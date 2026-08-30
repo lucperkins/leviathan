@@ -8,7 +8,7 @@ const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(
 const cite = (c: { id: string; para: number | null }) => (c.para ? `/chapters/${c.id}/#p${c.para}` : `/chapters/${c.id}/`);
 ---
 
-<Layout title="Scriptural references" wide>
+<Layout title="Scriptural references">
   <header class="mb-8">
     <p class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">Appendix</p>
     <h1 class="mt-1 font-serif text-3xl font-semibold">Scriptural references</h1>
