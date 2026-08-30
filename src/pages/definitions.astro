@@ -1,0 +1,310 @@
+---
+import Layout from "../layouts/Layout.astro";
+// @ts-ignore -- plain-JS rehype helper, shared so the diagram links use the
+// same paragraph numbering as quotations on concept and interlocutor pages.
+import { loadChapters, locate, quoteHref } from "../plugins/rehype-quote-sources.mjs";
+import fig1 from "../diagrams/fig1.svg?raw";
+import fig2 from "../diagrams/fig2.svg?raw";
+
+/**
+ * Where each term in the diagrams is defined: the chapter, and the opening
+ * words of the defining sentence. The quote is located in the chapter text at
+ * build time so the link lands on the paragraph and highlights it; a term
+ * without a quote just links to its chapter.
+ */
+const DEFINED: Record<string, { chapter: string; quote?: string }> = {
+  motion: { chapter: "the-introduction" },
+  sense: { chapter: "01-of-sense", quote: "So that Sense in all cases, is nothing els but originall fancy" },
+  imagination: { chapter: "02-of-imagination", quote: "Imagination therefore is nothing but Decaying Sense" },
+  trayne: { chapter: "03-of-the-consequence-or-trayne-of-imaginations" },
+  speech: { chapter: "04-of-speech", quote: "The generall use of Speech, is to transferre our Mentall Discourse" },
+  speech2: { chapter: "04-of-speech", quote: "The generall use of Speech, is to transferre our Mentall Discourse" },
+  reason: { chapter: "05-of-reason-and-science", quote: "Reason, in this sense, is nothing but Reckoning" },
+  endeavour: {
+    chapter: "06-of-the-interiour-beginnings-of-voluntary-motions",
+    quote: "These small beginnings of Motion, within the body of Man",
+  },
+  appetite: {
+    chapter: "06-of-the-interiour-beginnings-of-voluntary-motions",
+    quote: "This Endeavour, when it is toward something which causes it",
+  },
+  good: {
+    chapter: "06-of-the-interiour-beginnings-of-voluntary-motions",
+    quote: "whatsoever is the object of any mans Appetite or Desire",
+  },
+  will: {
+    chapter: "06-of-the-interiour-beginnings-of-voluntary-motions",
+    quote: "In Deliberation, the last Appetite, or Aversion",
+  },
+  religion: {
+    chapter: "06-of-the-interiour-beginnings-of-voluntary-motions",
+    quote: "Feare of power invisible, feigned by the mind",
+  },
+  power: {
+    chapter: "10-of-power-worth-dignity-honour-and-worthiness",
+    quote: "The POWER of a Man, (to take it Universally,) is his present means",
+  },
+  restless: {
+    chapter: "11-of-the-difference-of-manners",
+    quote: "a generall inclination of all mankind, a perpetuall and restlesse desire",
+  },
+  warre: {
+    chapter: "13-of-the-naturall-condition-of-mankind",
+    quote: "during the time men live without a common Power to keep them all in awe",
+  },
+  right: {
+    chapter: "14-of-the-first-and-second-naturall-lawes-and-of-contracts",
+    quote: "The RIGHT OF NATURE, which Writers commonly call Jus Naturale",
+  },
+  law: {
+    chapter: "14-of-the-first-and-second-naturall-lawes-and-of-contracts",
+    quote: "is a Precept, or generall Rule, found out by Reason",
+  },
+  covenant: {
+    chapter: "14-of-the-first-and-second-naturall-lawes-and-of-contracts",
+    quote: "The mutuall transferring of Right, is that which men call CONTRACT",
+  },
+  justice: { chapter: "15-of-other-lawes-of-nature", quote: "the definition of INJUSTICE, is no other than" },
+  person: {
+    chapter: "16-of-persons-authors-and-things-personated",
+    quote: "whose words or actions are considered, either as his own",
+  },
+  person2: {
+    chapter: "16-of-persons-authors-and-things-personated",
+    quote: "whose words or actions are considered, either as his own",
+  },
+  commonwealth: {
+    chapter: "17-of-the-causes-generation-and-definition-of-a-common-wealth",
+    quote: "One Person, of whose Acts a great Multitude, by mutuall Covenants",
+  },
+  sovereign: {
+    chapter: "17-of-the-causes-generation-and-definition-of-a-common-wealth",
+    quote: "he that carryeth this Person, as called",
+  },
+  sovereign2: {
+    chapter: "17-of-the-causes-generation-and-definition-of-a-common-wealth",
+    quote: "he that carryeth this Person, as called",
+  },
+  civill: {
+    chapter: "26-of-civill-lawes",
+    quote: "CIVILL LAW, Is to every Subject, those Rules, which the Common-wealth hath Commanded",
+  },
+  punishment: {
+    chapter: "28-of-punishments-and-rewards",
+    quote: "A PUNISHMENT, is an Evill inflicted by publique Authority",
+  },
+  holy: {
+    chapter: "35-of-the-signification-in-scripture-of-kingdome-of-god-of-holy-sacred-and-sacrament",
+    quote: "For by Holy, is alwaies understood, either God himselfe",
+  },
+  word: {
+    chapter: "36-of-the-word-of-god-and-of-prophets",
+    quote: "but a perfect Speech or Discourse, whereby the speaker",
+  },
+  prophet: {
+    chapter: "36-of-the-word-of-god-and-of-prophets",
+    quote: "The name of PROPHET, signifieth in Scripture sometimes Prolocutor",
+  },
+  miracle: { chapter: "37-of-miracles-and-their-use", quote: "A MIRACLE, is a work of God" },
+  church: {
+    chapter: "39-of-the-signification-in-scripture-of-the-word-church",
+    quote: "I define a CHURCH to be",
+  },
+  eccl: { chapter: "42-of-power-ecclesiasticall" },
+  teach: { chapter: "42-of-power-ecclesiasticall" },
+  juris: {
+    chapter: "42-of-power-ecclesiasticall",
+    quote: "Jurisdiction is the Power of hearing and determining Causes",
+  },
+};
+
+const chapters = loadChapters();
+const unresolved: string[] = [];
+
+function termHref(id: string) {
+  const entry = DEFINED[id];
+  if (!entry) {
+    unresolved.push(`${id} (no entry)`);
+    return "#";
+  }
+  const plain = `/chapters/${entry.chapter}/`;
+  if (!entry.quote) return plain;
+  const hit = locate(chapters, entry.quote);
+  if (!hit || hit.chapter.id !== entry.chapter) {
+    unresolved.push(`${id} (not found in ${entry.chapter})`);
+    return plain;
+  }
+  return quoteHref(hit.chapter.id, hit.para, entry.quote);
+}
+
+const resolve = (svg: string) => svg.replace(/__H_([a-z0-9]+)__/g, (_m: string, id: string) => termHref(id));
+const figure1 = resolve(fig1);
+const figure2 = resolve(fig2);
+if (unresolved.length) console.warn(`[definitions] unresolved term links: ${unresolved.join(", ")}`);
+---
+
+<Layout title="The chain of definitions" wide>
+  <header class="mb-10">
+    <p class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">Apparatus</p>
+    <h1 class="mt-1 font-serif text-3xl font-semibold">The chain of definitions</h1>
+    <p class="mt-3 max-w-prose text-lg text-stone-600 dark:text-stone-400">
+      Hobbes builds the whole book out of one continuous system of definitions. Every term is settled before it
+      is used, and each new definition is assembled from terms already fixed above it, so that the common-wealth
+      is reached from bodies in motion without a break.
+    </p>
+  </header>
+
+  <div class="prose-chapter max-w-prose font-serif text-lg leading-relaxed">
+    <p>
+      The method is announced in <a href="/chapters/05-of-reason-and-science/" class="chapter-link">Chapter V</a>,
+      where reason is defined as reckoning, and where Hobbes says that a man who would have true science must
+      begin from the definitions of his names and proceed in order. He then does exactly that. The diagrams below
+      trace the dependencies: an arrow runs from a term to any later definition that consumes it, and the label on
+      the arrow is the phrase in which the borrowing happens. Every term links to the passage that defines it.
+    </p>
+    <p>
+      Two things follow from reading the book this way. The famous political conclusions are not asserted but
+      rather derived, so a reader who accepts the early definitions of sense, appetite, and power has already
+      conceded most of what comes later. And the quarrel of Part IV is a quarrel about method: the schools are
+      accused not of holding false opinions so much as of reasoning from names that were never defined.
+    </p>
+  </div>
+
+  <figure class="mt-12">
+    <div class="overflow-x-auto rounded border border-stone-200 bg-stone-100/50 p-4 dark:border-stone-800 dark:bg-stone-900/40">
+      <Fragment set:html={figure1} />
+    </div>
+    <figcaption class="mt-3 max-w-prose text-sm text-stone-500 dark:text-stone-400">
+      Parts I and II: from motion to the common-wealth. Nothing enters a definition that has not been defined
+      earlier, and the single accented term is the hinge, where the natural chain becomes an artificial one.
+      Hover a term to trace what it rests on; click it to read the definition.
+    </figcaption>
+  </figure>
+
+  <section class="mt-16">
+    <h2 id="reading-the-seams" class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">
+      <a href="#reading-the-seams" class="heading-anchor">Reading the seams</a>
+    </h2>
+    <p class="mt-4 max-w-prose font-serif text-lg leading-relaxed">
+      The dependencies are visible in the sentences themselves. In each definition below, the words carrying a
+      superscript are terms Hobbes has already defined, and the chapter that defined them.
+    </p>
+
+    <dl class="mt-8 grid gap-6 md:grid-cols-2">
+      <div class="seam">
+        <dt>Imagination <span class="seam__chap">Chapter II</span></dt>
+        <dd>Imagination therefore is nothing but Decaying <b class="borrow">Sense<sup>I</sup></b>.</dd>
+      </div>
+      <div class="seam">
+        <dt>Will <span class="seam__chap">Chapter VI</span></dt>
+        <dd>
+          In <b class="borrow">Deliberation<sup>VI</sup></b>, the last <b class="borrow">Appetite<sup>VI</sup></b>,
+          or <b class="borrow">Aversion<sup>VI</sup></b>, immediately adhaering to the action, or to the omission
+          thereof, is that wee call the WILL.
+        </dd>
+      </div>
+      <div class="seam">
+        <dt>Common-wealth <span class="seam__chap">Chapter XVII</span></dt>
+        <dd>
+          One <b class="borrow">Person<sup>XVI</sup></b>, of whose Acts a great Multitude, by mutuall
+          <b class="borrow">Covenants<sup>XIV</sup></b> one with another, have made themselves every one the
+          <b class="borrow">Author<sup>XVI</sup></b>, to the end he may use the strength and
+          <b class="borrow">means<sup>X</sup></b> of them all, as he shall think expedient, for their
+          <b class="borrow">Peace<sup>XIV</sup></b> and Common Defence.
+        </dd>
+      </div>
+      <div class="seam">
+        <dt>Church <span class="seam__chap">Chapter XXXIX</span></dt>
+        <dd>
+          A company of men professing Christian <b class="borrow">Religion<sup>VI</sup></b>, united in the
+          <b class="borrow">person<sup>XVI</sup></b> of one <b class="borrow">Soveraign<sup>XVII</sup></b>; at whose
+          <b class="borrow">command<sup>XXVI</sup></b> they ought to assemble, and without whose
+          <b class="borrow">authority<sup>XVI</sup></b> they ought not to assemble.
+        </dd>
+      </div>
+    </dl>
+
+    <p class="mt-8 max-w-prose font-serif text-lg leading-relaxed">
+      The last of these is the one that does the work of Part III. By the time Hobbes defines a church, every
+      term he needs has been fixed in the political chapters, so the definition of a church turns out to be a
+      definition in politics. That is why the argument with
+      <a href="/interlocutors/bellarmine/" class="chapter-link">Bellarmine</a> in
+      <a href="/chapters/42-of-power-ecclesiasticall/" class="chapter-link">Chapter XLII</a> can be conducted
+      without any new vocabulary at all.
+    </p>
+  </section>
+
+  <figure class="mt-12">
+    <div class="overflow-x-auto rounded border border-stone-200 bg-stone-100/50 p-4 dark:border-stone-800 dark:bg-stone-900/40">
+      <Fragment set:html={figure2} />
+    </div>
+    <figcaption class="mt-3 max-w-prose text-sm text-stone-500 dark:text-stone-400">
+      Part III runs the same procedure over scripture. Terms carried down from Parts I and II are shown in
+      outline; because a church is defined through person and soveraign, ecclesiastical power resolves into
+      either teaching, which compels nobody, or jurisdiction, which only the civil sovereign holds.
+    </figcaption>
+  </figure>
+
+  <section class="mt-16 max-w-prose">
+    <h2 id="the-fourth-part" class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">
+      <a href="#the-fourth-part" class="heading-anchor">And the fourth part</a>
+    </h2>
+    <div class="prose-chapter mt-4 font-serif text-lg leading-relaxed">
+      <p>
+        Part IV is the same system stated negatively. Philosophy is defined in
+        <a href="/chapters/46-of-darknesse-from-vain-philosophy-and-fabulous-traditions/" class="chapter-link">
+          Chapter XLVI
+        </a>
+        as knowledge acquired by reasoning from the manner of the generation of a thing to its properties, or back
+        again, and the schools are then convicted of failing that definition. Their errors are catalogued as
+        abstract essences, separated essences, and insignificant speech, which are all the same fault: names that
+        entered the argument without ever being defined. The darkness of the fourth part is what happens when the
+        chain in the first is broken.
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Hover or focus a term to trace what it rests on: light the ancestors, dim the rest.
+  for (const svg of document.querySelectorAll<SVGSVGElement>("svg.fig")) {
+    const parents = new Map<string, string[]>();
+    for (const p of svg.querySelectorAll<SVGPathElement>("path.e")) {
+      const to = p.dataset.to!;
+      parents.set(to, [...(parents.get(to) ?? []), p.dataset.from!]);
+    }
+
+    const ancestors = (id: string) => {
+      const seen = new Set([id]);
+      const queue = [id];
+      while (queue.length) {
+        for (const p of parents.get(queue.pop()!) ?? []) {
+          if (seen.has(p)) continue;
+          seen.add(p);
+          queue.push(p);
+        }
+      }
+      return seen;
+    };
+
+    const nodes = svg.querySelectorAll<SVGElement>(".n[data-id]");
+    const clear = () => svg.classList.remove("tracing");
+    const trace = (id: string) => {
+      const lit = ancestors(id);
+      for (const n of nodes) n.classList.toggle("lit", lit.has(n.dataset.id!));
+      for (const el of svg.querySelectorAll<SVGElement>("[data-from][data-to]")) {
+        el.classList.toggle("lit", lit.has(el.dataset.from!) && lit.has(el.dataset.to!));
+      }
+      svg.classList.add("tracing");
+    };
+
+    for (const node of nodes) {
+      const id = node.dataset.id!;
+      node.addEventListener("pointerenter", () => trace(id));
+      node.addEventListener("focus", () => trace(id));
+      node.addEventListener("pointerleave", clear);
+      node.addEventListener("blur", clear);
+    }
+    svg.addEventListener("pointerleave", clear);
+  }
+</script>

@@ -61,6 +61,20 @@ const themes = (await getCollection("themes")).map((t) => ({ id: t.id, title: t.
             <ListNav sectionId="concepts" title="Concepts" basePath="/concepts" items={concepts} currentPath={currentPath} />
             <ListNav sectionId="interlocutors" title="Interlocutors" basePath="/interlocutors" items={interlocutors} currentPath={currentPath} />
           </div>
+          <div class="-mt-2 border-t border-stone-200 pt-2 text-sm dark:border-stone-800">
+            <a
+              href="/definitions/"
+              aria-current={currentPath === "/definitions/" ? "page" : undefined}
+              class:list={[
+                "block rounded px-2 py-1 leading-snug transition-colors",
+                currentPath === "/definitions/"
+                  ? "bg-stone-800 text-stone-50 dark:bg-stone-100 dark:text-stone-900"
+                  : "text-stone-700 hover:bg-stone-200 dark:text-stone-300 dark:hover:bg-stone-800",
+              ]}
+            >
+              The chain of definitions
+            </a>
+          </div>
         </div>
         <div class="border-t border-stone-200 px-4 py-3 dark:border-stone-800">
           <ThemeToggle />

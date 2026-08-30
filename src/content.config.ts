@@ -14,6 +14,10 @@ const chapters = defineCollection({
     pullquotes: z.array(z.string()).default([]),
     /** Whether paragraphs get ¶ numbers. Off for the epistle and the introduction. */
     numbered: z.boolean().default(true),
+    /** Notes shown beside a marginal heading, e.g. the argument a passage answers. */
+    marginalia: z
+      .array(z.object({ heading: z.string(), label: z.string(), href: z.string() }))
+      .default([]),
   }),
 });
 

@@ -34,7 +34,7 @@ const isActive = (ch: NavChapter) => currentPath === `/chapters/${ch.id}/`;
   <NavSection id="book" title="The book">
     {
       front.length > 0 && (
-        <ul class="mb-2 space-y-1">
+        <ul class="mb-2 ml-2 space-y-1">
           {front.map((ch) => (
             <ChapterNavItem chapter={ch} active={isActive(ch)} />
           ))}
@@ -54,7 +54,7 @@ const isActive = (ch: NavChapter) => currentPath === `/chapters/${ch.id}/`;
     }
     {
       back.length > 0 && (
-        <ul class="mt-2 space-y-1">
+        <ul class="mt-2 ml-2 space-y-1">
           {back.map((ch) => (
             <ChapterNavItem chapter={ch} active={isActive(ch)} />
           ))}

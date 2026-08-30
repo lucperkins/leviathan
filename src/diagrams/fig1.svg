@@ -1,0 +1,159 @@
+<svg viewBox="0 0 1020 1272" role="img" aria-label="Twenty-two of Hobbes&#x27;s definitions, from motion in the Introduction down to crime and punishment in Chapter XXVIII, each drawn from terms defined above it." class="fig" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="ah-f1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+<g class="edges">
+<path class="e" d="M 480 84 L 480 132" data-from="motion" data-to="sense" marker-end="url(#ah-f1)"/>
+<text class="el" x="480" y="102" text-anchor="middle" data-from="motion" data-to="sense">presseth the organ</text>
+<path class="e" d="M 480 84 L 480 108 L 760 108 L 760 228" data-from="motion" data-to="endeavour" marker-end="url(#ah-f1)"/>
+<text class="el" x="620" y="102" text-anchor="middle" data-from="motion" data-to="endeavour">small beginnings</text>
+<path class="e" d="M 480 180 L 480 204 L 240 204 L 240 228" data-from="sense" data-to="imagination" marker-end="url(#ah-f1)"/>
+<text class="el" x="360" y="198" text-anchor="middle" data-from="sense" data-to="imagination">decaying</text>
+<path class="e" d="M 240 276 L 240 324" data-from="imagination" data-to="trayne" marker-end="url(#ah-f1)"/>
+<path class="e" d="M 760 276 L 760 324" data-from="endeavour" data-to="appetite" marker-end="url(#ah-f1)"/>
+<text class="el" x="760" y="294" text-anchor="middle" data-from="endeavour" data-to="appetite">toward / fromward</text>
+<path class="e" d="M 240 372 L 240 420" data-from="trayne" data-to="speech" marker-end="url(#ah-f1)"/>
+<text class="el" x="240" y="390" text-anchor="middle" data-from="trayne" data-to="speech">into a trayne of words</text>
+<path class="e" d="M 760 372 L 760 396 L 540 396 L 540 420" data-from="appetite" data-to="good" marker-end="url(#ah-f1)"/>
+<text class="el" x="650" y="390" text-anchor="middle" data-from="appetite" data-to="good">its object</text>
+<path class="e" d="M 760 372 L 760 396 L 840 396 L 840 420" data-from="appetite" data-to="will" marker-end="url(#ah-f1)"/>
+<text class="el" x="800" y="390" text-anchor="middle" data-from="appetite" data-to="will">the last appetite</text>
+<path class="e" d="M 240 468 L 240 516" data-from="speech" data-to="reason" marker-end="url(#ah-f1)"/>
+<text class="el" x="240" y="486" text-anchor="middle" data-from="speech" data-to="reason">reckoning of names</text>
+<path class="e" d="M 240 468 L 240 492 L 30 492 L 30 588 L 240 588 L 240 612" data-from="speech" data-to="person" marker-end="url(#ah-f1)"/>
+<text class="el" x="135" y="582" text-anchor="middle" data-from="speech" data-to="person">words &amp; actions</text>
+<path class="e" d="M 540 468 L 540 492 L 760 492 L 760 516" data-from="good" data-to="power" marker-end="url(#ah-f1)"/>
+<text class="el" x="650" y="486" text-anchor="middle" data-from="good" data-to="power">means to a future good</text>
+<path class="e" d="M 760 564 L 760 612" data-from="power" data-to="restless" marker-end="url(#ah-f1)"/>
+<path class="e" d="M 760 660 L 760 708" data-from="restless" data-to="warre" marker-end="url(#ah-f1)"/>
+<text class="el" x="760" y="678" text-anchor="middle" data-from="restless" data-to="warre">competition</text>
+<path class="e" d="M 240 564 L 240 588 L 64 588 L 64 780 L 420 780 L 420 804" data-from="reason" data-to="law" marker-end="url(#ah-f1)"/>
+<text class="el" x="242" y="774" text-anchor="middle" data-from="reason" data-to="law">found out by Reason</text>
+<path class="e" d="M 760 756 L 760 804" data-from="warre" data-to="right" marker-end="url(#ah-f1)"/>
+<text class="el" x="760" y="774" text-anchor="middle" data-from="warre" data-to="right">liberty to use his own power</text>
+<path class="e" d="M 420 852 L 420 876 L 540 876 L 540 900" data-from="law" data-to="covenant" marker-end="url(#ah-f1)"/>
+<text class="el" x="480" y="870" text-anchor="middle" data-from="law" data-to="covenant">lay down this right</text>
+<path class="e" d="M 760 852 L 760 876 L 540 876 L 540 900" data-from="right" data-to="covenant" marker-end="url(#ah-f1)"/>
+<text class="el" x="650" y="870" text-anchor="middle" data-from="right" data-to="covenant">mutuall transferring</text>
+<path class="e" d="M 645 924 L 735 924" data-from="covenant" data-to="justice" marker-end="url(#ah-f1)"/>
+<text class="el" x="690" y="916" text-anchor="middle" data-from="covenant" data-to="justice">performance of covenant</text>
+<path class="e accent" d="M 240 660 L 240 684 L 30 684 L 30 972 L 540 972 L 540 996" data-from="person" data-to="commonwealth" marker-end="url(#ah-f1)"/>
+<text class="el" x="285" y="966" text-anchor="middle" data-from="person" data-to="commonwealth">one Person</text>
+<path class="e accent" d="M 540 948 L 540 996" data-from="covenant" data-to="commonwealth" marker-end="url(#ah-f1)"/>
+<text class="el" x="540" y="966" text-anchor="middle" data-from="covenant" data-to="commonwealth">by mutuall Covenants</text>
+<path class="e accent" d="M 540 1044 L 540 1092" data-from="commonwealth" data-to="sovereign" marker-end="url(#ah-f1)"/>
+<text class="el" x="540" y="1062" text-anchor="middle" data-from="commonwealth" data-to="sovereign">he that carryeth this Person</text>
+<path class="e" d="M 540 1140 L 540 1164 L 380 1164 L 380 1188" data-from="sovereign" data-to="civill" marker-end="url(#ah-f1)"/>
+<text class="el" x="460" y="1158" text-anchor="middle" data-from="sovereign" data-to="civill">commanded by the Common-wealth</text>
+<path class="e" d="M 485 1212 L 595 1212" data-from="civill" data-to="punishment" marker-end="url(#ah-f1)"/>
+<text class="el" x="540" y="1204" text-anchor="middle" data-from="civill" data-to="punishment">transgression of the Law</text>
+</g><g class="nodes">
+<a class="n" data-id="motion" href="__H_motion__">
+<rect x="375" y="36" width="210" height="48" rx="2"/>
+<text class="nt" x="480" y="57" text-anchor="middle">MOTION</text>
+<text class="nc" x="480" y="73" text-anchor="middle">Introduction</text>
+</a>
+<a class="n" data-id="sense" href="__H_sense__">
+<rect x="375" y="132" width="210" height="48" rx="2"/>
+<text class="nt" x="480" y="153" text-anchor="middle">SENSE</text>
+<text class="nc" x="480" y="169" text-anchor="middle">Chap. I</text>
+</a>
+<a class="n" data-id="imagination" href="__H_imagination__">
+<rect x="135" y="228" width="210" height="48" rx="2"/>
+<text class="nt" x="240" y="249" text-anchor="middle">IMAGINATION</text>
+<text class="nc" x="240" y="265" text-anchor="middle">Chap. II</text>
+</a>
+<a class="n" data-id="endeavour" href="__H_endeavour__">
+<rect x="655" y="228" width="210" height="48" rx="2"/>
+<text class="nt" x="760" y="249" text-anchor="middle">ENDEAVOUR</text>
+<text class="nc" x="760" y="265" text-anchor="middle">Chap. VI</text>
+</a>
+<a class="n" data-id="trayne" href="__H_trayne__">
+<rect x="135" y="324" width="210" height="48" rx="2"/>
+<text class="nt" x="240" y="345" text-anchor="middle">TRAYNE OF THOUGHTS</text>
+<text class="nc" x="240" y="361" text-anchor="middle">Chap. III</text>
+</a>
+<a class="n" data-id="appetite" href="__H_appetite__">
+<rect x="655" y="324" width="210" height="48" rx="2"/>
+<text class="nt" x="760" y="345" text-anchor="middle">APPETITE &amp; AVERSION</text>
+<text class="nc" x="760" y="361" text-anchor="middle">Chap. VI</text>
+</a>
+<a class="n" data-id="speech" href="__H_speech__">
+<rect x="135" y="420" width="210" height="48" rx="2"/>
+<text class="nt" x="240" y="441" text-anchor="middle">SPEECH</text>
+<text class="nc" x="240" y="457" text-anchor="middle">Chap. IV</text>
+</a>
+<a class="n" data-id="good" href="__H_good__">
+<rect x="435" y="420" width="210" height="48" rx="2"/>
+<text class="nt" x="540" y="441" text-anchor="middle">GOOD &amp; EVILL</text>
+<text class="nc" x="540" y="457" text-anchor="middle">Chap. VI</text>
+</a>
+<a class="n" data-id="will" href="__H_will__">
+<rect x="735" y="420" width="210" height="48" rx="2"/>
+<text class="nt" x="840" y="441" text-anchor="middle">WILL</text>
+<text class="nc" x="840" y="457" text-anchor="middle">Chap. VI</text>
+</a>
+<a class="n" data-id="reason" href="__H_reason__">
+<rect x="135" y="516" width="210" height="48" rx="2"/>
+<text class="nt" x="240" y="537" text-anchor="middle">REASON</text>
+<text class="nc" x="240" y="553" text-anchor="middle">Chap. V</text>
+</a>
+<a class="n" data-id="power" href="__H_power__">
+<rect x="655" y="516" width="210" height="48" rx="2"/>
+<text class="nt" x="760" y="537" text-anchor="middle">POWER</text>
+<text class="nc" x="760" y="553" text-anchor="middle">Chap. X</text>
+</a>
+<a class="n" data-id="person" href="__H_person__">
+<rect x="135" y="612" width="210" height="48" rx="2"/>
+<text class="nt" x="240" y="633" text-anchor="middle">PERSON &amp; AUTHOR</text>
+<text class="nc" x="240" y="649" text-anchor="middle">Chap. XVI</text>
+</a>
+<a class="n" data-id="restless" href="__H_restless__">
+<rect x="655" y="612" width="210" height="48" rx="2"/>
+<text class="nt" x="760" y="633" text-anchor="middle">POWER AFTER POWER</text>
+<text class="nc" x="760" y="649" text-anchor="middle">Chap. XI</text>
+</a>
+<a class="n" data-id="warre" href="__H_warre__">
+<rect x="655" y="708" width="210" height="48" rx="2"/>
+<text class="nt" x="760" y="729" text-anchor="middle">WARRE OF EVERY MAN</text>
+<text class="nc" x="760" y="745" text-anchor="middle">Chap. XIII</text>
+</a>
+<a class="n" data-id="law" href="__H_law__">
+<rect x="315" y="804" width="210" height="48" rx="2"/>
+<text class="nt" x="420" y="825" text-anchor="middle">LAW OF NATURE</text>
+<text class="nc" x="420" y="841" text-anchor="middle">Chap. XIV</text>
+</a>
+<a class="n" data-id="right" href="__H_right__">
+<rect x="655" y="804" width="210" height="48" rx="2"/>
+<text class="nt" x="760" y="825" text-anchor="middle">RIGHT OF NATURE</text>
+<text class="nc" x="760" y="841" text-anchor="middle">Chap. XIV</text>
+</a>
+<a class="n" data-id="covenant" href="__H_covenant__">
+<rect x="435" y="900" width="210" height="48" rx="2"/>
+<text class="nt" x="540" y="921" text-anchor="middle">COVENANT</text>
+<text class="nc" x="540" y="937" text-anchor="middle">Chap. XIV</text>
+</a>
+<a class="n" data-id="justice" href="__H_justice__">
+<rect x="735" y="900" width="210" height="48" rx="2"/>
+<text class="nt" x="840" y="921" text-anchor="middle">JUSTICE</text>
+<text class="nc" x="840" y="937" text-anchor="middle">Chap. XV</text>
+</a>
+<a class="n accent" data-id="commonwealth" href="__H_commonwealth__">
+<rect x="435" y="996" width="210" height="48" rx="2"/>
+<text class="nt" x="540" y="1017" text-anchor="middle">COMMON-WEALTH</text>
+<text class="nc" x="540" y="1033" text-anchor="middle">Chap. XVII</text>
+</a>
+<a class="n" data-id="sovereign" href="__H_sovereign__">
+<rect x="435" y="1092" width="210" height="48" rx="2"/>
+<text class="nt" x="540" y="1113" text-anchor="middle">SOVERAIGN &amp; SUBJECT</text>
+<text class="nc" x="540" y="1129" text-anchor="middle">Chap. XVII</text>
+</a>
+<a class="n" data-id="civill" href="__H_civill__">
+<rect x="275" y="1188" width="210" height="48" rx="2"/>
+<text class="nt" x="380" y="1209" text-anchor="middle">CIVILL LAW</text>
+<text class="nc" x="380" y="1225" text-anchor="middle">Chap. XXVI</text>
+</a>
+<a class="n" data-id="punishment" href="__H_punishment__">
+<rect x="595" y="1188" width="210" height="48" rx="2"/>
+<text class="nt" x="700" y="1209" text-anchor="middle">CRIME &amp; PUNISHMENT</text>
+<text class="nc" x="700" y="1225" text-anchor="middle">Chap. XXVII–XXVIII</text>
+</a>
+</g></svg>

@@ -1,0 +1,86 @@
+<svg viewBox="0 0 1020 696" role="img" aria-label="The definitions of Part III: religion, the word of God, prophet, miracle and the holy feed into the definition of a church, which is built from person and soveraign, and which divides ecclesiasticall power into teaching and jurisdiction." class="fig" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="ah-f2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+<g class="edges">
+<path class="e" d="M 180 84 L 180 228" data-from="religion" data-to="holy" marker-end="url(#ah-f2)"/>
+<text class="el" x="180" y="102" text-anchor="middle" data-from="religion" data-to="holy">feare of power invisible</text>
+<path class="e" d="M 620 84 L 620 132" data-from="speech2" data-to="word" marker-end="url(#ah-f2)"/>
+<text class="el" x="620" y="102" text-anchor="middle" data-from="speech2" data-to="word">a perfect Speech</text>
+<path class="e" d="M 620 180 L 620 204 L 420 204 L 420 228" data-from="word" data-to="prophet" marker-end="url(#ah-f2)"/>
+<text class="el" x="520" y="198" text-anchor="middle" data-from="word" data-to="prophet">he that speaketh from God</text>
+<path class="e" d="M 620 180 L 620 204 L 660 204 L 660 228" data-from="word" data-to="miracle" marker-end="url(#ah-f2)"/>
+<text class="el" x="640" y="198" text-anchor="middle" data-from="word" data-to="miracle">signe of his mission</text>
+<path class="e accent" d="M 900 180 L 900 204 L 985 204 L 985 300 L 520 300 L 520 420" data-from="person2" data-to="church" marker-end="url(#ah-f2)"/>
+<text class="el" x="752.5" y="294" text-anchor="middle" data-from="person2" data-to="church">united in one person</text>
+<path class="e accent" d="M 900 372 L 900 396 L 520 396 L 520 420" data-from="sovereign2" data-to="church" marker-end="url(#ah-f2)"/>
+<text class="el" x="710" y="390" text-anchor="middle" data-from="sovereign2" data-to="church">at whose command</text>
+<path class="e accent" d="M 420 276 L 420 300 L 520 300 L 520 420" data-from="prophet" data-to="church" marker-end="url(#ah-f2)"/>
+<path class="e accent" d="M 660 276 L 660 300 L 520 300 L 520 420" data-from="miracle" data-to="church" marker-end="url(#ah-f2)"/>
+<path class="e accent" d="M 180 276 L 180 300 L 520 300 L 520 420" data-from="holy" data-to="church" marker-end="url(#ah-f2)"/>
+<text class="el" x="350" y="294" text-anchor="middle" data-from="holy" data-to="church">consecrated to Gods service</text>
+<path class="e accent" d="M 520 468 L 520 516" data-from="church" data-to="eccl" marker-end="url(#ah-f2)"/>
+<path class="e" d="M 520 564 L 520 588 L 250 588 L 250 612" data-from="eccl" data-to="teach" marker-end="url(#ah-f2)"/>
+<text class="el" x="385" y="582" text-anchor="middle" data-from="eccl" data-to="teach">perswasion onely</text>
+<path class="e" d="M 520 564 L 520 588 L 790 588 L 790 612" data-from="eccl" data-to="juris" marker-end="url(#ah-f2)"/>
+<text class="el" x="655" y="582" text-anchor="middle" data-from="eccl" data-to="juris">determining causes</text>
+</g><g class="nodes">
+<a class="n" data-id="religion" href="__H_religion__">
+<rect x="75" y="36" width="210" height="48" rx="2"/>
+<text class="nt" x="180" y="57" text-anchor="middle">RELIGION</text>
+<text class="nc" x="180" y="73" text-anchor="middle">Chap. VI</text>
+</a>
+<a class="n carried" data-id="speech2" href="__H_speech2__">
+<rect x="515" y="36" width="210" height="48" rx="2"/>
+<text class="nt" x="620" y="57" text-anchor="middle">SPEECH</text>
+<text class="nc" x="620" y="73" text-anchor="middle">Chap. IV</text>
+</a>
+<a class="n" data-id="word" href="__H_word__">
+<rect x="515" y="132" width="210" height="48" rx="2"/>
+<text class="nt" x="620" y="153" text-anchor="middle">WORD OF GOD</text>
+<text class="nc" x="620" y="169" text-anchor="middle">Chap. XXXVI</text>
+</a>
+<a class="n carried" data-id="person2" href="__H_person2__">
+<rect x="795" y="132" width="210" height="48" rx="2"/>
+<text class="nt" x="900" y="153" text-anchor="middle">PERSON</text>
+<text class="nc" x="900" y="169" text-anchor="middle">Chap. XVI</text>
+</a>
+<a class="n" data-id="holy" href="__H_holy__">
+<rect x="75" y="228" width="210" height="48" rx="2"/>
+<text class="nt" x="180" y="249" text-anchor="middle">HOLY &amp; SACRED</text>
+<text class="nc" x="180" y="265" text-anchor="middle">Chap. XXXV</text>
+</a>
+<a class="n" data-id="prophet" href="__H_prophet__">
+<rect x="315" y="228" width="210" height="48" rx="2"/>
+<text class="nt" x="420" y="249" text-anchor="middle">PROPHET</text>
+<text class="nc" x="420" y="265" text-anchor="middle">Chap. XXXVI</text>
+</a>
+<a class="n" data-id="miracle" href="__H_miracle__">
+<rect x="555" y="228" width="210" height="48" rx="2"/>
+<text class="nt" x="660" y="249" text-anchor="middle">MIRACLE</text>
+<text class="nc" x="660" y="265" text-anchor="middle">Chap. XXXVII</text>
+</a>
+<a class="n carried" data-id="sovereign2" href="__H_sovereign2__">
+<rect x="795" y="324" width="210" height="48" rx="2"/>
+<text class="nt" x="900" y="345" text-anchor="middle">SOVERAIGN</text>
+<text class="nc" x="900" y="361" text-anchor="middle">Chap. XVII</text>
+</a>
+<a class="n accent" data-id="church" href="__H_church__">
+<rect x="415" y="420" width="210" height="48" rx="2"/>
+<text class="nt" x="520" y="441" text-anchor="middle">CHURCH</text>
+<text class="nc" x="520" y="457" text-anchor="middle">Chap. XXXIX</text>
+</a>
+<a class="n" data-id="eccl" href="__H_eccl__">
+<rect x="415" y="516" width="210" height="48" rx="2"/>
+<text class="nt" x="520" y="537" text-anchor="middle">POWER ECCLESIASTICALL</text>
+<text class="nc" x="520" y="553" text-anchor="middle">Chap. XLII</text>
+</a>
+<a class="n" data-id="teach" href="__H_teach__">
+<rect x="145" y="612" width="210" height="48" rx="2"/>
+<text class="nt" x="250" y="633" text-anchor="middle">POWER TO TEACH</text>
+<text class="nc" x="250" y="649" text-anchor="middle">Chap. XLII</text>
+</a>
+<a class="n" data-id="juris" href="__H_juris__">
+<rect x="685" y="612" width="210" height="48" rx="2"/>
+<text class="nt" x="790" y="633" text-anchor="middle">JURISDICTION</text>
+<text class="nc" x="790" y="649" text-anchor="middle">Chap. XLII</text>
+</a>
+</g></svg>

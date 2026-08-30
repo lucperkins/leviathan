@@ -21,9 +21,11 @@ const href = `/chapters/${chapter.id}/`;
         : "text-stone-700 hover:bg-stone-200 dark:text-stone-300 dark:hover:bg-stone-800",
     ]}
   >
-    <span class="w-6 shrink-0 text-right tabular-nums text-stone-400 dark:text-stone-500">
-      {chapter.part ? `${chapter.number}.` : ""}
-    </span>
+    {
+      chapter.part && (
+        <span class="w-6 shrink-0 text-right tabular-nums text-stone-400 dark:text-stone-500">{`${chapter.number}.`}</span>
+      )
+    }
     <span>{chapter.title}</span>
   </a>
 </li>

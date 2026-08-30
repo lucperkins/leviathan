@@ -21,7 +21,7 @@ const fromRoman = (s) => {
  * Chapters as they are on disk, with paragraphs in the same order (and
  * therefore the same index) that rehype-chapter-paragraphs numbers them.
  */
-function loadChapters() {
+export function loadChapters() {
   return readdirSync(CHAPTER_DIR)
     .filter((f) => f.endsWith(".mdx"))
     .map((f) => {
@@ -38,7 +38,7 @@ function loadChapters() {
 }
 
 /** Find the chapter and paragraph index containing the opening words of `quote`. */
-function locate(chapters, quote) {
+export function locate(chapters, quote) {
   const first = quote.split(/…|\.\.\./)[0];
   const words = normalise(first).split(" ").filter(Boolean);
   if (words.length < 5) return null;
