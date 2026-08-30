@@ -1041,8 +1041,19 @@ a.external::after {
   font-size: 0.65em;
 }
 .fn-ref a {
-  color: var(--color-rubric);
+  color: var(--color-stone-500);
   text-decoration: none;
+}
+.fn-ref a:hover,
+.fn-ref a:focus-visible {
+  color: var(--color-stone-900);
+}
+.dark .fn-ref a {
+  color: var(--color-stone-500);
+}
+.dark .fn-ref a:hover,
+.dark .fn-ref a:focus-visible {
+  color: var(--color-stone-200);
 }
 .footnotes {
   display: flex;
@@ -1067,7 +1078,10 @@ a.external::after {
   font-family: var(--font-sans);
   font-size: 0.7rem;
   font-variant-numeric: tabular-nums;
-  color: var(--color-rubric);
+  color: var(--color-stone-400);
+}
+.dark .footnotes__num {
+  color: var(--color-stone-500);
 }
 .footnotes__back {
   color: var(--color-stone-400);
