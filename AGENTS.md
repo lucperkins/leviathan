@@ -197,9 +197,8 @@ Styling for all of this is plain CSS at the bottom of `global.css`
   attribute names have to survive MDX. The only non-Alpine script is the
   pre-paint `is:inline` block in `Layout.astro` that applies persisted
   accordion state before Alpine boots. No React/Vue/etc.
-- Keyboard: Cmd+[ / Cmd+] (Ctrl elsewhere) follow the page's `rel="prev"` /
-  `rel="next"` links (`pageKeys` in `src/alpine.ts`). Note this shadows the
-  browser's own history shortcut on macOS — deliberate, requested.
+- No custom keyboard shortcuts: Cmd+[ / Cmd+] were tried for prev/next and
+  removed because they shadow the browser's back/forward. Leave them alone.
 - Verify with `bun run build` and `bun run build-storybook`; grep `dist/`
   for the expected markup rather than assuming.
 - Git is initialised but nothing is committed; stage with `git add -A` so

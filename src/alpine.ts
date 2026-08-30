@@ -119,20 +119,6 @@ export default (Alpine: Alpine) => {
     },
   }));
 
-  /** Cmd+[ / Cmd+] (Ctrl on other platforms) follow the page's rel=prev / rel=next links. */
-  Alpine.data("pageKeys", () => ({
-    onKey(e: KeyboardEvent) {
-      if (!(e.metaKey || e.ctrlKey) || e.altKey || e.shiftKey) return;
-      const target = e.target as HTMLElement | null;
-      if (target?.closest("input, textarea, select, [contenteditable]")) return;
-      const rel = e.key === "[" ? "prev" : e.key === "]" ? "next" : null;
-      if (!rel) return;
-      const link = document.querySelector<HTMLAnchorElement>(`a[rel="${rel}"]`);
-      if (!link) return;
-      e.preventDefault();
-      location.assign(link.href);
-    },
-  }));
 
   /**
    * Colour theme. The <head> script in Layout.astro SETS the initial theme
