@@ -70,6 +70,23 @@ const themes = defineCollection({
 });
 
 /**
+ * Readings: the schools that have taken the book up and what each finds in it.
+ * Sorted alphabetically, like the themes, and deliberately heavy on names —
+ * the point of a page here is to send a reader to the scholarship.
+ */
+const readings = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/readings" }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    chapters: z.array(reference("chapters")).default([]),
+    concepts: z.array(reference("concepts")).default([]),
+    themes: z.array(reference("themes")).default([]),
+    footnotes,
+  }),
+});
+
+/**
  * Kindred spirits: thinkers Hobbes did not argue with so much as resemble.
  * Distinct from the touchstones, who are the people he answers in the book.
  * Read in the order they lived, so `year` sorts them.
@@ -133,4 +150,4 @@ const hobbes = defineCollection({
     }),
 });
 
-export const collections = { chapters, concepts, hobbes, kindred, touchstones, themes, works };
+export const collections = { chapters, concepts, hobbes, kindred, readings, touchstones, themes, works };

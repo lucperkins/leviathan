@@ -1,0 +1,20 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import SectionIndex from "../../components/SectionIndex.astro";
+
+const readings = (await getCollection("readings")).sort((a, b) => a.data.title.localeCompare(b.data.title));
+const entries = readings.map((r) => ({
+  href: `/readings/${r.id}/`,
+  title: r.data.title,
+  summary: r.data.summary,
+}));
+---
+
+<Layout title="Readings">
+  <SectionIndex
+    title="Readings"
+    intro="Schools that have taken *Leviathan* up, and what each of them finds in it. These pages are about the scholarship rather than the text: who made the case, in which book, and what the passage they lean on actually says. They overlap and they contradict each other, which is the point — the book has been used as evidence for propositions Hobbes would not have recognised, and some of those uses have turned out to be the most illuminating things anyone has said about it."
+    entries={entries}
+  />
+</Layout>
