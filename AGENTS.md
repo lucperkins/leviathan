@@ -150,7 +150,9 @@ Styling for all of this is plain CSS at the bottom of `global.css`
   Every group is a `NavSection` (`<details>`; `nested` for the parts), open/closed state
   persisted by Alpine `$persist` under `localStorage["leviathan:nav:<id>"]`;
   a pre-paint `is:inline` script applies it early. The section containing the
-  current page is always forced open.
+  current page is always forced open. The sidebar's scroll offset is kept in
+  `sessionStorage["leviathan:nav-scroll"]` (Alpine `navScroll` saves it; the
+  same pre-paint script restores it) so the nav stays put between pages.
 - Active link = `currentPath` (normalised with trailing slash) equals the
   item href. Pages do not pass a `current` prop.
 - `Lightbox` wraps an `astro:assets` image in a button that opens the

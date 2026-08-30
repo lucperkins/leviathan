@@ -145,6 +145,21 @@ export default (Alpine: Alpine) => {
     },
   }));
 
+  /** Sidebar scroll offset, remembered for the session so the nav stays put across pages. */
+  Alpine.data("navScroll", () => ({
+    pending: false,
+    save() {
+      if (this.pending) return;
+      this.pending = true;
+      requestAnimationFrame(() => {
+        this.pending = false;
+        try {
+          sessionStorage.setItem("leviathan:nav-scroll", String(this.$el.scrollTop));
+        } catch {}
+      });
+    },
+  }));
+
   /** Image lightbox: a native <dialog> opened with showModal(); Escape, backdrop, and the button close it. */
   Alpine.data("lightbox", () => ({
     open() {
