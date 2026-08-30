@@ -10,6 +10,8 @@ const config: StorybookConfig = {
       scripts: ["/.storybook/alpine.ts"],
     },
   },
+  // storybook-astro's preset points at the builder by absolute directory path,
+  // which Node cannot resolve as ESM; name it here so the bare specifier wins.
   core: {
     builder: "@storybook/builder-vite",
   },

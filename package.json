@@ -15,6 +15,7 @@
   "dependencies": {
     "@alpinejs/persist": "^3.16.3",
     "@astrojs/alpinejs": "^1.0.0",
+    "@astrojs/markdown-remark": "^7.2.4",
     "@astrojs/mdx": "^7.0.8",
     "@tailwindcss/vite": "^4.3.3",
     "alpinejs": "^3.16.3",
