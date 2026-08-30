@@ -2,11 +2,13 @@
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import SectionIndex from "../../components/SectionIndex.astro";
+import { hobbesForm } from "../../lib/spelling";
 
 const concepts = (await getCollection("concepts")).sort((a, b) => a.data.title.localeCompare(b.data.title));
 const entries = concepts.map((c) => ({
   href: `/concepts/${c.id}/`,
   title: c.data.title,
+  meta: hobbesForm(c.data.title, c.data.hobbes),
   summary: c.data.summary,
 }));
 ---

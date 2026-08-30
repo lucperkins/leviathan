@@ -17,14 +17,16 @@
   --default-transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
-/* Shared hover transition for hand-written interactive styles. */
+/* One hover duration for every interactive style on the site. Listing each
+   class here meant new link styles kept missing it, so this matches elements
+   and custom elements instead: low specificity, so Tailwind's transition-*
+   utilities still win wherever a component sets its own. */
+a,
+button,
+summary,
 concept-ref,
-.heading-anchor,
 .heading-anchor::after,
-.quote-link,
-.quote-source__link,
-.concept-tip__link,
-.margin-note a,
+.fig .n rect,
 .prose-chapter mark.quote-hl {
   transition-property: color, background-color, text-decoration-color, opacity;
   transition-duration: var(--default-transition-duration);
@@ -953,6 +955,27 @@ a.external::after {
   font-family: var(--font-serif);
   font-size: 1.0625rem;
   font-weight: 600;
+}
+.omission__name a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.dark .omission__name a {
+  text-decoration-color: var(--color-stone-600);
+}
+.omission__name a:hover,
+.omission__name a:focus-visible {
+  text-decoration-color: var(--color-stone-700);
+}
+.dark .omission__name a:hover,
+.dark .omission__name a:focus-visible {
+  text-decoration-color: var(--color-stone-200);
+}
+.omission__and {
+  font-weight: 400;
+  color: var(--color-stone-500);
 }
 .omission__why {
   display: block;

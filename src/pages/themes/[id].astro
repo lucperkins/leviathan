@@ -2,6 +2,7 @@
 import { getCollection, getEntries, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import ConceptHeader from "../../components/ConceptHeader.astro";
+import { hobbesForm } from "../../lib/spelling";
 import PrevNext from "../../components/PrevNext.astro";
 import Prose from "../../components/Prose.astro";
 import RelatedLinks from "../../components/RelatedLinks.astro";
@@ -26,7 +27,8 @@ const chapters = chapterLinks(await getEntries(theme.data.chapters));
 const concepts = conceptLinks(await getEntries(theme.data.concepts));
 ---
 
-<Layout title={theme.data.title}>
+<Layout title={theme.data.title}
+    meta={hobbesForm(theme.data.title, theme.data.hobbes)}>
   <ConceptHeader
     kind="Theme"
     title={theme.data.title}

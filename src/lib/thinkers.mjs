@@ -282,55 +282,56 @@ export const CATEGORIES = [
 
 /**
  * Names a reader expects and does not find. Every one of these returns zero
- * matches in the text.
+ * matches in the text. `names` holds [display text, Wikipedia article] pairs,
+ * so compound entries link each person separately.
  */
 export const OMISSIONS = [
   {
-    name: "Thucydides",
+    names: [["Thucydides", "https://en.wikipedia.org/wiki/Thucydides"]],
     why: "Hobbes translated him. The history of the Peloponnesian War, published in 1629, was his first book and the first English version made directly from the Greek, and its lesson about assemblies at war runs through Part II. He never names him.",
   },
   {
-    name: "Euclid",
+    names: [["Euclid", "https://en.wikipedia.org/wiki/Euclid"]],
     why: "Geometry is the model for the entire method — reasoning from definitions to conclusions that hold whether or not one likes them. By Aubrey's account Hobbes discovered the <em>Elements</em> at forty and it changed his life. The name never appears.",
   },
   {
-    name: "Francis Bacon",
+    names: [["Francis Bacon", "https://en.wikipedia.org/wiki/Francis_Bacon"]],
     why: "Hobbes worked as his secretary in the 1620s, taking down his thoughts on walks at Gorhambury. The programme of replacing verbal disputation with a science of causes is close to Bacon's own.",
   },
   {
-    name: "René Descartes",
+    names: [["René Descartes", "https://en.wikipedia.org/wiki/Ren%C3%A9_Descartes"]],
     why: "Hobbes wrote the third set of Objections to the <em>Meditations</em> in 1641 and quarrelled with him afterwards. The two men disagreed precisely about incorporeal substance, which Chapter 46 is largely about.",
   },
   {
-    name: "Galileo",
+    names: [["Galileo", "https://en.wikipedia.org/wiki/Galileo_Galilei"]],
     why: "Hobbes visited him near Florence in 1636, and the doctrine that everything is body in motion — the foundation of Part I — is taken from the new science he represented.",
   },
   {
-    name: "Marin Mersenne and Pierre Gassendi",
+    names: [["Marin Mersenne", "https://en.wikipedia.org/wiki/Marin_Mersenne"], ["Pierre Gassendi", "https://en.wikipedia.org/wiki/Pierre_Gassendi"]],
     why: "The Paris circle that gave Hobbes his scientific education and among whom he wrote both <em>De Cive</em> and much of <em>Leviathan</em>.",
   },
   {
-    name: "Niccolò Machiavelli",
+    names: [["Niccolò Machiavelli", "https://en.wikipedia.org/wiki/Niccol%C3%B2_Machiavelli"]],
     why: "The obvious predecessor for a politics built on how people behave rather than how they ought to. His absence is the more conspicuous because Hobbes was routinely accused of being his disciple.",
   },
   {
-    name: "Jean Bodin",
+    names: [["Jean Bodin", "https://en.wikipedia.org/wiki/Jean_Bodin"]],
     why: "The theorist of indivisible sovereignty, which is the doctrine <em>Leviathan</em> is most famous for arguing. Bodin's <em>Six Books of the Common-wealth</em> was standard reading in England.",
   },
   {
-    name: "Hugo Grotius",
+    names: [["Hugo Grotius", "https://en.wikipedia.org/wiki/Hugo_Grotius"]],
     why: "The leading contemporary authority on natural law, covenant, and the right of war, working the same ground a decade earlier and cited by everyone else in the debate.",
   },
   {
-    name: "Luther and Calvin",
+    names: [["Martin Luther", "https://en.wikipedia.org/wiki/Martin_Luther"], ["John Calvin", "https://en.wikipedia.org/wiki/John_Calvin"]],
     why: "The Reformation is everywhere in Part III and its two founders are never named, though Calvin's successor Beza is answered at length.",
   },
   {
-    name: "Duns Scotus and William of Ockham",
+    names: [["Duns Scotus", "https://en.wikipedia.org/wiki/Duns_Scotus"], ["William of Ockham", "https://en.wikipedia.org/wiki/William_of_Ockham"]],
     why: "The schoolmen Hobbes is attacking for most of Part IV. He takes on the doctrine and leaves the names alone, apart from the single glance at Suárez.",
   },
   {
-    name: "Lucretius",
+    names: [["Lucretius", "https://en.wikipedia.org/wiki/Lucretius"]],
     why: "The ancient poem of atoms and void is the closest thing in antiquity to Hobbes's own materialism, and the obvious authority to claim. Seneca, Tacitus, Ovid, and Horace are missing too.",
   },
 ];

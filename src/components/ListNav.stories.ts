@@ -3,7 +3,7 @@ import ListNav from "./ListNav.astro";
 const concepts = [
   { id: "sense", title: "Sense" },
   { id: "imagination", title: "Imagination" },
-  { id: "common-wealth", title: "Common-wealth" },
+  { id: "commonwealth", title: "Commonwealth" },
 ];
 const interlocutors = [
   { id: "aristotle", title: "Aristotle" },

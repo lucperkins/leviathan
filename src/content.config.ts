@@ -35,7 +35,8 @@ const refSchema = z.object({
 
 const concepts = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/concepts" }),
-  schema: refSchema,
+  /** `hobbes` is his spelling, shown only where it differs from the modern title. */
+  schema: refSchema.extend({ hobbes: z.string().optional() }),
 });
 
 const interlocutors = defineCollection({

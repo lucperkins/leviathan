@@ -109,7 +109,16 @@ if (unresolved.length) console.warn(`[thinkers] unresolved: ${unresolved.join(",
       {
         OMISSIONS.map((o: any) => (
           <li class="omission">
-            <span class="omission__name">{o.name}</span>
+            <span class="omission__name">
+              {o.names.map(([text, href]: [string, string], i: number) => (
+                <>
+                  {i > 0 && <span class="omission__and"> and </span>}
+                  <a class="external" href={href} target="_blank" rel="noopener noreferrer">
+                    {text}
+                  </a>
+                </>
+              ))}
+            </span>
             <span class="omission__why" set:html={o.why} />
           </li>
         ))
