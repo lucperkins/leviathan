@@ -98,6 +98,14 @@ export const SHELVES = [
         note: "Takes the claim to be a system seriously and asks whether the politics really does follow from the physics.",
       },
       {
+        id: "spragens-politics-of-motion",
+        title: "The Politics of Motion: The World of Thomas Hobbes",
+        href: "https://openlibrary.org/works/OL4810482W",
+        author: "Thomas A. Spragens Jr.",
+        year: "1973",
+        note: "That the politics follows from a change of cosmology rather than from a change of subject, and that Hobbes kept the shape of Aristotle's enterprise while replacing everything inside it: a world with no natural places or ends leaves men in the same condition as the bodies in it, moving until something stops them.",
+      },
+      {
         id: "skinner-reason-and-rhetoric",
         title: "Reason and Rhetoric in the Philosophy of Hobbes",
         href: "https://openlibrary.org/works/OL29420323W",
