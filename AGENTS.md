@@ -180,6 +180,11 @@ Styling for all of this is plain CSS at the bottom of `global.css`
   someone will fail loudly there.
 - `/scripture/` links verses to Wikisource's King James text (public domain,
   with `#Chapter_N` and `#C:V` anchors), not to a commercial Bible site.
+- `/ancestor/` lists the disciplines that claim Hobbes as a founder — social
+  science, legal positivism, AI, game theory — each with the passage it rests
+  on, so the claim can be weighed against the text. Data in
+  `src/lib/ancestry.mjs`, rendered by the same `Shelves` component as the
+  reading lists.
 - `/further-reading/` is the one appendix page not generated from the text: a
   short reading list in `src/lib/library.mjs`, each entry described by what it
   claims. Entries have stable `id` anchors so pages can link to a book.
@@ -268,21 +273,23 @@ Styling for all of this is plain CSS at the bottom of `global.css`
 - The chapter extraction script is not in the repo yet (it lived in a
   scratchpad); if it is added, put it at `scripts/extract-chapters.ts`.
 
+## Mobile
+
+Below `md` (48rem) the sidebar becomes a drawer. `Layout.astro` renders a
+fixed navbar (`md:hidden`) carrying the title, a drawer toggle, and a theme
+toggle; the `<aside>` is `fixed … -translate-x-full` until the Alpine
+`navDrawer` component opens it, with a scrim behind and the document scroll
+locked while it is open. Escape closes it. The theme lives in an Alpine
+**store** rather than a component precisely because two toggles are on the
+page at once below that breakpoint and have to agree.
+
+`<main>` drops to `px-5 pt-20` to clear the navbar, and `.para-num` floats
+inline instead of sitting outside the column, which it cannot do once the
+column reaches the screen edge.
+
 ## TODO
 
-The two main ones, in no particular order.
-
-- **Make the site mobile-friendly.** It is currently desktop-only by
-  assumption. Known blockers, roughly in order:
-  - `Layout.astro` renders the sidebar as a fixed `w-80` `h-screen` `sticky`
-    `<aside>` with no breakpoint at all, so on a phone it eats the screen.
-    It needs to collapse to a drawer behind a toggle below (say) `md`.
-  - `<main>` uses `px-12 pt-12 pb-32`; the horizontal padding is too generous
-    for narrow viewports.
-  - Chapter paragraph numbers (`.para-num`) are positioned
-    `absolute; right: 100%`, so they sit outside the viewport once the column
-    reaches the screen edge. They need to move inline, or be hidden, on small
-    screens.
+- **Make the site mobile-friendly.** Mostly done, see above. What is left:
   - The derivation diagrams on `/definitions/` set `min-width: 40rem` inside
     an `overflow-x-auto` container. They scroll rather than break, but the
     hover-to-trace interaction has no touch equivalent.

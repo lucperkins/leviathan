@@ -11,6 +11,17 @@ declare module "alpinejs" {
 /** The three settings of the theme toggle; null in storage means follow the system. */
 type Theme = "light" | "sepia" | "dark";
 
+/** The shape of the `theme` store, so `this` is typed inside its methods. */
+interface ThemeStore {
+  stored: Theme | null;
+  mode: Theme;
+  init(): void;
+  readonly next: Theme;
+  readonly label: string;
+  set(mode: Theme): void;
+  cycle(): void;
+}
+
 /** Where the reader last was, kept in localStorage under `leviathan:reading`. */
 interface Reading {
   /** Chapter id, e.g. "13-of-the-naturall-condition-of-mankind". */
@@ -145,8 +156,12 @@ export default (Alpine: Alpine) => {
    * null until the reader chooses, in which case the system preference decides
    * between light and dark; choosing anything pins it. Layout.astro applies
    * the same rule before paint.
+   *
+   * A store rather than a component, because there are two toggles on the page
+   * below the mobile breakpoint — one in the navbar, one at the foot of the
+   * drawer — and they have to show the same state.
    */
-  Alpine.data("theme", () => ({
+  const theme: ThemeStore = {
     stored: Alpine.$persist(null as Theme | null).as("leviathan:theme"),
     mode: (document.documentElement.classList.contains("dark")
       ? "dark"
@@ -175,50 +190,23 @@ export default (Alpine: Alpine) => {
       this.stored = this.next;
       this.set(this.stored);
     },
-  }));
+  };
+  Alpine.store("theme", theme);
 
-  /** Sidebar scroll offset, remembered for the session so the nav stays put across pages. */
   /**
-   * Chapter pages: remember where the reader got to, so the home page can
-   * offer to send them back. The paragraph nearest the top of the viewport is
-   * taken to be the one being read; scrolling saves on a short debounce.
+   * The sidebar as a drawer, below the mobile breakpoint. Escape closes it,
+   * and the page behind it does not scroll while it is open.
    */
-  Alpine.data("readingPosition", () => ({
-    saved: Alpine.$persist(null as Reading | null).as("leviathan:reading"),
-    timer: undefined as number | undefined,
-    init() {
-      const { id, label } = (this.$el as HTMLElement).dataset as { id: string; label: string };
-      this.record(id, label);
-      const later = () => {
-        window.clearTimeout(this.timer);
-        this.timer = window.setTimeout(() => this.record(id, label), 400);
-      };
-      window.addEventListener("scroll", later, { passive: true });
-      window.addEventListener("pagehide", () => this.record(id, label));
+  Alpine.data("navDrawer", () => ({
+    open: false,
+    toggle() {
+      this.open = !this.open;
+      document.documentElement.style.overflow = this.open ? "hidden" : "";
     },
-    /** The last paragraph whose top has passed the reading line. */
-    paragraph(): string | null {
-      let found: string | null = null;
-      for (const p of document.querySelectorAll<HTMLElement>(".prose-chapter p[id^='p']")) {
-        if (p.getBoundingClientRect().top > 140) break;
-        found = p.id;
-      }
-      return found;
-    },
-    record(id: string, label: string) {
-      this.saved = { id, label, para: this.paragraph(), at: Date.now() };
-    },
-  }));
-
-  /** Home page: a link back to wherever `readingPosition` last left the reader. */
-  Alpine.data("resumeReading", () => ({
-    saved: Alpine.$persist(null as Reading | null).as("leviathan:reading"),
-    get href() {
-      if (!this.saved) return "/chapters/the-epistle-dedicatory/";
-      return `/chapters/${this.saved.id}/${this.saved.para ? `#${this.saved.para}` : ""}`;
-    },
-    get label() {
-      return this.saved ? `Resume ${this.saved.label}` : "";
+    close() {
+      if (!this.open) return;
+      this.open = false;
+      document.documentElement.style.overflow = "";
     },
   }));
 

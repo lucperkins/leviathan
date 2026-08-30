@@ -776,16 +776,6 @@ a.external::after {
   font-weight: 600;
   letter-spacing: -0.01em;
 }
-.toc-part__count {
-  margin-left: auto;
-  font-size: 0.7rem;
-  letter-spacing: 0.01em;
-  color: var(--color-stone-400);
-  white-space: nowrap;
-}
-.dark .toc-part__count {
-  color: var(--color-stone-600);
-}
 
 .toc-list {
   margin-top: 0.75rem;
@@ -1593,4 +1583,49 @@ a.external::after {
 .dark .prose-chapter a.external:hover,
 .dark .prose-chapter a.external:focus-visible {
   text-decoration-color: var(--color-stone-100);
+}
+
+/* Below the mobile breakpoint the reading column reaches the edge of the
+   screen, so the paragraph number has nowhere to sit outside it. It goes on
+   its own line above the paragraph instead. */
+@media (max-width: 47.99rem) {
+  .para-num {
+    position: static;
+    display: block;
+    margin: 0 0 0.2rem;
+  }
+  /* One tap target rather than a hover trail on a screen with no pointer. */
+  .prose-chapter .pullquote {
+    margin: 2rem 0;
+    padding: 1.25rem 0;
+  }
+  .prose-chapter .pullquote p {
+    font-size: 1.3rem;
+  }
+}
+
+/* The sidebar as a drawer below the mobile breakpoint. The transform is here
+   rather than in a Tailwind utility so that it applies at first paint: bound
+   with x-bind:class it would arrive only once Alpine had booted, and the
+   drawer would be visible on load and then slide away. */
+.nav-drawer {
+  transform: translateX(-100%);
+}
+.nav-drawer.is-open {
+  transform: none;
+}
+@media (min-width: 48rem) {
+  .nav-drawer {
+    transform: none;
+  }
+}
+
+/* The sidebar and the mobile navbar are one piece of chrome and share a
+   background. In dark mode it sits between stone-900 and the page's stone-950:
+   distinct from the page without being a lighter panel on top of it. */
+.site-chrome {
+  background-color: var(--color-stone-100);
+}
+.dark .site-chrome {
+  background-color: oklch(18.5% 0.005 52);
 }

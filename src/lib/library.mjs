@@ -154,6 +154,15 @@ export const SHELVES = [
         note: "What his positions looked like beside those of the people actually arguing in England at the time, which is less singular than the standard picture suggests.",
       },
       {
+        id: "lilla-stillborn-god",
+        title: "The Stillborn God",
+        href: "https://openlibrary.org/works/OL4295883W",
+        author: "Mark Lilla",
+        authorHref: `${W}Mark_Lilla`,
+        year: "2007",
+        note: "That Hobbes performed the decisive break in Western thought — the Great Separation — by explaining religion anthropologically, from fear and ignorance of causes, and so making it possible to argue about politics without arguing about God. The rest of the book is about the attempts to put God back, and why they failed. Chapter 12 of Leviathan is the hinge of the whole account.",
+      },
+      {
         id: "malcolm-aspects",
         title: "Aspects of Hobbes",
         href: "https://openlibrary.org/works/OL1734099W",

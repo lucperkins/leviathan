@@ -15,7 +15,7 @@ const parts = PARTS.map((title) => ({
 })).filter((p) => p.chapters.length);
 ---
 
-<Layout title="Contents" wide>
+<Layout title="Contents">
   <header class="mb-12 border-b border-stone-200 pb-8 text-center dark:border-stone-800">
     <p class="eyebrow">The book</p>
     <h1 class="mt-3 font-serif text-4xl font-semibold tracking-tight">Contents</h1>
@@ -44,9 +44,6 @@ const parts = PARTS.map((title) => ({
           <header class="toc-part">
             <span class="toc-part__numeral">{part.numeral}</span>
             <h2 class="toc-part__title">{part.title}</h2>
-            <span class="toc-part__count">
-              {part.chapters.length} chapters
-            </span>
           </header>
           <ol class="toc-list">
             {part.chapters.map((c) => (

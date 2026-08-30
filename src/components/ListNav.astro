@@ -30,7 +30,7 @@ const sorted = [...items].sort((a, b) => key(a).localeCompare(key(b)));
               href={indexHref}
               aria-current={currentPath === indexHref ? "page" : undefined}
               class:list={[
-                "block rounded py-1 pr-7 pl-2 leading-snug transition-colors",
+                "block rounded py-1 pr-3 pl-3 leading-snug transition-colors",
                 currentPath === indexHref
                   ? "bg-stone-800 text-stone-50 dark:bg-stone-100 dark:text-stone-900"
                   : "text-stone-500 hover:bg-stone-200 dark:text-stone-400 dark:hover:bg-stone-800",
@@ -51,7 +51,7 @@ const sorted = [...items].sort((a, b) => key(a).localeCompare(key(b)));
                 href={href}
                 aria-current={active ? "page" : undefined}
                 class:list={[
-                  "block rounded py-1 pr-7 pl-2 leading-snug transition-colors",
+                  "block rounded py-1 pr-3 pl-3 leading-snug transition-colors",
                   active
                       ? "bg-stone-800 text-stone-50 dark:bg-stone-100 dark:text-stone-900"
                       : "text-stone-700 hover:bg-stone-200 dark:text-stone-300 dark:hover:bg-stone-800",
