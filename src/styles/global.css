@@ -4,6 +4,15 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
+ * Capability rather than size. Every phone and tablet answers `hover: none`
+ * and every desktop does not, whatever the window is doing, which is a
+ * sounder test than a width for anything that depends on there being a
+ * pointer — the hover-to-trace diagrams on /definitions/, say.
+ */
+@custom-variant touch (@media (hover: none));
+@custom-variant landscape (@media (orientation: landscape));
+
+/*
  * Sepia: the warm paper setting e-readers offer, and the third state of the
  * theme toggle. Every colour on the site is a stone shade, and Tailwind v4
  * compiles those to var(--color-stone-N), so retinting the ramp here turns the
@@ -35,7 +44,16 @@
   display: none !important;
 }
 
+/*
+ * `desk` is the point at which the sidebar can sit beside the reading column
+ * rather than slide over it. It is 60rem rather than Tailwind's md (48rem)
+ * because an iPad in portrait is 820px: at md it fell on the desktop side and
+ * gave a quarter of a narrow screen to navigation. Everything else keeps the
+ * default scale.
+ */
 @theme {
+  --breakpoint-desk: 60rem;
+
   --font-serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
 
   /* One hover duration everywhere: Tailwind's transition-* utilities read
@@ -1204,7 +1222,6 @@ a.external::after {
 }
 .section-index__summary {
   margin-top: 0.4rem;
-  max-width: 62ch;
   font-family: var(--font-serif);
   font-size: 1rem;
   line-height: 1.55;
@@ -1630,7 +1647,7 @@ a.external::after {
 .nav-drawer.is-open {
   transform: none;
 }
-@media (min-width: 48rem) {
+@media (min-width: 60rem) {
   .nav-drawer {
     transform: none;
   }

@@ -65,7 +65,7 @@ const appendix = [
     <div class="flex min-h-screen" x-data="navDrawer" x-on:keydown.escape.window="close()">
       {/* Below md the sidebar is a drawer, and this bar is the only chrome. */}
       <header
-        class="site-chrome fixed inset-x-0 top-0 z-30 flex items-center justify-between border-b border-stone-200 px-4 py-2.5 md:hidden dark:border-stone-800"
+        class="site-chrome fixed inset-x-0 top-0 z-30 flex items-center justify-between border-b border-stone-200 px-4 py-2.5 desk:hidden dark:border-stone-800"
       >
         <a href="/" class="font-serif text-lg font-semibold tracking-tight">Leviathan</a>
         <div class="flex items-center gap-1">
@@ -95,7 +95,7 @@ const appendix = [
         x-show="open"
         x-on:click="close()"
         x-cloak
-        class="fixed inset-0 z-30 bg-stone-950/40 md:hidden"
+        class="fixed inset-0 z-30 bg-stone-950/40 desk:hidden"
         aria-hidden="true"
       >
       </div>
@@ -103,7 +103,7 @@ const appendix = [
       <aside
         id="site-nav"
         x-bind:class="open && 'is-open'"
-        class="site-chrome nav-drawer fixed inset-y-0 left-0 z-40 flex h-screen w-80 max-w-[85vw] shrink-0 flex-col border-r border-stone-200 transition-transform duration-200 md:sticky md:top-0 md:w-64 md:max-w-none xl:w-80 dark:border-stone-800"
+        class="site-chrome nav-drawer fixed inset-y-0 left-0 z-40 flex h-screen w-80 max-w-[85vw] shrink-0 flex-col border-r border-stone-200 transition-transform duration-200 desk:sticky desk:top-0 desk:w-64 desk:max-w-none xl:w-80 dark:border-stone-800"
       >
         <div class="flex-1 overflow-y-auto py-6 pr-2 pl-3" data-nav-scroll x-data="navScroll" x-on:scroll.passive="save()">
           {/* px-3 lines the title up with the nav link text, which sits inside the same padding. */}
@@ -120,7 +120,7 @@ const appendix = [
             <ListNav sectionId="appendix" title="Appendix" basePath="" items={appendix} currentPath={currentPath} indexHref="/appendix/" indexTitle="Overview" />
           </div>
         </div>
-        <div class="hidden border-t border-stone-200 px-4 py-3 md:block dark:border-stone-800">
+        <div class="hidden border-t border-stone-200 px-4 py-3 desk:block dark:border-stone-800">
           <ThemeToggle />
         </div>
 
@@ -149,7 +149,7 @@ const appendix = [
           } catch {}
         </script>
       </aside>
-      <main class="min-w-0 flex-1 px-5 pt-20 pb-24 md:px-12 md:pt-12 md:pb-32">
+      <main class="min-w-0 flex-1 px-5 pt-20 pb-24 md:px-8 desk:px-12 desk:pt-12 desk:pb-32">
         <div class:list={["mx-auto", wide ? "max-w-5xl" : "max-w-2xl"]}>
           {!isHome && <BackButton />}
           <slot />

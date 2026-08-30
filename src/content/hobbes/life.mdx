@@ -8,12 +8,14 @@ imageCaption: "Thomas Hobbes in his early eighties, painted by John Michael Wrig
 imageCredit: "John Michael Wright, c. 1669–70. National Portrait Gallery, London, via Wikimedia Commons. Public domain."
 footnotes:
   - after: "gave birth to twins, himself and fear"
-    text: "The couplet is in [*Thomae Hobbes Malmesburiensis Vita carmine expressa*](https://openlibrary.org/works/OL216843W), written in 1672 when he was eighty-four and printed shortly before his death: *Atque metum tantum concepit tunc mea mater, ut pareret geminos, meque metumque simul* — my mother conceived such fear that she brought forth twins, myself and dread together. The English form everyone quotes, that fear and he were born twins, is a translator's phrase rather than Hobbes's own, and it appears nowhere in *Leviathan*."
+    text: "The couplet is in [*Thomae Hobbes Malmesburiensis Vita carmine expressa*](https://openlibrary.org/works/OL216843W), written in 1672 when he was eighty-four and printed shortly before his death: *Atque metum tantum concepit tunc mea mater, ut pareret geminos, meque metumque simul* — my mother conceived such fear that she brought forth twins, myself and dread together. The English form everyone quotes, that fear and he were born twins, is a translator's phrase rather than Hobbes's own, and it doesn't appear in *Leviathan*."
   - after: "submitting to Cromwell"
     text: "[**Oliver Cromwell**](https://en.wikipedia.org/wiki/Oliver_Cromwell) (1599-1658), the member for Cambridge who became the best soldier of the parliamentary armies, signed the King's death warrant, and ruled as Lord Protector from 1653 until his death. He was not yet head of state when Hobbes came home: the Engagement of 1650 had required adult men to promise loyalty to the Commonwealth as it was then established, without a King or House of Lords, and the argument of the Review and Conclusion, that protection is what obedience is owed for, was read as a licence to swear it. [Not among the people Hobbes names](/thinkers/)."
 ---
 
 import HobbesMap from "../../components/HobbesMap.astro";
+import Lightbox from "../../components/Lightbox.astro";
+import malmesbury from "../../assets/malmesbury-1829.jpg";
 
 Thomas Hobbes was born on 5 April 1588 at Westport, the parish adjoining
 Malmesbury in Wiltshire. The Spanish fleet was expected that summer, and in
@@ -44,6 +46,20 @@ curriculum was scholastic logic and Aristotelian physics, and the mature
 Hobbes wrote about that training with a contempt that never cooled: the whole
 attack on the universities in Part IV of *Leviathan* is, among other things,
 a settling of accounts with his own education.
+
+<figure>
+  <Lightbox
+    src={malmesbury}
+    alt="A nineteenth-century engraving of Malmesbury Abbey seen across the rooftops, with the town in the foreground."
+    caption="Malmesbury Abbey, engraved by John Charles Varrall in 1829. Hobbes was born and schooled in Westport, the parish immediately outside the town walls; his father was vicar there. No picture of the house survives, and the parish church he grew up beside was pulled down in the civil war."
+    widths={[480, 720, 1080]}
+    sizes="(min-width: 60rem) 42rem, 90vw"
+    class="w-full rounded border border-stone-200 shadow-[0_10px_24px_-20px_rgb(0_0_0/0.22)] dark:border-stone-800"
+  />
+  <figcaption class="mt-3 text-center text-xs text-stone-500 dark:text-stone-400">
+    John Charles Varrall, 1829. Yale Center for British Art, via Wikimedia Commons. CC0.
+  </figcaption>
+</figure>
 
 ### The Cavendish household
 

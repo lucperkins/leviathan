@@ -2,7 +2,9 @@
 /**
  * Landing page for a section of the site: a short account of what the section
  * is, then every entry in it with its summary, in the same order as the
- * sidebar. Takes plain data so it renders in Storybook.
+ * sidebar. Nothing here sets its own measure: the intro and the entries both
+ * fill the reading column, so a section landing page is the same width as the
+ * pages it lists. Takes plain data so it renders in Storybook.
  */
 import { inlineMarkdown } from "../lib/inline";
 
@@ -31,7 +33,7 @@ const { title, intro, entries, eyebrow } = Astro.props;
     )
   }
   <h1 class="mt-1 font-serif text-3xl font-semibold">{title}</h1>
-  <p class="mt-3 max-w-prose text-lg text-stone-600 dark:text-stone-400" set:html={inlineMarkdown(intro)} />
+  <p class="mt-3 text-lg text-stone-600 dark:text-stone-400" set:html={inlineMarkdown(intro)} />
 </header>
 
 <ul class="section-index">

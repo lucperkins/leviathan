@@ -275,7 +275,12 @@ Styling for all of this is plain CSS at the bottom of `global.css`
 
 ## Mobile
 
-Below `md` (48rem) the sidebar becomes a drawer. `Layout.astro` renders a
+Below `desk` (60rem) the sidebar becomes a drawer. That breakpoint is defined
+in `global.css` rather than reused from Tailwind's `md`, because an iPad in
+portrait is 820px and at `md` it fell on the desktop side, giving a quarter of
+a narrow screen to navigation. There is also a `touch` variant
+(`@media (hover: none)`) for anything that depends on there being a pointer,
+which is a sounder test than any width. `Layout.astro` renders a
 fixed navbar (`md:hidden`) carrying the title, a drawer toggle, and a theme
 toggle; the `<aside>` is `fixed … -translate-x-full` until the Alpine
 `navDrawer` component opens it, with a scrim behind and the document scroll
@@ -298,6 +303,21 @@ column reaches the screen edge.
     one column below `48rem`.
   - Check the lightbox dialog and the `/scripture/` reference rows, which
     wrap but have not been looked at on a small screen.
+
+- **Glossaries of the other languages.** Hobbes writes in English but argues
+  in Latin, quotes Greek, and drops Hebrew where the scripture needs it. Three
+  possible appendix pages, or one with sections:
+  - *Latin*: the tags that carry an argument — `Jus Naturale`, `Lex
+    Naturalis`, `Summum Bonum`, `Finis Ultimus`, `Bellum omnium contra omnes`
+    (which is De Cive, not Leviathan), `Nunc-stans`, `Creatur infundendo`,
+    `Salus Populi`, `Auctoritas non veritas facit legem` (Latin Leviathan
+    only), and the chapter titles' `De Cive` echoes.
+  - *Greek*: `Prosopon`, `Ecclesia`, `Daemon`, `Gehenna`, `Hades`, the
+    school names (`Academia`, `Stoa`, `Peripatetics`), `Eucharist`.
+  - *Hebrew and other*: `Leviathan` and `Behemoth` themselves, `Sheol`,
+    `Cherubim`, `Messiah`, and the transliterations in Part III.
+  Each entry wants the word, what it means, and the paragraph where he uses
+  it — the same shape as `/scripture/`, and buildable from the text.
 
 - **The book's impact, and the main lines of interpretation.** Nothing on the
   site yet covers what happened to *Leviathan* after 1651 or how it has been
