@@ -18,7 +18,25 @@ text to explanatory pages. Static site, no backend.
 - **process-compose.yaml** runs `install` → then `site` (port 3000) and
   `storybook` (port 6006) in parallel. Site must stay on 3000.
 
-Commands: `bun run build`, `bun run build-storybook`, `process-compose up`.
+Commands: `bun run build`, `bun run build-storybook`, `bun run check`
+(`astro check`; needs TypeScript 6.x), `process-compose up`.
+
+## Deployment
+
+- GitHub: `lucperkins/leviathan` (public). Netlify site
+  `hobbes-leviathan-80f7c159` (project id in `.netlify/state.json`, which is
+  gitignored) on the `lucperkins` Starter team; `netlify-cli` is in the dev
+  shell and the machine has `NETLIFY_AUTH_TOKEN`.
+- `.github/workflows/deploy.yml` builds and deploys on every push to `main`
+  (production) and on PRs (preview alias); it uses the `NETLIFY_AUTH_TOKEN`
+  and `NETLIFY_SITE_ID` repo secrets. `netlify deploy --build --prod` from
+  the linked checkout also works for a manual deploy.
+- The site is behind HTTP Basic Auth implemented as a Netlify edge function
+  (`netlify/edge-functions/password.ts`, declared in `netlify.toml`). Any
+  username; the password is the `SITE_PASSWORD` Netlify env var (set with
+  `netlify env:set`, never committed). Netlify's native site password is a
+  Pro-plan feature and the API rejects it on Starter, hence the function.
+
 
 **Start and stop the dev servers only through process-compose** — never run
 `bun run dev` / `bun run storybook` / `astro dev stop` / `pkill` directly.
@@ -128,6 +146,12 @@ Styling for all of this is plain CSS at the bottom of `global.css`
   current page is always forced open.
 - Active link = `currentPath` (normalised with trailing slash) equals the
   item href. Pages do not pass a `current` prop.
+- `Lightbox` wraps an `astro:assets` image in a button that opens the
+  full-size file in a native `<dialog>` (Alpine `lightbox`); used for the
+  frontispiece on the home page.
+- Favicon: `public/favicon.svg` (sword and crozier crossed under a crown,
+  after the frontispiece) plus PNG renders `favicon-32.png` and
+  `apple-touch-icon.png` made with sharp.
 - `BackButton` sits at the top of every page except the home page: `history.back()` if
   the referrer is same-origin, otherwise a link to `/`.
 - Every chapter, concept, author, and theme page ends with `PrevNext` (chapters by

@@ -28,6 +28,8 @@ const themes = (await getCollection("themes")).map((t) => ({ id: t.id, title: t.
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>{title} · Leviathan</title>
     {/* Pre-paint: apply the persisted theme (or system preference) so there is no flash. Alpine `theme` owns it after boot. */}
     <script is:inline>

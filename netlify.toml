@@ -1,0 +1,12 @@
+[build]
+  command = "bun run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+# Whole-site HTTP Basic Auth; the password lives in the SITE_PASSWORD env var
+# (set in the Netlify UI or `netlify env:set`), never in the repo.
+[[edge_functions]]
+  path = "/*"
+  function = "password"

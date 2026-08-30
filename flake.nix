@@ -15,7 +15,7 @@
     {
       devShells = forAllSystems ({ pkgs }: {
         default = pkgs.mkShellNoCC {
-          packages = with pkgs; [ bun process-compose ];
+          packages = with pkgs; [ bun process-compose netlify-cli ];
         };
       });
     };

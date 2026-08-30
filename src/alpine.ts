@@ -159,6 +159,21 @@ export default (Alpine: Alpine) => {
     },
   }));
 
+  /** Image lightbox: a native <dialog> opened with showModal(); Escape, backdrop, and the button close it. */
+  Alpine.data("lightbox", () => ({
+    open() {
+      (this.$refs.dialog as HTMLDialogElement).showModal();
+      document.documentElement.style.overflow = "hidden";
+    },
+    close() {
+      (this.$refs.dialog as HTMLDialogElement).close();
+    },
+    /** Runs on the dialog's native close event (also fired by Escape). */
+    closed() {
+      document.documentElement.style.overflow = "";
+    },
+  }));
+
   /**
    * On a chapter page reached via a quotation link (?hl=<opening words>#pN),
    * wrap those words in <mark> inside paragraph N and scroll them into view.
