@@ -1,0 +1,49 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Glossary from "../components/Glossary.astro";
+// @ts-ignore -- plain-JS data, shares the chapter paragraph numbering
+import { greekIndex } from "../lib/greek.mjs";
+
+const { groups, total, absent } = greekIndex();
+---
+
+<Layout title="Greek glossary">
+  <header class="mb-8">
+    <p class="eyebrow">Appendix</p>
+    <h1 class="mt-1 font-serif text-3xl font-semibold">Greek glossary</h1>
+    <p class="mt-3 max-w-prose text-lg text-stone-600 dark:text-stone-400">
+      {total} words from the Greek — and, at the end, from the Hebrew and Aramaic — with what they mean and the
+      paragraphs where Hobbes uses them. There is more Greek here than
+      <a href="/latin/" class="chapter-link">Latin</a>, and it does a different job: where the Latin is mostly
+      terms of art, the Greek is almost all etymology, produced to show that a word the church has made into a
+      mystery began as an ordinary word for an ordinary thing.
+    </p>
+  </header>
+
+  <Glossary
+    groups={groups}
+    absent={absent}
+    absentIntro="Two Greek phrases a reader arrives expecting, and one Hebrew name that belongs to a different book."
+  />
+
+  <section class="mt-16 max-w-prose">
+    <h2 id="on-the-glossary" class="section-heading">
+      <a href="#on-the-glossary" class="heading-anchor">On the glossary</a>
+    </h2>
+    <div class="prose-chapter mt-4 font-serif text-lg leading-relaxed">
+      <p>
+        The 1651 text has no Greek type in it. Every word is transliterated into roman letters, unaccented, with
+        the endings anglicised as often as not — <em>Pisteno Eis</em> for πιστεύω εἰς, <em>proestotes</em> for
+        προεστῶτες. The headwords here keep the printer's spelling rather than correcting him, since that is what
+        a reader will meet on the page, and the entries are located in the chapter text at build time, so they
+        stay in step with it.
+      </p>
+      <p>
+        The Hebrew and Aramaic are folded in at the end rather than given a page. There is not much of it, and
+        almost all of it arrives second hand: Hobbes quotes the Septuagint's Greek or Jerome's Latin for the
+        Hebrew words he cares about, which is itself part of his argument that no priesthood holds a key the rest
+        of us lack.
+      </p>
+    </div>
+  </section>
+</Layout>

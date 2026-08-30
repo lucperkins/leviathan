@@ -181,11 +181,16 @@ Styling for all of this is plain CSS at the bottom of `global.css`
   someone will fail loudly there.
 - `/scripture/` links verses to Wikisource's King James text (public domain,
   with `#Chapter_N` and `#C:V` anchors), not to a commercial Bible site.
-- `/latin/` glosses the Latin, from `src/lib/latin.mjs`: a headword, a literal
-  translation, a paragraph of gloss, and the places Hobbes uses it, located in
-  the chapter text at build time the way the quote sources are. A term found
-  nowhere warns. `find` is a locator and may be narrower than the headword; the
-  page ends with three famous tags that are not in the book at all.
+- `/latin/` and `/greek/` gloss the foreign vocabulary, from `src/lib/latin.mjs`
+  and `src/lib/greek.mjs`: a headword, a literal translation, a paragraph of
+  gloss, and the places Hobbes uses it. `src/lib/glossary.mjs` locates those in
+  the chapter text at build time the way the quote sources are, and warns for a
+  term found nowhere; `Glossary.astro` renders both. An entry's `find` is a
+  locator and may be narrower than the headword, as with "Circumscriptive"
+  where "Definitive" alone would also catch Chapter 42's "sentence definitive".
+  Each page ends with the words a reader expects and will not find. The Hebrew
+  and Aramaic are a group at the foot of `/greek/` rather than a page: there is
+  little of it and it mostly arrives through the Septuagint.
 - `/ancestor/` lists the disciplines that claim Hobbes as a founder — social
   science, legal positivism, AI, game theory — each with the passage it rests
   on, so the claim can be weighed against the text. Data in
@@ -316,7 +321,8 @@ column reaches the screen edge.
     wrap but have not been looked at on a small screen.
 
 - **Glossaries of the other languages.** Hobbes writes in English but argues
-  in Latin, quotes Greek, and drops Hebrew where the scripture needs it.
+  in Latin, quotes Greek, and drops Hebrew where the scripture needs it. Done,
+  except that nothing here indexes the chapter titles' echoes of *De Cive*.
   - *Latin*: done, at `/latin/`. 28 entries in `src/lib/latin.mjs`, grouped by
     what the word is doing, plus three famous tags that are not in the book
     (`Bellum omnium contra omnes` is De Cive, `Auctoritas non veritas facit
@@ -325,15 +331,14 @@ column reaches the screen edge.
     build time, so a phrase that is not there warns rather than lies; `find`
     may be narrower than the headword where a word has a second sense
     ("sentence definitive" in Chapter 42).
-  - *Greek*: `Prosopon`, `Kurios`, `Ecclesia`, `Daemon`, `Gehenna`, `Hades`,
-    `Antiperistasis`, the school names (`Academia`, `Lycaeum`, `Stoa`,
-    `Peripatetics`), `Eucharist`. Transliterated, unaccented, and with the
-    printer guessing at the endings, which is why they are not in `/latin/`.
-  - *Hebrew and other*: `Leviathan` and `Behemoth` themselves, `Sheol`,
-    `Cherubim`, `Messiah`, and the transliterations in Part III.
-  Each entry wants the word, what it means, and the paragraph where he uses
-  it — the same shape as `/scripture/` and `/latin/`, and buildable from the
-  text.
+  - *Greek*: done, at `/greek/`. 37 entries, five groups of Greek and one of
+    Hebrew and Aramaic at the end. More than the Latin, and mostly etymology
+    rather than terms of art.
+  - *French*: no. Two words in one sentence of Chapter 4 (`Parole`, `Verbe`,
+    illustrating that Latin and French differ less than the schools pretend)
+    and one Spanish (`Varones`, Chapter 10). Not a page.
+  Both glossaries share `src/lib/glossary.mjs` and `Glossary.astro`, so a third
+  list would be data and a thin page.
 
 - **The book's impact, and the main lines of interpretation.** Nothing on the
   site yet covers what happened to *Leviathan* after 1651 or how it has been

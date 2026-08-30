@@ -747,67 +747,67 @@ a.external::after {
   color: var(--color-stone-600);
 }
 
-/* Appendix: the glossary of Latin. Headword and literal translation on one
+/* Appendix: the language glossaries. Headword and literal translation on one
    line, the gloss under it, and the places Hobbes uses it under that. */
-.latin-term {
+.gloss-term {
   padding: 1rem 0.1rem;
 }
-.latin-term__head {
+.gloss-term__head {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.1rem 0.75rem;
 }
-.latin-term__word {
+.gloss-term__word {
   font-family: var(--font-serif);
   font-size: 1.125rem;
   color: var(--color-stone-900);
   text-decoration: none;
 }
-.dark .latin-term__word {
+.dark .gloss-term__word {
   color: var(--color-stone-100);
 }
-.latin-term__word:hover,
-.latin-term__word:focus-visible {
+.gloss-term__word:hover,
+.gloss-term__word:focus-visible {
   text-decoration: underline;
   text-decoration-color: var(--color-stone-400);
   text-underline-offset: 4px;
 }
-.latin-term__literal {
+.gloss-term__literal {
   font-size: 0.875rem;
   font-style: italic;
   color: var(--color-stone-500);
 }
-.latin-term__body {
+.gloss-term__body {
   margin: 0;
 }
-.latin-term__gloss {
+.gloss-term__gloss {
   margin-top: 0.35rem;
   max-width: 62ch;
   line-height: 1.6;
   color: var(--color-stone-700);
 }
-.dark .latin-term__gloss {
+.dark .gloss-term__gloss {
   color: var(--color-stone-300);
 }
-.latin-term__gloss a {
+.gloss-term__gloss a {
   color: inherit;
   text-decoration: underline;
   text-decoration-color: var(--color-stone-300);
   text-underline-offset: 3px;
 }
-.latin-term__gloss a:hover,
-.latin-term__gloss a:focus-visible {
+.gloss-term__gloss a:hover,
+.gloss-term__gloss a:focus-visible {
   text-decoration-color: var(--color-stone-900);
 }
-.dark .latin-term__gloss a {
+.dark .gloss-term__gloss a {
   text-decoration-color: var(--color-stone-600);
 }
-.dark .latin-term__gloss a:hover,
-.dark .latin-term__gloss a:focus-visible {
+.dark .gloss-term__gloss a:hover,
+.dark .gloss-term__gloss a:focus-visible {
   text-decoration-color: var(--color-stone-100);
 }
-.latin-term__cites {
+.gloss-term__cites {
   display: flex;
   flex-wrap: wrap;
   gap: 0.15rem 0.9rem;
@@ -816,17 +816,17 @@ a.external::after {
   font-variant-numeric: tabular-nums;
   color: var(--color-stone-500);
 }
-.latin-term__cites a {
+.gloss-term__cites a {
   color: inherit;
   text-decoration: none;
   white-space: nowrap;
 }
-.latin-term__cites a:hover,
-.latin-term__cites a:focus-visible {
+.gloss-term__cites a:hover,
+.gloss-term__cites a:focus-visible {
   color: var(--color-stone-900);
 }
-.dark .latin-term__cites a:hover,
-.dark .latin-term__cites a:focus-visible {
+.dark .gloss-term__cites a:hover,
+.dark .gloss-term__cites a:focus-visible {
   color: var(--color-stone-100);
 }
 

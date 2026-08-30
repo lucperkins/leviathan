@@ -1,9 +1,4 @@
-import { readdirSync, readFileSync } from "node:fs";
-import { join } from "node:path";
-import matter from "gray-matter";
-import { chapterParagraphs } from "../plugins/rehype-quote-sources.mjs";
-
-const CHAPTER_DIR = "src/content/chapters";
+import { glossaryIndex } from "./glossary.mjs";
 
 /**
  * The Latin in *Leviathan*, glossed. Hobbes writes in English on purpose — the
@@ -12,12 +7,9 @@ const CHAPTER_DIR = "src/content/chapters";
  * the Vulgate he is correcting, or a piece of jargon he has quoted in order to
  * take it apart.
  *
- * `find` is what to look for in the chapter text, matched whole-word and case
- * insensitively, and is a locator rather than a headword: it can be narrower
- * than the entry when a word has another sense elsewhere in the book. The page
- * shows the chapters and paragraphs it turns up, so an entry for a phrase that
- * is not in the book fails loudly rather than quietly.
- * Anything Hobbes leaves in Greek belongs to a different list.
+ * `find` is what `glossary.mjs` looks for in the chapter text, so an entry for
+ * a phrase that is not in the book fails loudly rather than quietly. Anything
+ * Hobbes leaves in Greek is in greek.mjs.
  */
 export const GROUPS = [
   {
@@ -306,52 +298,7 @@ export const ABSENT = [
   },
 ];
 
-const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-/** Chapters in reading order, with their paragraphs as written and numbered as the pages number them. */
-function chapters() {
-  return readdirSync(CHAPTER_DIR)
-    .filter((f) => f.endsWith(".mdx"))
-    .map((f) => {
-      const { data, content } = matter(readFileSync(join(CHAPTER_DIR, f), "utf8"));
-      return {
-        id: f.replace(/\.mdx$/, ""),
-        number: data.number,
-        title: data.title,
-        part: data.part,
-        numbered: data.numbered !== false,
-        paras: chapterParagraphs(content),
-      };
-    })
-    .sort((a, b) => a.number - b.number);
-}
-
-/**
- * Every term with the places Hobbes uses it. A term found nowhere is a mistake
- * in the list above rather than a fact about the book, so it warns at build
- * time in the same way the index of thinkers does.
- */
+/** Every term with the chapters and paragraphs where Hobbes uses it. */
 export function latinIndex() {
-  const book = chapters();
-  const placed = TERMS.map((t) => {
-    const res = t.find.map((f) => new RegExp(`(^|[^A-Za-z])${escape(f)}([^A-Za-z]|$)`, "i"));
-    const cited = [];
-    for (const ch of book) {
-      ch.paras.forEach((p, i) => {
-        if (!res.some((re) => re.test(p))) return;
-        cited.push({
-          id: ch.id,
-          title: ch.title,
-          number: ch.number,
-          part: ch.part,
-          para: ch.numbered ? i + 1 : null,
-        });
-      });
-    }
-    if (cited.length === 0) console.warn(`[latin] "${t.term}" is not in the chapter text`);
-    return { ...t, cited };
-  });
-
-  const groups = GROUPS.map((g) => ({ ...g, terms: placed.filter((t) => t.group === g.id) }));
-  return { groups, total: placed.length, absent: ABSENT };
+  return glossaryIndex({ groups: GROUPS, terms: TERMS, absent: ABSENT, label: "latin" });
 }
