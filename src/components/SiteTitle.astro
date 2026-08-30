@@ -1,0 +1,11 @@
+---
+interface Props {
+  href?: string;
+}
+const { href = "/" } = Astro.props;
+---
+
+<a href={href} class="block">
+  <span class="font-serif text-2xl font-semibold tracking-tight">Leviathan</span>
+  <span class="block text-xs text-stone-500 dark:text-stone-400">Thomas Hobbes, 1651</span>
+</a>

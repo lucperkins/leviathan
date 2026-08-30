@@ -1,0 +1,45 @@
+---
+import NavSection from "./NavSection.astro";
+
+interface Props {
+  /** NavSection id used to persist open/closed state. */
+  sectionId: string;
+  title: string;
+  /** URL prefix, e.g. "/concepts". */
+  basePath: string;
+  items: { id: string; title: string }[];
+  currentPath?: string;
+}
+const { sectionId, title, basePath, items, currentPath } = Astro.props;
+
+const sorted = [...items].sort((a, b) => a.title.localeCompare(b.title));
+---
+
+<nav aria-label={title} class="text-sm">
+  <NavSection id={sectionId} title={title}>
+    <ul class="space-y-1">
+      {
+        sorted.map((item) => {
+          const href = `${basePath}/${item.id}/`;
+          const active = currentPath === href;
+          return (
+            <li>
+              <a
+                href={href}
+                aria-current={active ? "page" : undefined}
+                class:list={[
+                  "block rounded py-1 pr-7 pl-2 leading-snug transition-colors",
+                  active
+                      ? "bg-stone-800 text-stone-50 dark:bg-stone-100 dark:text-stone-900"
+                      : "text-stone-700 hover:bg-stone-200 dark:text-stone-300 dark:hover:bg-stone-800",
+                ]}
+              >
+                {item.title}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </NavSection>
+</nav>

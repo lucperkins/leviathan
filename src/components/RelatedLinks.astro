@@ -1,0 +1,30 @@
+---
+/** A small "see also" block: a heading and a list of links. Renders nothing when empty. */
+interface Props {
+  title: string;
+  items: { href: string; label: string }[];
+}
+const { title, items } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <aside class="mt-12 border-t border-stone-200 pt-6 dark:border-stone-800">
+      <h2 class="mb-3 text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">
+        {title}
+      </h2>
+      <ul class="space-y-1 text-sm">
+        {items.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="text-stone-700 underline decoration-stone-300 underline-offset-4 hover:decoration-stone-700 dark:text-stone-300 dark:decoration-stone-700 dark:hover:decoration-stone-300"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </aside>
+  )
+}

@@ -1,0 +1,439 @@
+@import "tailwindcss";
+
+/* Class-based dark mode: `.dark` on <html>, toggled by the ThemeToggle component. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Alpine: hide elements until it has booted. */
+[x-cloak] {
+  display: none !important;
+}
+
+@theme {
+  --font-serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+
+  /* One hover duration everywhere: Tailwind's transition-* utilities read
+     these, and the hand-written styles below reference them too. */
+  --default-transition-duration: 180ms;
+  --default-transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Shared hover transition for hand-written interactive styles. */
+concept-ref,
+.heading-anchor,
+.heading-anchor::after,
+.quote-link,
+.quote-source__link,
+.concept-tip__link,
+.prose-chapter mark.quote-hl {
+  transition-property: color, background-color, text-decoration-color, opacity;
+  transition-duration: var(--default-transition-duration);
+  transition-timing-function: var(--default-transition-timing-function);
+}
+
+.prose-chapter p + p {
+  margin-top: 1.25rem;
+}
+
+.prose-chapter h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-stone-500);
+}
+.prose-chapter h3 + p {
+  margin-top: 0;
+}
+
+.prose-chapter blockquote {
+  margin: 1.25rem 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--color-stone-300);
+  color: var(--color-stone-600);
+}
+.prose-chapter em {
+  font-style: italic;
+}
+
+/* Concept references in chapter text */
+concept-ref {
+  position: relative;
+  cursor: help;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--color-stone-400);
+  text-underline-offset: 0.2em;
+  outline: none;
+}
+concept-ref:hover,
+concept-ref:focus-visible {
+  text-decoration-color: var(--color-stone-800);
+  text-decoration-style: solid;
+}
+concept-ref:focus-visible {
+  border-radius: 2px;
+  box-shadow: 0 0 0 2px var(--color-stone-400);
+}
+
+.concept-tip {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  z-index: 20;
+  width: 20rem;
+  max-width: calc(100vw - 2rem);
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--color-stone-200);
+  border-radius: 0.5rem;
+  background: white;
+  box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.25);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--color-stone-700);
+  cursor: auto;
+  text-decoration: none;
+  animation: concept-tip-in var(--default-transition-duration) var(--default-transition-timing-function);
+}
+@keyframes concept-tip-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.25rem);
+  }
+}
+.concept-tip--above {
+  top: auto;
+  bottom: calc(100% + 0.4rem);
+}
+.concept-tip__title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-stone-900);
+}
+.concept-tip__summary {
+  margin-top: 0.25rem;
+}
+.concept-tip__link {
+  display: inline-block;
+  margin-top: 1.25rem;
+  font-weight: 500;
+  color: var(--color-stone-900);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--color-stone-300);
+}
+.concept-tip__link:hover {
+  text-decoration-color: var(--color-stone-900);
+}
+
+/* Linkable headings on concept pages */
+.prose-chapter h3 {
+  scroll-margin-top: 2rem;
+}
+.heading-anchor {
+  color: inherit;
+  text-decoration: none;
+}
+.heading-anchor::after {
+  content: " #";
+  opacity: 0;
+  color: var(--color-stone-400);
+}
+.heading-anchor:hover,
+.heading-anchor:focus-visible {
+  color: var(--color-stone-900);
+}
+.heading-anchor:hover::after,
+.heading-anchor:focus-visible::after {
+  opacity: 1;
+}
+
+.concept-tip__kind {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-stone-400);
+}
+concept-ref[data-kind="author"] {
+  text-decoration-style: dashed;
+}
+
+.prose-chapter ul,
+.prose-chapter ol {
+  margin: 1.25rem 0 1.25rem 1.25rem;
+}
+.prose-chapter ul {
+  list-style: disc;
+}
+.prose-chapter ol {
+  list-style: decimal;
+}
+.prose-chapter li + li {
+  margin-top: 0.5rem;
+}
+.prose-chapter li::marker {
+  color: var(--color-stone-400);
+}
+
+/* Quotation sources on concept and author pages */
+.quote-source {
+  margin-top: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--color-stone-500);
+}
+.quote-source__link,
+.quote-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.quote-source__link:hover,
+.quote-link:hover {
+  color: var(--color-stone-900);
+  text-decoration-color: var(--color-stone-900);
+}
+
+/* Paragraph targets in chapter text */
+.prose-chapter p {
+  scroll-margin-top: 2rem;
+}
+.prose-chapter mark.quote-hl {
+  background: var(--color-amber-200);
+  color: inherit;
+  cursor: pointer;
+  padding: 0.05em 0;
+  box-decoration-break: clone;
+  animation: quote-hl-in 600ms ease-out;
+}
+@keyframes quote-hl-in {
+  from {
+    background: var(--color-amber-400);
+  }
+}
+
+
+/* ---------- Dark theme overrides for the hand-written styles above ---------- */
+.dark {
+  color-scheme: dark;
+}
+.dark .prose-chapter h3 {
+  color: var(--color-stone-300);
+}
+.dark .prose-chapter blockquote {
+  border-left-color: var(--color-stone-600);
+  color: var(--color-stone-300);
+}
+.dark .prose-chapter li::marker {
+  color: var(--color-stone-600);
+}
+.dark concept-ref {
+  text-decoration-color: var(--color-stone-600);
+}
+.dark concept-ref:hover,
+.dark concept-ref:focus-visible {
+  text-decoration-color: var(--color-stone-200);
+}
+.dark concept-ref:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-stone-600);
+}
+.dark .concept-tip {
+  border-color: var(--color-stone-700);
+  background: var(--color-stone-900);
+  color: var(--color-stone-300);
+  box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.7);
+}
+.dark .concept-tip__kind {
+  color: var(--color-stone-500);
+}
+.dark .concept-tip__title {
+  color: var(--color-stone-100);
+}
+.dark .concept-tip__link {
+  color: var(--color-stone-100);
+  text-decoration-color: var(--color-stone-600);
+}
+.dark .concept-tip__link:hover {
+  text-decoration-color: var(--color-stone-100);
+}
+.dark .heading-anchor::after {
+  color: var(--color-stone-600);
+}
+.dark .heading-anchor:hover,
+.dark .heading-anchor:focus-visible {
+  color: var(--color-stone-100);
+}
+.dark .quote-source {
+  color: var(--color-stone-400);
+}
+.dark .quote-source__link,
+.dark .quote-link {
+  text-decoration-color: var(--color-stone-700);
+}
+.dark .quote-source__link:hover,
+.dark .quote-link:hover {
+  color: var(--color-stone-100);
+  text-decoration-color: var(--color-stone-100);
+}
+.dark .prose-chapter mark.quote-hl {
+  background: var(--color-amber-900);
+  color: var(--color-amber-50);
+}
+.dark .prose-chapter mark.quote-hl {
+  animation-name: quote-hl-in-dark;
+}
+@keyframes quote-hl-in-dark {
+  from {
+    background: var(--color-amber-600);
+  }
+}
+
+/* Pull quotes set between chapter paragraphs */
+.prose-chapter .pullquote {
+  margin: 2.5rem 0;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--color-stone-300);
+  border-bottom: 1px solid var(--color-stone-300);
+  text-align: center;
+}
+.prose-chapter .pullquote p {
+  margin: 0;
+  font-size: 1.6rem;
+  line-height: 1.3;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  color: var(--color-stone-800);
+  text-wrap: balance;
+}
+.prose-chapter .pullquote p::before {
+  content: "\201C";
+}
+.prose-chapter .pullquote p::after {
+  content: "\201D";
+}
+.dark .prose-chapter .pullquote {
+  border-color: var(--color-stone-700);
+}
+.dark .prose-chapter .pullquote p {
+  color: var(--color-stone-200);
+}
+
+/* Hobbes's table of the sciences (Chapter IX): a nested outline, his labels kept as text */
+.prose-chapter .science-table {
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+.prose-chapter .science-table ul {
+  list-style: none;
+  margin: 0 0 0 1.25rem;
+  padding: 0;
+  border-left: 1px solid var(--color-stone-200);
+}
+.prose-chapter .science-table > ul {
+  margin-left: 0;
+  border-left: 0;
+}
+.prose-chapter .science-table li {
+  margin: 0;
+  padding: 0.2rem 0 0.2rem 0.75rem;
+}
+.prose-chapter .science-table li + li {
+  margin-top: 0;
+}
+.prose-chapter .science-table strong {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-stone-600);
+}
+.dark .prose-chapter .science-table ul {
+  border-left-color: var(--color-stone-800);
+}
+.dark .prose-chapter .science-table strong {
+  color: var(--color-stone-400);
+}
+
+/* Paragraph numbers in the left margin of chapter text */
+.prose-chapter p {
+  position: relative;
+}
+.para-num {
+  position: absolute;
+  right: 100%;
+  top: 0.45em;
+  margin-right: 0.9rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-style: normal;
+  line-height: 1;
+  color: var(--color-stone-300);
+  text-decoration: none;
+  user-select: none;
+  white-space: nowrap;
+}
+.para-num:hover,
+.para-num:focus-visible {
+  color: var(--color-stone-700);
+}
+.dark .para-num {
+  color: var(--color-stone-700);
+}
+.dark .para-num:hover,
+.dark .para-num:focus-visible {
+  color: var(--color-stone-300);
+}
+.pullquote .para-num {
+  display: none;
+}
+
+/* Pull quote as a link to its sentence */
+.prose-chapter .pullquote {
+  scroll-margin-top: 2rem;
+}
+.prose-chapter .pullquote__link {
+  color: inherit;
+  text-decoration: none;
+}
+.prose-chapter .pullquote__link:hover,
+.prose-chapter .pullquote__link:focus-visible {
+  color: var(--color-stone-950);
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 0.2em;
+}
+.dark .prose-chapter .pullquote__link:hover,
+.dark .prose-chapter .pullquote__link:focus-visible {
+  color: white;
+  text-decoration-color: var(--color-stone-600);
+}
+
+/* Links inside summaries (page headers and tooltips) */
+.summary a,
+.concept-tip__summary a {
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.summary a:hover,
+.concept-tip__summary a:hover {
+  color: var(--color-stone-900);
+  text-decoration-color: var(--color-stone-900);
+}
+.dark .summary a,
+.dark .concept-tip__summary a {
+  text-decoration-color: var(--color-stone-600);
+}
+.dark .summary a:hover,
+.dark .concept-tip__summary a:hover {
+  color: var(--color-stone-100);
+  text-decoration-color: var(--color-stone-100);
+}

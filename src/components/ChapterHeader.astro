@@ -1,0 +1,14 @@
+---
+interface Props {
+  number: number;
+  title: string;
+}
+const { number, title } = Astro.props;
+---
+
+<header class="mb-8">
+  <p class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">
+    Chapter {number}
+  </p>
+  <h1 class="mt-1 font-serif text-3xl font-semibold">{title}</h1>
+</header>

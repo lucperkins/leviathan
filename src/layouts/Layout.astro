@@ -1,0 +1,85 @@
+---
+import "../styles/global.css";
+import { getCollection } from "astro:content";
+import BackButton from "../components/BackButton.astro";
+import ChapterNav from "../components/ChapterNav.astro";
+import ListNav from "../components/ListNav.astro";
+import SiteTitle from "../components/SiteTitle.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+
+const isHome = Astro.url.pathname === "/";
+const currentPath = Astro.url.pathname.endsWith("/")
+  ? Astro.url.pathname
+  : `${Astro.url.pathname}/`;
+
+const chapters = (await getCollection("chapters")).map((ch) => ({ id: ch.id, ...ch.data }));
+const concepts = (await getCollection("concepts")).map((c) => ({ id: c.id, title: c.data.title }));
+const authors = (await getCollection("authors")).map((a) => ({ id: a.id, title: a.data.title }));
+const themes = (await getCollection("themes")).map((t) => ({ id: t.id, title: t.data.title }));
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{title} · Leviathan</title>
+    {/* Pre-paint: apply the persisted theme (or system preference) so there is no flash. Alpine `theme` owns it after boot. */}
+    <script is:inline>
+      (() => {
+        let stored = null;
+        try {
+          stored = JSON.parse(localStorage.getItem("leviathan:theme") || "null");
+        } catch {}
+        const dark = stored ? stored === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.classList.toggle("dark", dark);
+      })();
+    </script>
+  </head>
+  <body
+    class="min-h-screen bg-stone-50 text-stone-900 dark:bg-stone-950 dark:text-stone-100"
+    x-data="pageKeys"
+    x-on:keydown.window="onKey($event)"
+  >
+    <div class="flex min-h-screen">
+      <aside
+        class="sticky top-0 flex h-screen w-80 shrink-0 flex-col border-r border-stone-200 bg-stone-100 dark:border-stone-800 dark:bg-stone-900"
+      >
+        <div class="flex-1 overflow-y-auto px-4 py-6">
+          <div class="mb-8"><SiteTitle /></div>
+          <ChapterNav chapters={chapters} currentPath={currentPath} />
+          <div class="mt-2 border-t border-stone-200 pt-4 dark:border-stone-800">
+            <ListNav sectionId="themes" title="Themes" basePath="/themes" items={themes} currentPath={currentPath} />
+            <ListNav sectionId="concepts" title="Concepts" basePath="/concepts" items={concepts} currentPath={currentPath} />
+            <ListNav sectionId="authors" title="Authors" basePath="/authors" items={authors} currentPath={currentPath} />
+          </div>
+        </div>
+        <div class="border-t border-stone-200 px-4 py-3 dark:border-stone-800">
+          <ThemeToggle />
+        </div>
+
+        {/* Pre-paint only: apply the state Alpine's $persist stored so closed sections don't flash open. Alpine owns the state after boot. */}
+        <script is:inline>
+          for (const el of document.querySelectorAll("details[data-nav-section]")) {
+            if (el.querySelector('[aria-current="page"]')) continue;
+            try {
+              const v = localStorage.getItem(`leviathan:nav:${el.dataset.navSection}`);
+              if (v !== null) el.open = JSON.parse(v);
+            } catch {}
+          }
+        </script>
+      </aside>
+      <main class="flex-1 px-12 pt-12 pb-32">
+        <div class="mx-auto max-w-2xl">
+          {!isHome && <BackButton />}
+          <slot />
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

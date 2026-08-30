@@ -1,0 +1,9 @@
+---
+/** Wraps chapter body text (rendered MDX) in the reading typography. Extra attributes are passed through. */
+interface Props extends astroHTML.JSX.HTMLAttributes {}
+const { class: className, ...rest } = Astro.props;
+---
+
+<article class:list={["prose-chapter font-serif text-lg leading-relaxed", className]} {...rest}>
+  <slot />
+</article>

@@ -1,0 +1,37 @@
+---
+/** Previous / next links at the foot of a page within a sequence. */
+interface Item {
+  href: string;
+  title: string;
+}
+interface Props {
+  prev?: Item;
+  next?: Item;
+  /** What the sequence is, e.g. "chapter", "concept", "author". */
+  kind?: string;
+}
+const { prev, next, kind = "page" } = Astro.props;
+---
+
+{
+  (prev || next) && (
+    <nav aria-label={`Previous and next ${kind}`} class="mt-16 flex gap-8 border-t border-stone-200 pt-6 text-sm dark:border-stone-800">
+      {prev ? (
+        <a href={prev.href} rel="prev" class="group flex-1 rounded px-3 py-2 -mx-3 transition-colors hover:bg-stone-100 dark:hover:bg-stone-900">
+          <span class="block text-xs font-semibold tracking-widest text-stone-400 uppercase dark:text-stone-500">Previous {kind}</span>
+          <span class="mt-1 block font-serif text-base text-stone-700 group-hover:text-stone-900 dark:text-stone-300 dark:group-hover:text-stone-100">{prev.title}</span>
+        </a>
+      ) : (
+        <span class="flex-1" />
+      )}
+      {next ? (
+        <a href={next.href} rel="next" class="group flex-1 rounded px-3 py-2 -mx-3 text-right transition-colors hover:bg-stone-100 dark:hover:bg-stone-900">
+          <span class="block text-xs font-semibold tracking-widest text-stone-400 uppercase dark:text-stone-500">Next {kind}</span>
+          <span class="mt-1 block font-serif text-base text-stone-700 group-hover:text-stone-900 dark:text-stone-300 dark:group-hover:text-stone-100">{next.title}</span>
+        </a>
+      ) : (
+        <span class="flex-1" />
+      )}
+    </nav>
+  )
+}

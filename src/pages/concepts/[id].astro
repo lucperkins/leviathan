@@ -1,0 +1,35 @@
+---
+import { getCollection, getEntries, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import ConceptHeader from "../../components/ConceptHeader.astro";
+import PrevNext from "../../components/PrevNext.astro";
+import Prose from "../../components/Prose.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+import { chapterLinks } from "../../lib/related";
+import { neighbours } from "../../lib/sequence";
+
+export async function getStaticPaths() {
+  // Same order as the sidebar: alphabetical by title.
+  const concepts = (await getCollection("concepts")).sort((a, b) => a.data.title.localeCompare(b.data.title));
+  return concepts.map((concept, i) => ({
+    params: { id: concept.id },
+    props: {
+      concept,
+      ...neighbours(concepts, i, (c) => ({ href: `/concepts/${c.id}/`, title: c.data.title })),
+    },
+  }));
+}
+
+const { concept, prev, next } = Astro.props;
+const { Content } = await render(concept);
+const chapters = chapterLinks(await getEntries(concept.data.chapters));
+---
+
+<Layout title={concept.data.title}>
+  <ConceptHeader title={concept.data.title} summary={concept.data.summary} />
+  <Prose>
+    <Content />
+  </Prose>
+  <RelatedLinks title="Read in Leviathan" items={chapters} />
+  <PrevNext kind="concept" prev={prev} next={next} />
+</Layout>

@@ -1,0 +1,60 @@
+---
+import NavSection from "./NavSection.astro";
+import { partLabel, partNumber } from "../lib/parts";
+
+export interface NavChapter {
+  id: string;
+  number: number;
+  title: string;
+  part: string;
+}
+
+interface Props {
+  chapters: NavChapter[];
+  currentPath?: string;
+}
+const { chapters, currentPath } = Astro.props;
+
+const sorted = [...chapters].sort((a, b) => a.number - b.number);
+const parts = new Map<string, NavChapter[]>();
+for (const ch of sorted) {
+  parts.set(ch.part, [...(parts.get(ch.part) ?? []), ch]);
+}
+// Parts in the book's order, not first-seen order.
+const ordered = [...parts].sort(([a], [b]) => partNumber(a) - partNumber(b));
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+---
+
+<nav aria-label="The book" class="text-sm">
+  <NavSection id="book" title="The book">
+    {
+      ordered.map(([part, list]) => (
+        <NavSection id={`part-${slug(part)}`} title={partLabel(part)} nested>
+          <ul class="space-y-1">
+            {list.map((ch) => {
+              const href = `/chapters/${ch.id}/`;
+              const active = currentPath === href;
+              return (
+                <li>
+                  <a
+                    href={href}
+                    aria-current={active ? "page" : undefined}
+                    class:list={[
+                      "flex gap-2 rounded py-1 pr-7 pl-2 leading-snug transition-colors",
+                      active
+                        ? "bg-stone-800 text-stone-50 dark:bg-stone-100 dark:text-stone-900"
+                        : "text-stone-700 hover:bg-stone-200 dark:text-stone-300 dark:hover:bg-stone-800",
+                    ]}
+                  >
+                    <span class="w-6 shrink-0 text-right tabular-nums text-stone-400 dark:text-stone-500">{ch.number}.</span>
+                    <span>{ch.title}</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </NavSection>
+      ))
+    }
+  </NavSection>
+</nav>

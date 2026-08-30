@@ -1,0 +1,53 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import frontispiece from "../assets/frontispiece.jpg";
+---
+
+<Layout title="Home">
+  <h1 class="font-serif text-4xl font-semibold">Leviathan</h1>
+  <p class="mt-2 text-lg text-stone-600 dark:text-stone-400">
+    or The Matter, Forme and Power of a Common-Wealth Ecclesiasticall and Civil
+  </p>
+
+  <figure class="mt-10">
+    <a href={frontispiece.src} class="block" title="Open the full-size scan">
+      <Image
+        src={frontispiece}
+        widths={[480, 720, 1080]}
+        sizes="(min-width: 1024px) 42rem, 100vw"
+        alt="The frontispiece of Leviathan, 1651: a crowned giant composed of hundreds of small human figures rises above a landscape, holding a sword in one hand and a bishop's crozier in the other. Below, two columns of small panels show the instruments of civil and ecclesiastical power."
+        class="w-full rounded border border-stone-200 dark:border-stone-800"
+      />
+    </a>
+    <figcaption class="mt-3 text-sm text-stone-500 dark:text-stone-400">
+      Frontispiece engraved by Abraham Bosse, 1651, in consultation with Hobbes. British Library copy, via
+      Wikimedia Commons. Public domain.
+    </figcaption>
+  </figure>
+
+  <div class="prose-chapter mt-10 font-serif text-lg leading-relaxed">
+    <p>
+      The engraving is the argument of the book in a single image. A giant wearing a crown looks out over a
+      peaceful landscape: fields, a river, a walled town with its church, a few figures going about their
+      business. His body is made of people, hundreds of them, standing close together and facing inward, so
+      that the sovereign is nothing but the subjects who compose him. This is the common-wealth as Hobbes
+      defines it in Chapter XVII: one person, of whose acts a great multitude have made themselves the author.
+    </p>
+    <p>
+      In his right hand he holds a sword, the civil power; in his left, a bishop's crozier, the ecclesiastical
+      power. Hobbes's point, argued at length in Parts III and IV, is that both belong to the same hand. The
+      two columns of panels beneath repeat the pairing. On the sword's side: a castle, a crown, a cannon, a
+      trophy of weapons, and a battle. On the crozier's side: a church, a mitre, a thunderbolt of
+      excommunication, the forked distinctions of scholastic logic, and an ecclesiastical court. Each is the
+      civil or spiritual counterpart of the other.
+    </p>
+    <p>
+      Across the top runs a line from the Book of Job, chapter 41, where God describes the sea monster
+      Leviathan: <em>Non est potestas Super Terram quae Comparetur ei</em>, "There is no power on earth which
+      can be compared to him." Hobbes took his title from the same verses. The creature that nothing on earth
+      can match is the state, and the picture shows what it is made of.
+    </p>
+    <p>Select a chapter, theme, concept, or author from the left to begin.</p>
+  </div>
+</Layout>

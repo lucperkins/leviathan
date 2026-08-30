@@ -1,0 +1,34 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import ChapterHeader from "../../components/ChapterHeader.astro";
+import ConceptRefs from "../../components/ConceptRefs.astro";
+import PrevNext from "../../components/PrevNext.astro";
+import Prose from "../../components/Prose.astro";
+import { getAllRefs } from "../../lib/refs";
+import { neighbours } from "../../lib/sequence";
+
+export async function getStaticPaths() {
+  const chapters = (await getCollection("chapters")).sort((a, b) => a.data.number - b.data.number);
+  return chapters.map((chapter, i) => ({
+    params: { id: chapter.id },
+    props: {
+      chapter,
+      ...neighbours(chapters, i, (c) => ({ href: `/chapters/${c.id}/`, title: c.data.title })),
+    },
+  }));
+}
+
+const { chapter, prev, next } = Astro.props;
+const { Content } = await render(chapter);
+const refs = await getAllRefs();
+---
+
+<Layout title={chapter.data.title}>
+  <ChapterHeader number={chapter.data.number} title={chapter.data.title} />
+  <Prose x-data="quoteTarget" x-on:click="onClick($event)">
+    <Content />
+  </Prose>
+  <PrevNext kind="chapter" prev={prev} next={next} />
+  <ConceptRefs refs={refs} />
+</Layout>
