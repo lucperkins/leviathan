@@ -60,4 +60,23 @@ const themes = defineCollection({
   }),
 });
 
-export const collections = { chapters, concepts, interlocutors, themes };
+/**
+ * Hobbes himself: a short life in four parts, read in sequence rather than
+ * alphabetically, so entries carry an explicit `order`.
+ */
+const hobbes = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/hobbes" }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      summary: z.string(),
+      order: z.number(),
+      /** Portrait or plate heading the section; all are public domain. */
+      image: image().optional(),
+      imageAlt: z.string().optional(),
+      imageCaption: z.string().optional(),
+      imageCredit: z.string().optional(),
+    }),
+});
+
+export const collections = { chapters, concepts, hobbes, interlocutors, themes };

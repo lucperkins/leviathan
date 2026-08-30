@@ -24,6 +24,7 @@ concept-ref,
 .quote-link,
 .quote-source__link,
 .concept-tip__link,
+.margin-note a,
 .prose-chapter mark.quote-hl {
   transition-property: color, background-color, text-decoration-color, opacity;
   transition-duration: var(--default-transition-duration);
