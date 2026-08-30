@@ -23,20 +23,20 @@ function inline(text) {
 const el = (tagName, properties, children = []) => ({ type: "element", tagName, properties, children });
 
 /**
- * Editorial footnotes in chapter text, driven by frontmatter:
+ * Editorial footnotes in any content collection, driven by frontmatter:
  *
  *   footnotes:
  *     - after: "Mr. Seldens most excellent Treatise of that subject."
  *       text: "John Selden (1584–1654), *Titles of Honor* (1614)…"
  *
- * `after` is matched against the chapter text; a numbered marker is inserted
- * immediately after it, and the notes are collected at the foot of the
- * chapter. Runs last, so the markers are not counted as paragraph text and the
- * appended list is not given a ¶ number.
+ * `after` is matched against the text; a numbered marker is inserted straight
+ * after it, and the notes are collected at the foot of the entry. Runs late,
+ * so markers are not counted as paragraph text and the appended list is not
+ * given a ¶ number.
  */
 export default function rehypeFootnotes() {
   return (tree, file) => {
-    if (!file.path?.includes("/content/chapters/")) return;
+    if (!file.path?.includes("/content/")) return;
     const notes = file.data?.astro?.frontmatter?.footnotes ?? [];
     if (!notes.length) return;
 

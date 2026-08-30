@@ -2,6 +2,9 @@ import { defineCollection, reference } from "astro:content";
 import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 
+/** Editorial footnotes: `after` is matched in the text, the note collected at the foot. */
+const footnotes = z.array(z.object({ after: z.string(), text: z.string() })).default([]);
+
 const chapters = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/chapters" }),
   schema: z.object({
@@ -16,8 +19,7 @@ const chapters = defineCollection({
     numbered: z.boolean().default(true),
     /** Editorial headnote above the chapter text; inline markdown, so links work. */
     note: z.string().optional(),
-    /** Editorial footnotes: `after` is matched in the text, and the note is collected at the foot. */
-    footnotes: z.array(z.object({ after: z.string(), text: z.string() })).default([]),
+    footnotes,
     /** Notes shown beside a marginal heading, e.g. the argument a passage answers. */
     marginalia: z
       .array(z.object({ heading: z.string(), label: z.string(), href: z.string() }))
@@ -81,6 +83,7 @@ const hobbes = defineCollection({
       imageAlt: z.string().optional(),
       imageCaption: z.string().optional(),
       imageCredit: z.string().optional(),
+      footnotes,
     }),
 });
 
