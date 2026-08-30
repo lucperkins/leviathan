@@ -1,0 +1,118 @@
+---
+import Layout from "../layouts/Layout.astro";
+// @ts-ignore -- plain-JS helpers, so the links use the site's paragraph numbering
+import { loadChapters, locate, quoteHref } from "../plugins/rehype-quote-sources.mjs";
+// @ts-ignore
+import { CATEGORIES, OMISSIONS } from "../lib/thinkers.mjs";
+
+const chapters = loadChapters();
+const unresolved: string[] = [];
+
+/** Link to the paragraph where Hobbes names the person, falling back to the chapter. */
+function passage(p: any) {
+  const plain = `/chapters/${p.chapter}/`;
+  if (!p.quote) return plain;
+  const hit = locate(chapters, p.quote);
+  if (!hit || hit.chapter.id !== p.chapter) {
+    unresolved.push(`${p.name} (not found in ${p.chapter})`);
+    return plain;
+  }
+  return quoteHref(hit.chapter.id, hit.para, p.quote);
+}
+
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+const total = CATEGORIES.reduce((n: number, c: any) => n + c.people.length, 0);
+if (unresolved.length) console.warn(`[thinkers] unresolved: ${unresolved.join(", ")}`);
+---
+
+<Layout title="Thinkers named">
+  <header class="mb-8">
+    <p class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">Appendix</p>
+    <h1 class="mt-1 font-serif text-3xl font-semibold">Thinkers named</h1>
+    <p class="mt-3 max-w-prose text-lg text-stone-600 dark:text-stone-400">
+      Everyone Hobbes names as a writer or an authority: {total} people, in a book of nearly half a million words.
+      He held that words are wise men's counters and the money of fools, and he cites accordingly. Each name links to
+      the passage where it appears.
+    </p>
+  </header>
+
+  <nav
+    aria-label="Sections"
+    class="mb-10 flex flex-wrap gap-x-3 gap-y-1 border-y border-stone-200 py-3 text-sm dark:border-stone-800"
+  >
+    {
+      CATEGORIES.map((c: any) => (
+        <a
+          href={`#${slug(c.title)}`}
+          class="text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
+        >
+          {c.title}
+        </a>
+      ))
+    }
+    <a href="#surprising-omissions" class="text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">
+      Surprising omissions
+    </a>
+  </nav>
+
+  <div class="space-y-12">
+    {
+      CATEGORIES.map((c: any) => (
+        <section>
+          <h2
+            id={slug(c.title)}
+            class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400"
+          >
+            <a href={`#${slug(c.title)}`} class="heading-anchor">
+              {c.title}
+            </a>
+          </h2>
+          <p class="mt-2 max-w-prose text-sm text-stone-500 dark:text-stone-400" set:html={c.blurb} />
+          <ul class="mt-5 space-y-5">
+            {c.people.map((p: any) => (
+              <li class="thinker">
+                <p class="thinker__head">
+                  <span class="thinker__name">{p.name}</span>
+                  <span class="thinker__dates">{p.dates}</span>
+                  <span class="thinker__count">
+                    {p.mentions} {p.mentions === 1 ? "mention" : "mentions"}
+                  </span>
+                </p>
+                <p class="thinker__note" set:html={p.note} />
+                <p class="thinker__links">
+                  <a href={passage(p)}>Chapter {parseInt(p.chapter, 10)}</a>
+                  {p.interlocutor && <a href={`/interlocutors/${p.interlocutor}/`}>Full entry</a>}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+
+  <section class="mt-16">
+    <h2
+      id="surprising-omissions"
+      class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400"
+    >
+      <a href="#surprising-omissions" class="heading-anchor">Surprising omissions</a>
+    </h2>
+    <p class="mt-4 max-w-prose font-serif text-lg leading-relaxed">
+      The names below return nothing at all. Some of the absences are ordinary, but several are people Hobbes had
+      read closely, worked for, argued with in print, or travelled to meet. They fit his own doctrine: an argument
+      is carried by its definitions rather than by whose name is attached to it, so the moderns he does name are
+      almost all people he means to refute.
+    </p>
+    <ul class="mt-6 space-y-4">
+      {
+        OMISSIONS.map((o: any) => (
+          <li class="omission">
+            <span class="omission__name">{o.name}</span>
+            <span class="omission__why" set:html={o.why} />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Layout>

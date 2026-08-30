@@ -877,3 +877,91 @@ a.external::after {
 .dark .chapter-note a:focus-visible {
   color: var(--color-stone-100);
 }
+
+/* Appendix: the index of thinkers Hobbes names, and the ones he does not. */
+.thinker__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.6rem;
+}
+.thinker__name {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.thinker__dates {
+  font-size: 0.8rem;
+  color: var(--color-stone-500);
+}
+.thinker__count {
+  margin-left: auto;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-stone-400);
+  white-space: nowrap;
+}
+.dark .thinker__count {
+  color: var(--color-stone-600);
+}
+.thinker__note {
+  margin-top: 0.35rem;
+  max-width: 62ch;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--color-stone-700);
+}
+.dark .thinker__note {
+  color: var(--color-stone-300);
+}
+.thinker__links {
+  margin-top: 0.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  font-size: 0.75rem;
+}
+.thinker__links a {
+  color: var(--color-stone-500);
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.dark .thinker__links a {
+  text-decoration-color: var(--color-stone-700);
+}
+.thinker__links a:hover,
+.thinker__links a:focus-visible {
+  color: var(--color-stone-900);
+}
+.dark .thinker__links a:hover,
+.dark .thinker__links a:focus-visible {
+  color: var(--color-stone-100);
+}
+
+.omission {
+  border-left: 2px solid var(--color-stone-200);
+  padding-left: 1rem;
+}
+.dark .omission {
+  border-color: var(--color-stone-800);
+}
+.omission__name {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+.omission__why {
+  display: block;
+  margin-top: 0.2rem;
+  max-width: 62ch;
+  font-family: var(--font-serif);
+  line-height: 1.55;
+  color: var(--color-stone-600);
+}
+.dark .omission__why {
+  color: var(--color-stone-400);
+}
