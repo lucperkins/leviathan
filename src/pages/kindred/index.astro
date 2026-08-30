@@ -1,0 +1,21 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import SectionIndex from "../../components/SectionIndex.astro";
+
+const kindred = (await getCollection("kindred")).sort((a, b) => a.data.year - b.data.year);
+const entries = kindred.map((k) => ({
+  href: `/kindred/${k.id}/`,
+  title: k.data.title,
+  meta: k.data.dates,
+  summary: k.data.summary,
+}));
+---
+
+<Layout title="Kindred spirits">
+  <SectionIndex
+    title="Kindred spirits"
+    intro="The [touchstones](/touchstones/) are the people Hobbes argues with in the book. These are the people he resembles: writers who had already denied that men are naturally sociable, or that universals are anything but names, or that a priest may compel anybody, or that justice exists before there is an agreement to break. Some he certainly read, some he cannot have, and one or two he read and never mentioned — Machiavelli, Bodin, Grotius, Thucydides and Lucretius are all on the list of [names a reader expects and does not find](/thinkers/#surprising-omissions). Read in the order they lived."
+    entries={entries}
+  />
+</Layout>

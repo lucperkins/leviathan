@@ -70,6 +70,27 @@ const themes = defineCollection({
 });
 
 /**
+ * Kindred spirits: thinkers Hobbes did not argue with so much as resemble.
+ * Distinct from the touchstones, who are the people he answers in the book.
+ * Read in the order they lived, so `year` sorts them.
+ */
+const kindred = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/kindred" }),
+  schema: z.object({
+    title: z.string(),
+    /** Shown under the title: "c. 1275–1342". */
+    dates: z.string(),
+    /** Sort key: birth year, negative for BC. */
+    year: z.number(),
+    summary: z.string(),
+    chapters: z.array(reference("chapters")).default([]),
+    concepts: z.array(reference("concepts")).default([]),
+    themes: z.array(reference("themes")).default([]),
+    footnotes,
+  }),
+});
+
+/**
  * His other books. Short pages: what each one is, what it does that Leviathan
  * does not, and where the same argument sits in Leviathan. Read in the order
  * they were written, so `year` sorts them.
@@ -110,4 +131,4 @@ const hobbes = defineCollection({
     }),
 });
 
-export const collections = { chapters, concepts, hobbes, touchstones, themes, works };
+export const collections = { chapters, concepts, hobbes, kindred, touchstones, themes, works };

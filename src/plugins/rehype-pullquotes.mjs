@@ -29,6 +29,13 @@ export default function rehypePullquotes() {
         continue;
       }
       const para = tree.children[idx];
+      const next = tree.children[idx + 1];
+      if (next?.type === "element" && next.tagName === "aside" && next.properties?.className?.includes("pullquote")) {
+        // Two pull quotes from one paragraph set out together read as a stack
+        // rather than as a quotation from the passage above them.
+        file.message(`two pull quotes in one paragraph; skipping "${quote.slice(0, 40)}…"`);
+        continue;
+      }
       const paraId = String(para.properties?.id ?? "");
       // same-page link: keep only the query and fragment
       const href = quoteHref("", Number(paraId.slice(1)), quote).replace(/^\/chapters\/\//, "");

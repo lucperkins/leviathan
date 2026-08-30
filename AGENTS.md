@@ -65,6 +65,7 @@ Three collections, all MDX under `src/content/`, loaded with `glob`:
 | `authors`  | `authors/slug.mdx`  | same as concepts + `dates?`, `sortName?` (surname; defaults to the title's last word — authors sort by it in the sidebar and prev/next) |
 | `themes`   | `themes/slug.mdx`   | `title`, `summary`, `hobbes?`, `chapters` (refs), `concepts` (refs) |
 | `works`    | `works/slug.mdx`    | `title`, `dates`, `year` (sort key), `summary`, `chapters`/`concepts`/`themes` (refs) |
+| `kindred`  | `kindred/slug.mdx`  | same as `works`; `year` is a birth year, negative for BC |
 
 Every collection also takes `footnotes` (`after` is matched in the text, the
 note collected at the foot; see `rehype-footnotes.mjs`). The marker is placed
@@ -182,6 +183,11 @@ Styling for all of this is plain CSS at the bottom of `global.css`
 - `/further-reading/` is the one appendix page not generated from the text: a
   short reading list in `src/lib/library.mjs`, each entry described by what it
   claims. Entries have stable `id` anchors so pages can link to a book.
+- `/kindred/` is the thinkers Hobbes resembles rather than answers, in the
+  order they lived. Distinct from `/touchstones/`, who are the people he
+  argues with inside the book; the two overlap only in that most of the
+  kindred are on the `/thinkers/` list of surprising omissions. Each page is
+  shaped: where they agree, where they part, whether he read them.
 - `/works/` is his other nine books, in the order he wrote them (`year`).
   Brisk pages: what each is, what it does that *Leviathan* does not, and where
   the same argument sits in *Leviathan*.

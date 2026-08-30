@@ -435,14 +435,10 @@ concept-ref[data-kind="touchstone"] {
 .prose-chapter .pullquote__link:hover,
 .prose-chapter .pullquote__link:focus-visible {
   color: var(--color-stone-950);
-  text-decoration: underline;
-  text-decoration-color: var(--color-stone-300);
-  text-underline-offset: 0.2em;
 }
 .dark .prose-chapter .pullquote__link:hover,
 .dark .prose-chapter .pullquote__link:focus-visible {
   color: white;
-  text-decoration-color: var(--color-stone-600);
 }
 
 /* Links inside summaries (page headers and tooltips) */
