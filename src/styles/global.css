@@ -1034,3 +1034,50 @@ a.external::after {
     transition: none;
   }
 }
+
+/* Footnotes on the thinkers appendix. */
+.fn-ref {
+  margin-left: 0.1em;
+  font-size: 0.65em;
+}
+.fn-ref a {
+  color: var(--color-rubric);
+  text-decoration: none;
+}
+.footnotes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  max-width: 62ch;
+}
+.footnotes li {
+  display: flex;
+  gap: 0.6rem;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--color-stone-600);
+}
+.dark .footnotes li {
+  color: var(--color-stone-400);
+}
+.footnotes__num {
+  flex: none;
+  width: 1.1rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-rubric);
+}
+.footnotes__back {
+  color: var(--color-stone-400);
+  text-decoration: none;
+}
+.footnotes__back:hover,
+.footnotes__back:focus-visible {
+  color: var(--color-stone-800);
+}
+.dark .footnotes__back:hover,
+.dark .footnotes__back:focus-visible {
+  color: var(--color-stone-200);
+}

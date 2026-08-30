@@ -234,6 +234,8 @@ export const CATEGORIES = [
         dates: "1584–1654",
         mentions: 1,
         note: "The only living scholar Hobbes praises, for his treatise on titles of honour. One sentence, and no argument with him at all.",
+        footnote:
+          "The treatise is Selden's <em>Titles of Honor</em> (1614). This is the only place in the book where Hobbes recommends a contemporary's work rather than disputing it — Bellarmine, Beza, Coke, and Suárez are all named in order to be answered — and the name appears only in the possessive, as \"Mr. Seldens most excellent Treatise.\"",
         chapter: "10-of-power-worth-dignity-honour-and-worthiness",
         quote: "in Mr. Seldens most excellent Treatise of that subject",
       },
