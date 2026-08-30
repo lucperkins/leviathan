@@ -50,10 +50,15 @@ export default function rehypeFootnotes() {
         const at = node.value.indexOf(note.after);
         if (at < 0) return;
 
-        // The marker goes after the punctuation, not before it: "Godolphin;1",
-        // never "Godolphin1;". A dash is the one mark it precedes.
         let end = at + note.after.length;
-        while (end < node.value.length && /[.,;:!?)\]'"’”]/.test(node.value[end])) end++;
+        // Never split a word: an apostrophe followed by letters is a possessive
+        // or a contraction and belongs to the name, so "Sommerville's" takes the
+        // marker after the s rather than inside it.
+        const tail = /^['’][A-Za-z]+/.exec(node.value.slice(end));
+        if (tail) end += tail[0].length;
+        // Then the marker goes after the punctuation, not before it:
+        // "Godolphin;1", never "Godolphin1;". A dash is the one mark it precedes.
+        while (end < node.value.length && /[.,;:!?)\]"”]/.test(node.value[end])) end++;
         const marker = el("sup", { className: ["fn-ref"] }, [
           el("a", { id: `fnref-${n}`, href: `#fn-${n}` }, [{ type: "text", value: String(n) }]),
         ]);
