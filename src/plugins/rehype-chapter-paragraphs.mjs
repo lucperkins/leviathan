@@ -6,13 +6,15 @@ const isDisplayLine = (node) => node.children.length === 1 && node.children[0].t
 /**
  * Numbers the top-level paragraphs of chapter pages (<p id="p1">…) and
  * prefixes each with a light, clickable ¶N link to itself, shown in the
- * left margin by CSS. Quotations on concept/author/theme pages link to
+ * left margin by CSS. Quotations on concept/interlocutor/theme pages link to
  * these ids. Display lines get the `display-line` class and no number
  * (rehype-quote-sources skips them the same way when it counts paragraphs).
+ * Entries with `numbered: false` in their frontmatter get no numbers at all.
  */
 export default function rehypeChapterParagraphs() {
   return (tree, file) => {
     if (!file.path?.includes("/content/chapters/")) return;
+    if (file.data?.astro?.frontmatter?.numbered === false) return;
     let n = 0;
     visit(tree, { type: "element", tagName: "p" }, (node, _index, parent) => {
       if (parent !== tree) return;

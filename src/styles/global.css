@@ -159,7 +159,7 @@ concept-ref:focus-visible {
   text-transform: uppercase;
   color: var(--color-stone-400);
 }
-concept-ref[data-kind="author"] {
+concept-ref[data-kind="interlocutor"] {
   text-decoration-style: dashed;
 }
 
@@ -180,7 +180,7 @@ concept-ref[data-kind="author"] {
   color: var(--color-stone-400);
 }
 
-/* Quotation sources on concept and author pages */
+/* Quotation sources on concept and interlocutor pages */
 .quote-source {
   margin-top: 0.5rem;
   font-family: var(--font-sans);

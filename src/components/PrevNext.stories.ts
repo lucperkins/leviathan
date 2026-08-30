@@ -18,5 +18,5 @@ export const OnlyNext = {
   args: { kind: "concept", next: { href: "/concepts/imagination/", title: "Imagination" } },
 };
 export const OnlyPrev = {
-  args: { kind: "author", prev: { href: "/authors/aristotle/", title: "Aristotle" } },
+  args: { kind: "interlocutor", prev: { href: "/interlocutors/aristotle/", title: "Aristotle" } },
 };

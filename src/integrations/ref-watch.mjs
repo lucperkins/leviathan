@@ -3,7 +3,7 @@ import { REF_KINDS } from "../plugins/rehype-concepts.mjs";
 
 /**
  * Dev-only integration. Chapter MDX is compiled once by Vite with the concept
- * and author terms baked in by rehype-concepts. When a ref entry is added,
+ * and interlocutor terms baked in by rehype-concepts. When a ref entry is added,
  * removed, or edited, invalidate the compiled chapter modules so the plugin
  * re-runs with the current term list, then reload the browser.
  *

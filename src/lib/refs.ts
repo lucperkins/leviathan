@@ -1,6 +1,6 @@
 import { getCollection } from "astro:content";
 
-export type RefKind = "concept" | "author";
+export type RefKind = "concept" | "interlocutor";
 
 export interface RefSummary {
   kind: RefKind;
@@ -14,9 +14,9 @@ export const refPath = (kind: RefKind, id: string) => `/${kind}s/${id}/`;
 
 /** Every tooltip-able entry across all ref collections. */
 export async function getAllRefs(): Promise<RefSummary[]> {
-  const [concepts, authors] = await Promise.all([getCollection("concepts"), getCollection("authors")]);
+  const [concepts, interlocutors] = await Promise.all([getCollection("concepts"), getCollection("interlocutors")]);
   return [
     ...concepts.map((c) => ({ kind: "concept" as const, id: c.id, title: c.data.title, summary: c.data.summary })),
-    ...authors.map((a) => ({ kind: "author" as const, id: a.id, title: a.data.title, summary: a.data.summary })),
+    ...interlocutors.map((a) => ({ kind: "interlocutor" as const, id: a.id, title: a.data.title, summary: a.data.summary })),
   ];
 }

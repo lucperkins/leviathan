@@ -18,9 +18,9 @@ export const conceptLink = (c: CollectionEntry<"concepts">) => ({
   label: c.data.title,
 });
 
-/** Authors sort by surname: `sortName` if given, else the last word of the title. */
-export const authorSortKey = (a: CollectionEntry<"authors">) =>
+/** Interlocutors sort by surname: `sortName` if given, else the last word of the title. */
+export const interlocutorSortKey = (a: CollectionEntry<"interlocutors">) =>
   a.data.sortName ?? a.data.title.trim().split(/\s+/).at(-1)!;
 
-export const sortAuthors = (authors: CollectionEntry<"authors">[]) =>
-  [...authors].sort((x, y) => authorSortKey(x).localeCompare(authorSortKey(y)));
+export const sortInterlocutors = (interlocutors: CollectionEntry<"interlocutors">[]) =>
+  [...interlocutors].sort((x, y) => interlocutorSortKey(x).localeCompare(interlocutorSortKey(y)));

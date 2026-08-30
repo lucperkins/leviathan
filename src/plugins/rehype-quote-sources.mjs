@@ -26,13 +26,15 @@ function loadChapters() {
     .filter((f) => f.endsWith(".mdx"))
     .map((f) => {
       const { data, content } = matter(readFileSync(join(CHAPTER_DIR, f), "utf8"));
+      if (data.numbered === false) return null; // no ¶ ids to link to
       const paras = content
         .split(/\n\s*\n/)
         .map((b) => b.trim())
         .filter((b) => b && !/^(#|[-*]\s|\d+[.)]\s|<|>)/.test(b) && !/^\*\*[^*]+\*\*$/.test(b)) // only real paragraphs; bold-only display lines are unnumbered
         .map((b) => normalise(b.replace(/\n/g, " ")));
       return { id: f.replace(/\.mdx$/, ""), number: data.number, title: data.title, part: data.part, paras };
-    });
+    })
+    .filter(Boolean);
 }
 
 /** Find the chapter and paragraph index containing the opening words of `quote`. */
@@ -77,10 +79,10 @@ const label = (ch) => (ch.part ? `Chapter ${ch.number}` : ch.title);
 const fullTitle = (ch) => (ch.part ? `Chapter ${ch.number}, ${ch.title}` : ch.title);
 
 /**
- * On concept and author pages, link quotations of Hobbes to the paragraph
+ * On concept and interlocutor pages, link quotations of Hobbes to the paragraph
  * of the chapter they come from.
  *
- * Runs on concept, author, and theme pages.
+ * Runs on concept, interlocutor, and theme pages.
  *
  * - Blockquotes get a footer: "Leviathan, Chapter 2 ¶7" (full title on hover),
  *   linked to /chapters/<id>/?hl=<opening words>#p7; the chapter page
@@ -93,7 +95,7 @@ const fullTitle = (ch) => (ch.part ? `Chapter ${ch.number}, ${ch.title}` : ch.ti
  */
 export default function rehypeQuoteSources() {
   return (tree, file) => {
-    if (!/\/content\/(concepts|authors|themes)\//.test(file.path ?? "")) return;
+    if (!/\/content\/(concepts|interlocutors|themes)\//.test(file.path ?? "")) return;
     const chapters = loadChapters();
 
     // Blockquotes

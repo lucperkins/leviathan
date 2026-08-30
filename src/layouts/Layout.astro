@@ -5,7 +5,7 @@ import BackButton from "../components/BackButton.astro";
 import ChapterNav from "../components/ChapterNav.astro";
 import ListNav from "../components/ListNav.astro";
 import SiteTitle from "../components/SiteTitle.astro";
-import { authorSortKey } from "../lib/related";
+import { interlocutorSortKey } from "../lib/related";
 import ThemeToggle from "../components/ThemeToggle.astro";
 
 interface Props {
@@ -22,7 +22,7 @@ const currentPath = Astro.url.pathname.endsWith("/")
 
 const chapters = (await getCollection("chapters")).map((ch) => ({ id: ch.id, ...ch.data }));
 const concepts = (await getCollection("concepts")).map((c) => ({ id: c.id, title: c.data.title }));
-const authors = (await getCollection("authors")).map((a) => ({ id: a.id, title: a.data.title, sort: authorSortKey(a) }));
+const interlocutors = (await getCollection("interlocutors")).map((a) => ({ id: a.id, title: a.data.title, sort: interlocutorSortKey(a) }));
 const themes = (await getCollection("themes")).map((t) => ({ id: t.id, title: t.data.title }));
 ---
 
@@ -55,10 +55,11 @@ const themes = (await getCollection("themes")).map((t) => ({ id: t.id, title: t.
         <div class="flex-1 overflow-y-auto px-4 py-6" data-nav-scroll x-data="navScroll" x-on:scroll.passive="save()">
           <div class="mb-8"><SiteTitle /></div>
           <ChapterNav chapters={chapters} currentPath={currentPath} />
-          <div class="mt-2 border-t border-stone-200 pt-4 dark:border-stone-800">
+          {/* The rule splits the book section's bottom margin so the gap to Themes equals the gaps below it. */}
+          <div class="-mt-2 border-t border-stone-200 pt-2 dark:border-stone-800">
             <ListNav sectionId="themes" title="Themes" basePath="/themes" items={themes} currentPath={currentPath} />
             <ListNav sectionId="concepts" title="Concepts" basePath="/concepts" items={concepts} currentPath={currentPath} />
-            <ListNav sectionId="authors" title="Authors" basePath="/authors" items={authors} currentPath={currentPath} />
+            <ListNav sectionId="interlocutors" title="Interlocutors" basePath="/interlocutors" items={interlocutors} currentPath={currentPath} />
           </div>
         </div>
         <div class="border-t border-stone-200 px-4 py-3 dark:border-stone-800">

@@ -19,9 +19,9 @@ export const Concept = {
   },
 };
 
-export const Author = {
+export const Interlocutor = {
   args: {
-    kind: "Author",
+    kind: "Interlocutor",
     title: "Aristotle",
     meta: "384–322 BC",
     summary: "Greek philosopher whose works, filtered through the medieval schools, were the authority Hobbes set out to displace.",

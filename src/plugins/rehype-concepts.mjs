@@ -6,7 +6,7 @@ import { visit } from "unist-util-visit";
 /** Content collections whose entries get hover tooltips in chapter text. */
 export const REF_KINDS = [
   { kind: "concept", dir: "src/content/concepts" },
-  { kind: "author", dir: "src/content/authors" },
+  { kind: "interlocutor", dir: "src/content/interlocutors" },
 ];
 
 /**
@@ -34,7 +34,7 @@ const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 /**
  * Rehype plugin: wraps ref terms in chapter body text with
- * <concept-ref data-kind="concept|author" data-concept="id">…</concept-ref>.
+ * <concept-ref data-kind="concept|interlocutor" data-concept="id">…</concept-ref>.
  * Only runs on files under src/content/chapters so ref pages don't self-link.
  *
  * The ref list is re-read on every transform (it is a handful of files) so

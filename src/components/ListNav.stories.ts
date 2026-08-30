@@ -5,7 +5,7 @@ const concepts = [
   { id: "imagination", title: "Imagination" },
   { id: "common-wealth", title: "Common-wealth" },
 ];
-const authors = [
+const interlocutors = [
   { id: "aristotle", title: "Aristotle" },
   { id: "cicero", title: "Cicero" },
 ];
@@ -27,6 +27,6 @@ export const Concepts = {
 export const ConceptsWithCurrent = {
   args: { ...Concepts.args, currentPath: "/concepts/sense/" },
 };
-export const Authors = {
-  args: { sectionId: "authors", title: "Authors", basePath: "/authors", items: authors },
+export const Interlocutors = {
+  args: { sectionId: "interlocutors", title: "Interlocutors", basePath: "/interlocutors", items: interlocutors },
 };

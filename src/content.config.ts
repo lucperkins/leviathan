@@ -12,10 +12,12 @@ const chapters = defineCollection({
     part: z.string().optional(),
     /** Verbatim sentences to set out as pull quotes after the paragraph they occur in. */
     pullquotes: z.array(z.string()).default([]),
+    /** Whether paragraphs get ¶ numbers. Off for the epistle and the introduction. */
+    numbered: z.boolean().default(true),
   }),
 });
 
-/** Shared shape for anything that gets a tooltip + page: concepts, authors. */
+/** Shared shape for anything that gets a tooltip + page: concepts, interlocutors. */
 const refSchema = z.object({
   title: z.string(),
   summary: z.string(),
@@ -28,8 +30,8 @@ const concepts = defineCollection({
   schema: refSchema,
 });
 
-const authors = defineCollection({
-  loader: glob({ pattern: "**/*.mdx", base: "./src/content/authors" }),
+const interlocutors = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/interlocutors" }),
   schema: refSchema.extend({
     dates: z.string().optional(),
     /** Surname (or other key) to sort by; defaults to the last word of the title. */
@@ -54,4 +56,4 @@ const themes = defineCollection({
   }),
 });
 
-export const collections = { chapters, concepts, authors, themes };
+export const collections = { chapters, concepts, interlocutors, themes };
