@@ -1,4 +1,4 @@
-<svg viewBox="0 0 1020 1272" role="img" aria-label="Twenty-two of Hobbes&#x27;s definitions, from motion in the Introduction down to crime and punishment in Chapter XXVIII, each drawn from terms defined above it." class="fig" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 1020 1272" role="img" aria-label="Twenty-two of Hobbes&#x27;s definitions, from motion in the Introduction down to crime and punishment in Chapter 28, each drawn from terms defined above it." class="fig" xmlns="http://www.w3.org/2000/svg">
 <defs><marker id="ah-f1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
 <g class="edges">
 <path class="e" d="M 480 84 L 480 132" data-from="motion" data-to="sense" marker-end="url(#ah-f1)"/>
@@ -54,106 +54,106 @@
 <a class="n" data-id="sense" href="__H_sense__">
 <rect x="375" y="132" width="210" height="48" rx="2"/>
 <text class="nt" x="480" y="153" text-anchor="middle">SENSE</text>
-<text class="nc" x="480" y="169" text-anchor="middle">Chap. I</text>
+<text class="nc" x="480" y="169" text-anchor="middle">Chap. 1</text>
 </a>
 <a class="n" data-id="imagination" href="__H_imagination__">
 <rect x="135" y="228" width="210" height="48" rx="2"/>
 <text class="nt" x="240" y="249" text-anchor="middle">IMAGINATION</text>
-<text class="nc" x="240" y="265" text-anchor="middle">Chap. II</text>
+<text class="nc" x="240" y="265" text-anchor="middle">Chap. 2</text>
 </a>
 <a class="n" data-id="endeavour" href="__H_endeavour__">
 <rect x="655" y="228" width="210" height="48" rx="2"/>
 <text class="nt" x="760" y="249" text-anchor="middle">ENDEAVOUR</text>
-<text class="nc" x="760" y="265" text-anchor="middle">Chap. VI</text>
+<text class="nc" x="760" y="265" text-anchor="middle">Chap. 6</text>
 </a>
 <a class="n" data-id="trayne" href="__H_trayne__">
 <rect x="135" y="324" width="210" height="48" rx="2"/>
 <text class="nt" x="240" y="345" text-anchor="middle">TRAYNE OF THOUGHTS</text>
-<text class="nc" x="240" y="361" text-anchor="middle">Chap. III</text>
+<text class="nc" x="240" y="361" text-anchor="middle">Chap. 3</text>
 </a>
 <a class="n" data-id="appetite" href="__H_appetite__">
 <rect x="655" y="324" width="210" height="48" rx="2"/>
 <text class="nt" x="760" y="345" text-anchor="middle">APPETITE &amp; AVERSION</text>
-<text class="nc" x="760" y="361" text-anchor="middle">Chap. VI</text>
+<text class="nc" x="760" y="361" text-anchor="middle">Chap. 6</text>
 </a>
 <a class="n" data-id="speech" href="__H_speech__">
 <rect x="135" y="420" width="210" height="48" rx="2"/>
 <text class="nt" x="240" y="441" text-anchor="middle">SPEECH</text>
-<text class="nc" x="240" y="457" text-anchor="middle">Chap. IV</text>
+<text class="nc" x="240" y="457" text-anchor="middle">Chap. 4</text>
 </a>
 <a class="n" data-id="good" href="__H_good__">
 <rect x="435" y="420" width="210" height="48" rx="2"/>
 <text class="nt" x="540" y="441" text-anchor="middle">GOOD &amp; EVILL</text>
-<text class="nc" x="540" y="457" text-anchor="middle">Chap. VI</text>
+<text class="nc" x="540" y="457" text-anchor="middle">Chap. 6</text>
 </a>
 <a class="n" data-id="will" href="__H_will__">
 <rect x="735" y="420" width="210" height="48" rx="2"/>
 <text class="nt" x="840" y="441" text-anchor="middle">WILL</text>
-<text class="nc" x="840" y="457" text-anchor="middle">Chap. VI</text>
+<text class="nc" x="840" y="457" text-anchor="middle">Chap. 6</text>
 </a>
 <a class="n" data-id="reason" href="__H_reason__">
 <rect x="135" y="516" width="210" height="48" rx="2"/>
 <text class="nt" x="240" y="537" text-anchor="middle">REASON</text>
-<text class="nc" x="240" y="553" text-anchor="middle">Chap. V</text>
+<text class="nc" x="240" y="553" text-anchor="middle">Chap. 5</text>
 </a>
 <a class="n" data-id="power" href="__H_power__">
 <rect x="655" y="516" width="210" height="48" rx="2"/>
 <text class="nt" x="760" y="537" text-anchor="middle">POWER</text>
-<text class="nc" x="760" y="553" text-anchor="middle">Chap. X</text>
+<text class="nc" x="760" y="553" text-anchor="middle">Chap. 10</text>
 </a>
 <a class="n" data-id="person" href="__H_person__">
 <rect x="135" y="612" width="210" height="48" rx="2"/>
 <text class="nt" x="240" y="633" text-anchor="middle">PERSON &amp; AUTHOR</text>
-<text class="nc" x="240" y="649" text-anchor="middle">Chap. XVI</text>
+<text class="nc" x="240" y="649" text-anchor="middle">Chap. 16</text>
 </a>
 <a class="n" data-id="restless" href="__H_restless__">
 <rect x="655" y="612" width="210" height="48" rx="2"/>
 <text class="nt" x="760" y="633" text-anchor="middle">POWER AFTER POWER</text>
-<text class="nc" x="760" y="649" text-anchor="middle">Chap. XI</text>
+<text class="nc" x="760" y="649" text-anchor="middle">Chap. 11</text>
 </a>
 <a class="n" data-id="warre" href="__H_warre__">
 <rect x="655" y="708" width="210" height="48" rx="2"/>
 <text class="nt" x="760" y="729" text-anchor="middle">WARRE OF EVERY MAN</text>
-<text class="nc" x="760" y="745" text-anchor="middle">Chap. XIII</text>
+<text class="nc" x="760" y="745" text-anchor="middle">Chap. 13</text>
 </a>
 <a class="n" data-id="law" href="__H_law__">
 <rect x="315" y="804" width="210" height="48" rx="2"/>
 <text class="nt" x="420" y="825" text-anchor="middle">LAW OF NATURE</text>
-<text class="nc" x="420" y="841" text-anchor="middle">Chap. XIV</text>
+<text class="nc" x="420" y="841" text-anchor="middle">Chap. 14</text>
 </a>
 <a class="n" data-id="right" href="__H_right__">
 <rect x="655" y="804" width="210" height="48" rx="2"/>
 <text class="nt" x="760" y="825" text-anchor="middle">RIGHT OF NATURE</text>
-<text class="nc" x="760" y="841" text-anchor="middle">Chap. XIV</text>
+<text class="nc" x="760" y="841" text-anchor="middle">Chap. 14</text>
 </a>
 <a class="n" data-id="covenant" href="__H_covenant__">
 <rect x="435" y="900" width="210" height="48" rx="2"/>
 <text class="nt" x="540" y="921" text-anchor="middle">COVENANT</text>
-<text class="nc" x="540" y="937" text-anchor="middle">Chap. XIV</text>
+<text class="nc" x="540" y="937" text-anchor="middle">Chap. 14</text>
 </a>
 <a class="n" data-id="justice" href="__H_justice__">
 <rect x="735" y="900" width="210" height="48" rx="2"/>
 <text class="nt" x="840" y="921" text-anchor="middle">JUSTICE</text>
-<text class="nc" x="840" y="937" text-anchor="middle">Chap. XV</text>
+<text class="nc" x="840" y="937" text-anchor="middle">Chap. 15</text>
 </a>
 <a class="n accent" data-id="commonwealth" href="__H_commonwealth__">
 <rect x="435" y="996" width="210" height="48" rx="2"/>
 <text class="nt" x="540" y="1017" text-anchor="middle">COMMON-WEALTH</text>
-<text class="nc" x="540" y="1033" text-anchor="middle">Chap. XVII</text>
+<text class="nc" x="540" y="1033" text-anchor="middle">Chap. 17</text>
 </a>
 <a class="n" data-id="sovereign" href="__H_sovereign__">
 <rect x="435" y="1092" width="210" height="48" rx="2"/>
 <text class="nt" x="540" y="1113" text-anchor="middle">SOVERAIGN &amp; SUBJECT</text>
-<text class="nc" x="540" y="1129" text-anchor="middle">Chap. XVII</text>
+<text class="nc" x="540" y="1129" text-anchor="middle">Chap. 17</text>
 </a>
 <a class="n" data-id="civill" href="__H_civill__">
 <rect x="275" y="1188" width="210" height="48" rx="2"/>
 <text class="nt" x="380" y="1209" text-anchor="middle">CIVILL LAW</text>
-<text class="nc" x="380" y="1225" text-anchor="middle">Chap. XXVI</text>
+<text class="nc" x="380" y="1225" text-anchor="middle">Chap. 26</text>
 </a>
 <a class="n" data-id="punishment" href="__H_punishment__">
 <rect x="595" y="1188" width="210" height="48" rx="2"/>
 <text class="nt" x="700" y="1209" text-anchor="middle">CRIME &amp; PUNISHMENT</text>
-<text class="nc" x="700" y="1225" text-anchor="middle">Chap. XXVII–XXVIII</text>
+<text class="nc" x="700" y="1225" text-anchor="middle">Chap. 27–XXVIII</text>
 </a>
 </g></svg>

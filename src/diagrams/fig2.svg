@@ -26,61 +26,61 @@
 <a class="n" data-id="religion" href="__H_religion__">
 <rect x="75" y="36" width="210" height="48" rx="2"/>
 <text class="nt" x="180" y="57" text-anchor="middle">RELIGION</text>
-<text class="nc" x="180" y="73" text-anchor="middle">Chap. VI</text>
+<text class="nc" x="180" y="73" text-anchor="middle">Chap. 6</text>
 </a>
 <a class="n carried" data-id="speech2" href="__H_speech2__">
 <rect x="515" y="36" width="210" height="48" rx="2"/>
 <text class="nt" x="620" y="57" text-anchor="middle">SPEECH</text>
-<text class="nc" x="620" y="73" text-anchor="middle">Chap. IV</text>
+<text class="nc" x="620" y="73" text-anchor="middle">Chap. 4</text>
 </a>
 <a class="n" data-id="word" href="__H_word__">
 <rect x="515" y="132" width="210" height="48" rx="2"/>
 <text class="nt" x="620" y="153" text-anchor="middle">WORD OF GOD</text>
-<text class="nc" x="620" y="169" text-anchor="middle">Chap. XXXVI</text>
+<text class="nc" x="620" y="169" text-anchor="middle">Chap. 36</text>
 </a>
 <a class="n carried" data-id="person2" href="__H_person2__">
 <rect x="795" y="132" width="210" height="48" rx="2"/>
 <text class="nt" x="900" y="153" text-anchor="middle">PERSON</text>
-<text class="nc" x="900" y="169" text-anchor="middle">Chap. XVI</text>
+<text class="nc" x="900" y="169" text-anchor="middle">Chap. 16</text>
 </a>
 <a class="n" data-id="holy" href="__H_holy__">
 <rect x="75" y="228" width="210" height="48" rx="2"/>
 <text class="nt" x="180" y="249" text-anchor="middle">HOLY &amp; SACRED</text>
-<text class="nc" x="180" y="265" text-anchor="middle">Chap. XXXV</text>
+<text class="nc" x="180" y="265" text-anchor="middle">Chap. 35</text>
 </a>
 <a class="n" data-id="prophet" href="__H_prophet__">
 <rect x="315" y="228" width="210" height="48" rx="2"/>
 <text class="nt" x="420" y="249" text-anchor="middle">PROPHET</text>
-<text class="nc" x="420" y="265" text-anchor="middle">Chap. XXXVI</text>
+<text class="nc" x="420" y="265" text-anchor="middle">Chap. 36</text>
 </a>
 <a class="n" data-id="miracle" href="__H_miracle__">
 <rect x="555" y="228" width="210" height="48" rx="2"/>
 <text class="nt" x="660" y="249" text-anchor="middle">MIRACLE</text>
-<text class="nc" x="660" y="265" text-anchor="middle">Chap. XXXVII</text>
+<text class="nc" x="660" y="265" text-anchor="middle">Chap. 37</text>
 </a>
 <a class="n carried" data-id="sovereign2" href="__H_sovereign2__">
 <rect x="795" y="324" width="210" height="48" rx="2"/>
 <text class="nt" x="900" y="345" text-anchor="middle">SOVERAIGN</text>
-<text class="nc" x="900" y="361" text-anchor="middle">Chap. XVII</text>
+<text class="nc" x="900" y="361" text-anchor="middle">Chap. 17</text>
 </a>
 <a class="n accent" data-id="church" href="__H_church__">
 <rect x="415" y="420" width="210" height="48" rx="2"/>
 <text class="nt" x="520" y="441" text-anchor="middle">CHURCH</text>
-<text class="nc" x="520" y="457" text-anchor="middle">Chap. XXXIX</text>
+<text class="nc" x="520" y="457" text-anchor="middle">Chap. 39</text>
 </a>
 <a class="n" data-id="eccl" href="__H_eccl__">
 <rect x="415" y="516" width="210" height="48" rx="2"/>
 <text class="nt" x="520" y="537" text-anchor="middle">POWER ECCLESIASTICALL</text>
-<text class="nc" x="520" y="553" text-anchor="middle">Chap. XLII</text>
+<text class="nc" x="520" y="553" text-anchor="middle">Chap. 42</text>
 </a>
 <a class="n" data-id="teach" href="__H_teach__">
 <rect x="145" y="612" width="210" height="48" rx="2"/>
 <text class="nt" x="250" y="633" text-anchor="middle">POWER TO TEACH</text>
-<text class="nc" x="250" y="649" text-anchor="middle">Chap. XLII</text>
+<text class="nc" x="250" y="649" text-anchor="middle">Chap. 42</text>
 </a>
 <a class="n" data-id="juris" href="__H_juris__">
 <rect x="685" y="612" width="210" height="48" rx="2"/>
 <text class="nt" x="790" y="633" text-anchor="middle">JURISDICTION</text>
-<text class="nc" x="790" y="649" text-anchor="middle">Chap. XLII</text>
+<text class="nc" x="790" y="649" text-anchor="middle">Chap. 42</text>
 </a>
 </g></svg>

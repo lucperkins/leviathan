@@ -10,7 +10,7 @@ export const CATEGORIES = [
   {
     title: "Greek philosophers",
     blurb:
-      "All but one of these appear in Chapter XLVI, where Hobbes gives a short history of the schools in order to explain how philosophy went wrong.",
+      "All but one of these appear in Chapter 46, where Hobbes gives a short history of the schools in order to explain how philosophy went wrong.",
     people: [
       {
         name: "Aristotle",
@@ -201,7 +201,7 @@ export const CATEGORIES = [
         dates: "1542–1621",
         mentions: 32,
         interlocutor: "bellarmine",
-        note: "The most cited modern by a wide margin. The last third of Chapter XLII answers his <em>De Summo Pontifice</em> book by book.",
+        note: "The most cited modern by a wide margin. The last third of Chapter 42 answers his <em>De Summo Pontifice</em> book by book.",
         chapter: "42-of-power-ecclesiasticall",
         quote: "maintained chiefly, and I think as strongly as is possible, by Cardinall Bellarmine",
       },
@@ -299,7 +299,7 @@ export const OMISSIONS = [
   },
   {
     name: "René Descartes",
-    why: "Hobbes wrote the third set of Objections to the <em>Meditations</em> in 1641 and quarrelled with him afterwards. The two men disagreed precisely about incorporeal substance, which Chapter XLVI is largely about.",
+    why: "Hobbes wrote the third set of Objections to the <em>Meditations</em> in 1641 and quarrelled with him afterwards. The two men disagreed precisely about incorporeal substance, which Chapter 46 is largely about.",
   },
   {
     name: "Galileo",
