@@ -27,7 +27,10 @@ const themes = (await getCollection("themes")).map((t) => ({ id: t.id, title: t.
 const hobbes = (await getCollection("hobbes")).map((h) => ({ id: h.id, title: h.data.title, sort: String(h.data.order) }));
 
 /** Editorial apparatus rather than a content collection. */
-const appendix = [{ id: "definitions", title: "The chain of definitions" }];
+const appendix = [
+  { id: "definitions", title: "The chain of definitions" },
+  { id: "scripture", title: "Scriptural references" },
+];
 ---
 
 <html lang="en">

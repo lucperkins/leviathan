@@ -32,6 +32,13 @@ const isActive = (ch: NavChapter) => currentPath === `/chapters/${ch.id}/`;
 
 <nav aria-label="The book" class="text-sm">
   <NavSection id="book" title="The book">
+    <ul class="mb-2 ml-2 space-y-1">
+      <ChapterNavItem
+        chapter={{ id: "contents", number: 0, title: "Contents" }}
+        href="/contents/"
+        active={currentPath === "/contents/"}
+      />
+    </ul>
     {
       front.length > 0 && (
         <ul class="mb-2 ml-2 space-y-1">

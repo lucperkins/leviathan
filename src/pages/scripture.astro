@@ -1,0 +1,82 @@
+---
+import Layout from "../layouts/Layout.astro";
+// @ts-ignore -- plain-JS helper, shares the chapter paragraph numbering
+import { scriptureIndex } from "../lib/scripture.mjs";
+
+const { books, total, citations } = scriptureIndex();
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+const cite = (c: { id: string; para: number | null }) => (c.para ? `/chapters/${c.id}/#p${c.para}` : `/chapters/${c.id}/`);
+---
+
+<Layout title="Scriptural references" wide>
+  <header class="mb-8">
+    <p class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">Appendix</p>
+    <h1 class="mt-1 font-serif text-3xl font-semibold">Scriptural references</h1>
+    <p class="mt-3 max-w-prose text-lg text-stone-600 dark:text-stone-400">
+      Every passage of scripture Hobbes cites by chapter and verse: {total} distinct references to {books.length} books,
+      cited {citations} times. Each reference opens in the King James Version, the translation Hobbes worked from;
+      the numbers beside it are the chapters and paragraphs where he uses it.
+    </p>
+  </header>
+
+  <nav aria-label="Books" class="mb-10 flex flex-wrap gap-x-3 gap-y-1 border-y border-stone-200 py-3 text-sm dark:border-stone-800">
+    {
+      books.map((b: { book: string; refs: unknown[] }) => (
+        <a href={`#${slug(b.book)}`} class="text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">
+          {b.book}
+          <span class="text-xs text-stone-400 dark:text-stone-600">{b.refs.length}</span>
+        </a>
+      ))
+    }
+  </nav>
+
+  <div class="space-y-10">
+    {
+      books.map((b: any) => (
+        <section>
+          <h2 id={slug(b.book)} class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">
+            <a href={`#${slug(b.book)}`} class="heading-anchor">{b.book}</a>
+          </h2>
+          <ul class="mt-3 divide-y divide-stone-200 border-t border-stone-200 dark:divide-stone-800 dark:border-stone-800">
+            {b.refs.map((r: any) => (
+              <li class="scripture-ref">
+                <a class="external scripture-ref__ref" href={r.href} target="_blank" rel="noopener noreferrer">
+                  {r.label}
+                </a>
+                <span class="scripture-ref__cites">
+                  {r.cited.map((c: any) => (
+                    <a href={cite(c)} title={c.title}>
+                      {c.part ? `${c.number}` : c.title}
+                      {c.para && <span class="scripture-ref__para">&para;{c.para}</span>}
+                    </a>
+                  ))}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+
+  <section class="mt-16 max-w-prose">
+    <h2 id="on-the-references" class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">
+      <a href="#on-the-references" class="heading-anchor">On the references</a>
+    </h2>
+    <div class="prose-chapter mt-4 font-serif text-lg leading-relaxed">
+      <p>
+        Hobbes writes his citations in the old style, with a full stop where we would put a colon, so that
+        <em>Gen. 17.7,8</em> means Genesis 17:7–8. His spellings are not consistent, and neither are his printer's:
+        Matthew appears as Mat., Matth., Matt. and Math., Isaiah as Esay, and Ezekiel once as Exekiel. All of them
+        have been resolved to the modern names here.
+      </p>
+      <p>
+        One caution about the historical books. Hobbes sometimes follows the older reckoning, inherited from the
+        Vulgate, in which the two books of Samuel are counted as the first and second books of Kings. Where he
+        writes <em>2 Kings 1.12</em> about David's mourning for Saul and Jonathan, the passage is 2 Samuel 1:12 in
+        the King James Version. The links here follow the book he names rather than silently correcting him, so a
+        handful of references to Kings will open a chapter that does not contain the verse he had in mind.
+      </p>
+    </div>
+  </section>
+</Layout>

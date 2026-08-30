@@ -672,3 +672,180 @@ a.external::after {
     margin-left: 2.5rem;
   }
 }
+
+/* Appendix: the index of scriptural references. Reference on the left, the
+   places Hobbes cites it on the right, wrapping under it when space is short. */
+.scripture-ref {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1.5rem;
+  padding: 0.4rem 0.1rem;
+}
+.scripture-ref__ref {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--color-stone-800);
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.dark .scripture-ref__ref {
+  color: var(--color-stone-200);
+  text-decoration-color: var(--color-stone-700);
+}
+.scripture-ref__ref:hover,
+.scripture-ref__ref:focus-visible {
+  text-decoration-color: var(--color-stone-600);
+}
+.scripture-ref__cites {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.6rem;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-stone-500);
+}
+.scripture-ref__cites a {
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.scripture-ref__cites a:hover,
+.scripture-ref__cites a:focus-visible {
+  color: var(--color-stone-900);
+}
+.dark .scripture-ref__cites a:hover,
+.dark .scripture-ref__cites a:focus-visible {
+  color: var(--color-stone-100);
+}
+.scripture-ref__para {
+  margin-left: 0.15rem;
+  color: var(--color-stone-400);
+}
+.dark .scripture-ref__para {
+  color: var(--color-stone-600);
+}
+
+/* The contents page: a printed table of contents rather than a nav list. */
+.toc-front {
+  font-family: var(--font-serif);
+  text-align: center;
+}
+.toc-front li + li {
+  margin-top: 0.6rem;
+}
+.toc-front a {
+  font-size: 1.125rem;
+  color: var(--color-stone-700);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+}
+.dark .toc-front a {
+  color: var(--color-stone-300);
+}
+.toc-front a:hover,
+.toc-front a:focus-visible {
+  color: var(--color-stone-950);
+  text-decoration-color: var(--color-stone-400);
+}
+.dark .toc-front a:hover,
+.dark .toc-front a:focus-visible {
+  color: var(--color-stone-50);
+}
+
+.toc-part {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  border-bottom: 1px solid var(--color-stone-200);
+  padding-bottom: 0.6rem;
+}
+.dark .toc-part {
+  border-color: var(--color-stone-800);
+}
+.toc-part__numeral {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  line-height: 1;
+  color: var(--color-stone-300);
+}
+.dark .toc-part__numeral {
+  color: var(--color-stone-700);
+}
+.toc-part__title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.toc-part__count {
+  margin-left: auto;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-stone-400);
+  white-space: nowrap;
+}
+.dark .toc-part__count {
+  color: var(--color-stone-600);
+}
+
+.toc-list {
+  margin-top: 0.75rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 2.5rem;
+}
+@media (min-width: 48rem) {
+  .toc-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.toc-list a {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+  border-radius: 3px;
+  padding: 0.4rem 0.5rem;
+  transition-property: background-color, color;
+  transition-duration: var(--default-transition-duration);
+  transition-timing-function: var(--default-transition-timing-function);
+}
+.toc-list a:hover,
+.toc-list a:focus-visible {
+  background-color: var(--color-stone-100);
+}
+.dark .toc-list a:hover,
+.dark .toc-list a:focus-visible {
+  background-color: var(--color-stone-900);
+}
+.toc-list__num {
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--color-stone-400);
+}
+.dark .toc-list__num {
+  color: var(--color-stone-600);
+}
+.toc-list__title {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.35;
+  color: var(--color-stone-700);
+}
+.dark .toc-list__title {
+  color: var(--color-stone-300);
+}
+.toc-list a:hover .toc-list__title,
+.toc-list a:focus-visible .toc-list__title {
+  color: var(--color-stone-950);
+}
+.dark .toc-list a:hover .toc-list__title,
+.dark .toc-list a:focus-visible .toc-list__title {
+  color: var(--color-stone-50);
+}

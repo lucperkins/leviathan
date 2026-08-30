@@ -18,6 +18,19 @@ const fromRoman = (s) => {
 };
 
 /**
+ * A chapter's body split into the paragraphs that rehype-chapter-paragraphs
+ * numbers, in the same order, with the text left as written. Headings, lists,
+ * and bold-only display lines are not paragraphs and get no number.
+ */
+export function chapterParagraphs(content) {
+  return content
+    .split(/\n\s*\n/)
+    .map((b) => b.trim())
+    .filter((b) => b && !/^(#|[-*]\s|\d+[.)]\s|<|>)/.test(b) && !/^\*\*[^*]+\*\*$/.test(b))
+    .map((b) => b.replace(/\n/g, " "));
+}
+
+/**
  * Chapters as they are on disk, with paragraphs in the same order (and
  * therefore the same index) that rehype-chapter-paragraphs numbers them.
  */
@@ -27,11 +40,7 @@ export function loadChapters() {
     .map((f) => {
       const { data, content } = matter(readFileSync(join(CHAPTER_DIR, f), "utf8"));
       if (data.numbered === false) return null; // no ¶ ids to link to
-      const paras = content
-        .split(/\n\s*\n/)
-        .map((b) => b.trim())
-        .filter((b) => b && !/^(#|[-*]\s|\d+[.)]\s|<|>)/.test(b) && !/^\*\*[^*]+\*\*$/.test(b)) // only real paragraphs; bold-only display lines are unnumbered
-        .map((b) => normalise(b.replace(/\n/g, " ")));
+      const paras = chapterParagraphs(content).map(normalise);
       return { id: f.replace(/\.mdx$/, ""), number: data.number, title: data.title, part: data.part, paras };
     })
     .filter(Boolean);

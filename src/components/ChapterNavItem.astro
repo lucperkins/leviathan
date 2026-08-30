@@ -5,9 +5,11 @@ import type { NavChapter } from "./ChapterNav.astro";
 interface Props {
   chapter: NavChapter;
   active?: boolean;
+  /** Overrides the chapter URL, for entries that are not chapters. */
+  href?: string;
 }
-const { chapter, active = false } = Astro.props;
-const href = `/chapters/${chapter.id}/`;
+const { chapter, active = false, href: hrefProp } = Astro.props;
+const href = hrefProp ?? `/chapters/${chapter.id}/`;
 ---
 
 <li>
