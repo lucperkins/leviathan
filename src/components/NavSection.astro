@@ -1,9 +1,9 @@
 ---
 /**
  * A collapsible sidebar section. Open/closed state is owned by the Alpine
- * `navSection` component and persisted per `id`. Rendered open by default;
+ * `navSection` component and persisted per `id`. Every section starts closed;
  * the pre-paint script in Layout.astro applies the persisted state before
- * Alpine boots so closed sections don't flash open.
+ * Alpine boots, and the section holding the current page is forced open.
  */
 interface Props {
   id: string;
@@ -12,7 +12,7 @@ interface Props {
   /** Nested inside another NavSection: indented, tighter spacing. */
   nested?: boolean;
 }
-const { id, title, open = true, nested = false } = Astro.props;
+const { id, title, open = false, nested = false } = Astro.props;
 ---
 
 <details
@@ -24,7 +24,7 @@ const { id, title, open = true, nested = false } = Astro.props;
   x-on:toggle="open = $el.open"
 >
   <summary
-    class="flex cursor-pointer list-none items-center justify-between rounded px-2 py-1 text-xs font-semibold tracking-widest text-stone-500 uppercase select-none hover:bg-stone-200 hover:text-stone-700 dark:hover:bg-stone-800 dark:hover:text-stone-300 [&::-webkit-details-marker]:hidden"
+    class="flex cursor-pointer list-none items-center justify-between rounded py-1 pr-1 pl-2 text-xs font-semibold tracking-widest text-stone-500 uppercase select-none hover:bg-stone-200 hover:text-stone-700 dark:hover:bg-stone-800 dark:hover:text-stone-300 [&::-webkit-details-marker]:hidden"
   >
     <span class="min-w-0">{title}</span>
     <svg

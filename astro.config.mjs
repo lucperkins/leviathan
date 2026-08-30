@@ -5,6 +5,7 @@ import alpinejs from "@astrojs/alpinejs";
 import mdx from "@astrojs/mdx";
 import tailwindcss from "@tailwindcss/vite";
 import rehypeConcepts from "./src/plugins/rehype-concepts.mjs";
+import rehypeScripture from "./src/plugins/rehype-scripture.mjs";
 import rehypeConceptHeadings from "./src/plugins/rehype-concept-headings.mjs";
 import rehypeChapterParagraphs from "./src/plugins/rehype-chapter-paragraphs.mjs";
 import rehypeQuoteSources from "./src/plugins/rehype-quote-sources.mjs";
@@ -22,6 +23,7 @@ export default defineConfig({
     processor: unified({
       rehypePlugins: [
         rehypeConcepts,
+        rehypeScripture,
         rehypeConceptHeadings,
         rehypeChapterParagraphs,
         rehypeQuoteSources,

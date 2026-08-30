@@ -52,23 +52,43 @@ if (miscounted.length) console.warn(`[thinkers] mention counts out of date — $
     </p>
   </header>
 
-  <nav
-    aria-label="Sections"
-    class="mb-10 flex flex-wrap gap-x-3 gap-y-1 border-y border-stone-200 py-3 text-sm dark:border-stone-800"
-  >
-    {
-      CATEGORIES.map((c: any) => (
+  <nav aria-label="Sections" class="mb-10 flex items-start gap-3">
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 16 16"
+      width="14"
+      height="14"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      class="mt-1 shrink-0 text-stone-400 dark:text-stone-600"
+    >
+      <path d="M2.5 4h.01M2.5 8h.01M2.5 12h.01" />
+      <path d="M6 4h7.5M6 8h7.5M6 12h5" />
+    </svg>
+    <ul class="space-y-1 text-sm">
+      {
+        CATEGORIES.map((c: any) => (
+          <li>
+            <a
+              href={`#${slug(c.title)}`}
+              class="text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
+            >
+              {c.title}
+            </a>
+          </li>
+        ))
+      }
+      <li>
         <a
-          href={`#${slug(c.title)}`}
+          href="#surprising-omissions"
           class="text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
         >
-          {c.title}
+          Surprising omissions
         </a>
-      ))
-    }
-    <a href="#surprising-omissions" class="text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">
-      Surprising omissions
-    </a>
+      </li>
+    </ul>
   </nav>
 
   <div class="space-y-12">
@@ -77,7 +97,7 @@ if (miscounted.length) console.warn(`[thinkers] mention counts out of date — $
         <section>
           <h2
             id={slug(c.title)}
-            class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400"
+            class="section-heading"
           >
             <a href={`#${slug(c.title)}`} class="heading-anchor">
               {c.title}
@@ -101,7 +121,7 @@ if (miscounted.length) console.warn(`[thinkers] mention counts out of date — $
                 <p class="thinker__note" set:html={p.note} />
                 <p class="thinker__links">
                   <a href={passage(p)}>Chapter {parseInt(p.chapter, 10)}</a>
-                  {p.interlocutor && <a href={`/interlocutors/${p.interlocutor}/`}>Full entry</a>}
+                  {p.touchstone && <a href={`/touchstones/${p.touchstone}/`}>Full entry</a>}
                 </p>
               </li>
             ))}
@@ -114,7 +134,7 @@ if (miscounted.length) console.warn(`[thinkers] mention counts out of date — $
   <section class="mt-16">
     <h2
       id="surprising-omissions"
-      class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400"
+      class="section-heading"
     >
       <a href="#surprising-omissions" class="heading-anchor">Surprising omissions</a>
     </h2>

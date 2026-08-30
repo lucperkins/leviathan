@@ -12,3 +12,10 @@
   for = "/*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow, noarchive, noimageindex"
+
+# The section was renamed from "interlocutors" to "touchstones"; keep the old
+# URLs working for anything that already links to them.
+[[redirects]]
+  from = "/interlocutors/*"
+  to = "/touchstones/:splat"
+  status = 301

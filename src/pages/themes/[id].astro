@@ -6,12 +6,12 @@ import { hobbesForm } from "../../lib/spelling";
 import PrevNext from "../../components/PrevNext.astro";
 import Prose from "../../components/Prose.astro";
 import RelatedLinks from "../../components/RelatedLinks.astro";
-import { chapterLinks, conceptLinks } from "../../lib/related";
+import { chapterLinks, conceptLinks, sortThemes } from "../../lib/related";
 import { neighbours } from "../../lib/sequence";
 
 export async function getStaticPaths() {
-  // Same order as the sidebar: alphabetical by title.
-  const themes = (await getCollection("themes")).sort((a, b) => a.data.title.localeCompare(b.data.title));
+  // Same order as the sidebar: alphabetical, ignoring a leading "The".
+  const themes = sortThemes(await getCollection("themes"));
   return themes.map((theme, i) => ({
     params: { id: theme.id },
     props: {

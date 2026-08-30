@@ -2,9 +2,10 @@
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import SectionIndex from "../../components/SectionIndex.astro";
+import { sortThemes } from "../../lib/related";
 import { hobbesForm } from "../../lib/spelling";
 
-const themes = (await getCollection("themes")).sort((a, b) => a.data.title.localeCompare(b.data.title));
+const themes = sortThemes(await getCollection("themes"));
 const entries = themes.map((t) => ({
   href: `/themes/${t.id}/`,
   title: t.data.title,

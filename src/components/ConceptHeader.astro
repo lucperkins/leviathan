@@ -4,9 +4,9 @@ import { inlineMarkdown } from "../lib/inline";
 interface Props {
   title: string;
   summary: string;
-  /** Small label above the title, e.g. "Concept" or "Interlocutor". */
+  /** Small label above the title, e.g. "Concept" or "Touchstone". */
   kind?: string;
-  /** Optional line under the title, e.g. an interlocutor's dates. */
+  /** Optional line under the title, e.g. an touchstone's dates. */
   meta?: string;
 }
 const { title, summary, kind = "Concept", meta } = Astro.props;

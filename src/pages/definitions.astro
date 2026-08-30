@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 // @ts-ignore -- plain-JS rehype helper, shared so the diagram links use the
-// same paragraph numbering as quotations on concept and interlocutor pages.
+// same paragraph numbering as quotations on concept and touchstone pages.
 import { loadChapters, locate, quoteHref } from "../plugins/rehype-quote-sources.mjs";
 import DefinitionChain from "../components/DefinitionChain.astro";
 import { DEFINITIONS } from "../lib/definitions";
@@ -121,7 +121,7 @@ if (unresolved.length) console.warn(`[definitions] unresolved term links: ${unre
   </figure>
 
   <section class="mt-16">
-    <h2 id="reading-the-seams" class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">
+    <h2 id="reading-the-seams" class="section-heading">
       <a href="#reading-the-seams" class="heading-anchor">Reading the seams</a>
     </h2>
     <p class="mt-4 max-w-prose font-serif text-lg leading-relaxed">
@@ -136,7 +136,7 @@ if (unresolved.length) console.warn(`[definitions] unresolved term links: ${unre
       The last of these is the one that does the work of Part III. By the time Hobbes defines a church, every
       term he needs has been fixed in the political chapters, so the definition of a church turns out to be a
       definition in politics. That is why the argument with{" "}
-      <a href="/interlocutors/bellarmine/" class="chapter-link">Bellarmine</a> in{" "}
+      <a href="/touchstones/bellarmine/" class="chapter-link">Bellarmine</a> in{" "}
       <a href="/chapters/42-of-power-ecclesiasticall/" class="chapter-link">Chapter 42</a> can be conducted
       without any new vocabulary at all.
     </p>
@@ -154,7 +154,7 @@ if (unresolved.length) console.warn(`[definitions] unresolved term links: ${unre
   </figure>
 
   <section class="mt-16 max-w-prose">
-    <h2 id="the-fourth-part" class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">
+    <h2 id="the-fourth-part" class="section-heading">
       <a href="#the-fourth-part" class="heading-anchor">And the fourth part</a>
     </h2>
     <div class="prose-chapter mt-4 font-serif text-lg leading-relaxed">

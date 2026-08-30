@@ -189,7 +189,7 @@ concept-ref:focus-visible {
   text-transform: uppercase;
   color: var(--color-stone-400);
 }
-concept-ref[data-kind="interlocutor"] {
+concept-ref[data-kind="touchstone"] {
   text-decoration-style: dashed;
 }
 
@@ -210,7 +210,7 @@ concept-ref[data-kind="interlocutor"] {
   color: var(--color-stone-400);
 }
 
-/* Quotation sources on concept and interlocutor pages */
+/* Quotation sources on concept and touchstone pages */
 .quote-source {
   margin-top: 0.5rem;
   font-family: var(--font-sans);
@@ -468,20 +468,25 @@ concept-ref[data-kind="interlocutor"] {
   text-decoration-color: var(--color-stone-100);
 }
 
-/* Chapter mentions in editorial prose */
-.prose-chapter .chapter-link {
+/* Chapter mentions: both the ones rehype-chapter-links makes in editorial
+   prose and the ones written by hand in page templates. The rule used to be
+   scoped to .prose-chapter, so the hand-written ones on the home page and the
+   appendix pages were links with no indication that they were links. */
+.chapter-link {
   color: inherit;
   text-decoration: underline;
   text-decoration-color: var(--color-stone-300);
   text-underline-offset: 3px;
 }
-.prose-chapter .chapter-link:hover {
+.chapter-link:hover,
+.chapter-link:focus-visible {
   text-decoration-color: var(--color-stone-900);
 }
-.dark .prose-chapter .chapter-link {
+.dark .chapter-link {
   text-decoration-color: var(--color-stone-600);
 }
-.dark .prose-chapter .chapter-link:hover {
+.dark .chapter-link:hover,
+.dark .chapter-link:focus-visible {
   text-decoration-color: var(--color-stone-100);
 }
 
@@ -1501,4 +1506,67 @@ a.external::after {
   font-size: 0.78rem;
   line-height: 1.55;
   color: var(--color-stone-500);
+}
+
+/* Hobbes's own scriptural citations in the chapter text, linked to the King
+   James text by rehype-scripture. There are several hundred of them, so they
+   are marked as lightly as a link can be: no external arrow, and a dotted
+   underline that only firms up on hover. */
+.scripture-ref {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--color-stone-400);
+  text-underline-offset: 3px;
+}
+.scripture-ref:hover,
+.scripture-ref:focus-visible {
+  text-decoration-style: solid;
+  text-decoration-color: var(--color-stone-800);
+}
+.dark .scripture-ref {
+  text-decoration-color: var(--color-stone-600);
+}
+.dark .scripture-ref:hover,
+.dark .scripture-ref:focus-visible {
+  text-decoration-color: var(--color-stone-200);
+}
+
+/* The books lists: the author on its own line under the title. */
+.work__author {
+  margin-top: 0.1rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--color-stone-500);
+}
+.dark .work__author {
+  color: var(--color-stone-400);
+}
+.work__author a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.dark .work__author a {
+  text-decoration-color: var(--color-stone-600);
+}
+.work__author a:hover,
+.work__author a:focus-visible {
+  text-decoration-color: var(--color-stone-700);
+}
+.dark .work__author a:hover,
+.dark .work__author a:focus-visible {
+  text-decoration-color: var(--color-stone-200);
+}
+
+/* Section headings on the index and apparatus pages. They used to be set as
+   small caps, which read as labels rather than headings; the marginal
+   headings inside the chapter text are a different thing and stay as they
+   are. */
+.section-heading {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.25;
 }

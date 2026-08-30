@@ -34,7 +34,7 @@ const cite = (c: { id: string; para: number | null }) => (c.para ? `/chapters/${
     {
       books.map((b: any) => (
         <section>
-          <h2 id={slug(b.book)} class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">
+          <h2 id={slug(b.book)} class="section-heading">
             <a href={`#${slug(b.book)}`} class="heading-anchor">{b.book}</a>
           </h2>
           <ul class="mt-3 divide-y divide-stone-200 border-t border-stone-200 dark:divide-stone-800 dark:border-stone-800">
@@ -60,7 +60,7 @@ const cite = (c: { id: string; para: number | null }) => (c.para ? `/chapters/${
   </div>
 
   <section class="mt-16 max-w-prose">
-    <h2 id="on-the-references" class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">
+    <h2 id="on-the-references" class="section-heading">
       <a href="#on-the-references" class="heading-anchor">On the references</a>
     </h2>
     <div class="prose-chapter mt-4 font-serif text-lg leading-relaxed">

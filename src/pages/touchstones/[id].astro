@@ -1,0 +1,35 @@
+---
+import { getCollection, getEntries, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import ConceptHeader from "../../components/ConceptHeader.astro";
+import PrevNext from "../../components/PrevNext.astro";
+import Prose from "../../components/Prose.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+import { chapterLinks, sortTouchstones } from "../../lib/related";
+import { neighbours } from "../../lib/sequence";
+
+export async function getStaticPaths() {
+  // Same order as the sidebar: by surname.
+  const touchstones = sortTouchstones(await getCollection("touchstones"));
+  return touchstones.map((touchstone, i) => ({
+    params: { id: touchstone.id },
+    props: {
+      touchstone,
+      ...neighbours(touchstones, i, (a) => ({ href: `/touchstones/${a.id}/`, title: a.data.title })),
+    },
+  }));
+}
+
+const { touchstone, prev, next } = Astro.props;
+const { Content } = await render(touchstone);
+const chapters = chapterLinks(await getEntries(touchstone.data.chapters));
+---
+
+<Layout title={touchstone.data.title}>
+  <ConceptHeader kind="Touchstone" title={touchstone.data.title} meta={touchstone.data.dates} summary={touchstone.data.summary} />
+  <Prose>
+    <Content />
+  </Prose>
+  <RelatedLinks title="Read in Leviathan" items={chapters} />
+  <PrevNext kind="touchstone" prev={prev} next={next} />
+</Layout>

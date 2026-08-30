@@ -18,12 +18,25 @@ export const conceptLink = (c: CollectionEntry<"concepts">) => ({
   label: c.data.title,
 });
 
-/** Interlocutors sort by surname: `sortName` if given, else the last word of the title. */
-export const interlocutorSortKey = (a: CollectionEntry<"interlocutors">) =>
+/**
+ * Titles sort as though a leading article were not there, so "The English
+ * Civil War" files under E and "The state of nature" under S. Used for the
+ * themes, which are the only collection whose titles start with "The".
+ */
+export const titleSortKey = (title: string) => title.replace(/^the\s+/i, "");
+
+export const themeSortKey = (t: CollectionEntry<"themes">) => titleSortKey(t.data.title);
+
+/** Themes in sidebar order. */
+export const sortThemes = (themes: CollectionEntry<"themes">[]) =>
+  [...themes].sort((a, b) => themeSortKey(a).localeCompare(themeSortKey(b)));
+
+/** Touchstones sort by surname: `sortName` if given, else the last word of the title. */
+export const touchstoneSortKey = (a: CollectionEntry<"touchstones">) =>
   a.data.sortName ?? a.data.title.trim().split(/\s+/).at(-1)!;
 
-export const sortInterlocutors = (interlocutors: CollectionEntry<"interlocutors">[]) =>
-  [...interlocutors].sort((x, y) => interlocutorSortKey(x).localeCompare(interlocutorSortKey(y)));
+export const sortTouchstones = (touchstones: CollectionEntry<"touchstones">[]) =>
+  [...touchstones].sort((x, y) => touchstoneSortKey(x).localeCompare(touchstoneSortKey(y)));
 
 export const themeLink = (t: CollectionEntry<"themes">) => ({
   href: `/themes/${t.id}/`,
@@ -31,5 +44,4 @@ export const themeLink = (t: CollectionEntry<"themes">) => ({
 });
 
 /** Related themes: alphabetical, matching the sidebar. */
-export const themeLinks = (themes: CollectionEntry<"themes">[]) =>
-  [...themes].sort((a, b) => a.data.title.localeCompare(b.data.title)).map(themeLink);
+export const themeLinks = (themes: CollectionEntry<"themes">[]) => sortThemes(themes).map(themeLink);

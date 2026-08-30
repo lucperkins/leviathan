@@ -1,8 +1,9 @@
 /**
- * Major works about *Leviathan*, grouped by what they are for. `href` links the
- * book itself where it has an entry of its own; otherwise `author` carries the
- * link, and where neither exists the entry is plain text rather than a guess.
- * `id` is the anchor, so entries can be linked from elsewhere on the site.
+ * Major works about *Leviathan*, grouped by what they are for. Every entry
+ * links somewhere: a Wikipedia article for the book where one exists, then the
+ * section of an author's article that covers it, then the Open Library record,
+ * which has almost everything and is neither a shop nor a tracker. `id` is the
+ * anchor, so entries can be linked from elsewhere on the site.
  */
 const W = "https://en.wikipedia.org/wiki/";
 
@@ -15,6 +16,7 @@ export const SHELVES = [
       {
         id: "malcolm-leviathan",
         title: "Leviathan",
+        href: "https://en.wikipedia.org/wiki/Noel_Malcolm",
         author: "Noel Malcolm (ed.)",
         year: "2012",
         note: "The Clarendon edition, in three volumes: the English and Latin texts on facing pages, with an introduction longer than most books about Hobbes. The scholarly standard, and the place to settle any question about what he actually wrote.",
@@ -22,6 +24,7 @@ export const SHELVES = [
       {
         id: "tuck-leviathan",
         title: "Leviathan",
+        href: "https://en.wikipedia.org/wiki/Richard_Tuck",
         author: "Richard Tuck (ed.)",
         year: "1991",
         note: "The Cambridge student edition, revised in 1996. Modernised spelling, light annotation, and the one most people have read.",
@@ -29,6 +32,7 @@ export const SHELVES = [
       {
         id: "molesworth-works",
         title: "The English Works of Thomas Hobbes",
+        href: "https://openlibrary.org/works/OL654092W",
         author: "Sir William Molesworth (ed.)",
         authorHref: `${W}Sir_William_Molesworth,_8th_Baronet`,
         year: "1839–45",
@@ -44,6 +48,7 @@ export const SHELVES = [
       {
         id: "strauss-political-philosophy",
         title: "The Political Philosophy of Hobbes",
+        href: "https://openlibrary.org/works/OL509284W",
         author: "Leo Strauss",
         authorHref: `${W}Leo_Strauss`,
         year: "1936",
@@ -52,6 +57,7 @@ export const SHELVES = [
       {
         id: "oakeshott-introduction",
         title: "Hobbes on Civil Association",
+        href: "https://openlibrary.org/works/OL29663W",
         author: "Michael Oakeshott",
         authorHref: `${W}Michael_Oakeshott`,
         year: "1975",
@@ -60,6 +66,7 @@ export const SHELVES = [
       {
         id: "warrender-obligation",
         title: "The Political Philosophy of Hobbes: His Theory of Obligation",
+        href: "https://openlibrary.org/works/OL1377959W",
         author: "Howard Warrender",
         year: "1957",
         note: "That obligation rests on the laws of nature as God's commands, not on self-interest or the sword. The strongest statement of the reading A. E. Taylor proposed in 1938, and the one the field has spent seventy years testing.",
@@ -67,6 +74,7 @@ export const SHELVES = [
       {
         id: "schmitt-leviathan",
         title: "The Leviathan in the State Theory of Thomas Hobbes",
+        href: "https://openlibrary.org/works/OL16937458W",
         author: "Carl Schmitt",
         authorHref: `${W}Carl_Schmitt`,
         year: "1938",
@@ -75,6 +83,7 @@ export const SHELVES = [
       {
         id: "macpherson-possessive-individualism",
         title: "The Political Theory of Possessive Individualism",
+        href: "https://openlibrary.org/works/OL677844W",
         author: "C. B. Macpherson",
         authorHref: `${W}C._B._Macpherson`,
         year: "1962",
@@ -83,6 +92,7 @@ export const SHELVES = [
       {
         id: "watkins-system",
         title: "Hobbes's System of Ideas",
+        href: "https://openlibrary.org/works/OL487820W",
         author: "J. W. N. Watkins",
         year: "1965",
         note: "Takes the claim to be a system seriously and asks whether the politics really does follow from the physics.",
@@ -90,6 +100,7 @@ export const SHELVES = [
       {
         id: "skinner-reason-and-rhetoric",
         title: "Reason and Rhetoric in the Philosophy of Hobbes",
+        href: "https://openlibrary.org/works/OL29420323W",
         author: "Quentin Skinner",
         authorHref: `${W}Quentin_Skinner`,
         year: "1996",
@@ -98,6 +109,7 @@ export const SHELVES = [
       {
         id: "skinner-republican-liberty",
         title: "Hobbes and Republican Liberty",
+        href: "https://openlibrary.org/works/OL2724337W",
         author: "Quentin Skinner",
         authorHref: `${W}Quentin_Skinner`,
         year: "2008",
@@ -120,6 +132,7 @@ export const SHELVES = [
       {
         id: "martinich-two-gods",
         title: "The Two Gods of Leviathan",
+        href: "https://openlibrary.org/works/OL8005077W",
         author: "A. P. Martinich",
         year: "1992",
         note: "The case that Hobbes was a sincere, if unorthodox, Christian, and that Parts III and IV are doing what they say they are doing.",
@@ -127,6 +140,7 @@ export const SHELVES = [
       {
         id: "collins-allegiance",
         title: "The Allegiance of Thomas Hobbes",
+        href: "https://openlibrary.org/works/OL5828051W",
         author: "Jeffrey R. Collins",
         year: "2005",
         note: "That the book is an intervention in the Engagement controversy on the side of the new republic, which is roughly what the royalists in Paris accused it of being.",
@@ -134,6 +148,7 @@ export const SHELVES = [
       {
         id: "sommerville-historical-context",
         title: "Thomas Hobbes: Political Ideas in Historical Context",
+        href: "https://openlibrary.org/works/OL1984752W",
         author: "Johann Sommerville",
         year: "1992",
         note: "What his positions looked like beside those of the people actually arguing in England at the time, which is less singular than the standard picture suggests.",
@@ -141,6 +156,7 @@ export const SHELVES = [
       {
         id: "malcolm-aspects",
         title: "Aspects of Hobbes",
+        href: "https://openlibrary.org/works/OL1734099W",
         author: "Noel Malcolm",
         year: "2002",
         note: "Essays on the parts nobody else covers: the printing of Leviathan, the Latin edition, the reception abroad, the manuscripts.",
@@ -155,6 +171,7 @@ export const SHELVES = [
       {
         id: "gauthier-logic",
         title: "The Logic of Leviathan",
+        href: "https://openlibrary.org/works/OL4804106W",
         author: "David Gauthier",
         authorHref: `${W}David_Gauthier`,
         year: "1969",
@@ -163,6 +180,7 @@ export const SHELVES = [
       {
         id: "hampton-social-contract",
         title: "Hobbes and the Social Contract Tradition",
+        href: "https://openlibrary.org/works/OL2732447W",
         author: "Jean Hampton",
         authorHref: `${W}Jean_Hampton`,
         year: "1986",
@@ -171,6 +189,7 @@ export const SHELVES = [
       {
         id: "kavka-hobbesian",
         title: "Hobbesian Moral and Political Theory",
+        href: "https://openlibrary.org/works/OL13424840W",
         author: "Gregory S. Kavka",
         year: "1986",
         note: "Not what Hobbes said but rather what can be built from it: the best defensible theory in the neighbourhood of his premises.",
@@ -192,6 +211,7 @@ export const SHELVES = [
       {
         id: "martinich-biography",
         title: "Hobbes: A Biography",
+        href: "https://openlibrary.org/works/OL1950771W",
         author: "A. P. Martinich",
         year: "1999",
         note: "The standard modern life, and careful about separating what is known from what Aubrey enjoyed telling.",
@@ -199,6 +219,7 @@ export const SHELVES = [
       {
         id: "aubrey-brief-lives",
         title: "Brief Lives",
+        href: "https://openlibrary.org/works/OL2953447W",
         author: "John Aubrey",
         authorHref: `${W}John_Aubrey`,
         year: "c. 1680",
@@ -207,6 +228,7 @@ export const SHELVES = [
       {
         id: "tuck-hobbes",
         title: "Hobbes: A Very Short Introduction",
+        href: "https://openlibrary.org/works/OL2011486W",
         author: "Richard Tuck",
         year: "1989",
         note: "A hundred and fifty pages, and the best short account of why the philosophy and the politics are one argument.",
@@ -214,6 +236,7 @@ export const SHELVES = [
       {
         id: "cambridge-companion",
         title: "The Cambridge Companion to Hobbes",
+        href: "https://openlibrary.org/works/OL19555911W",
         author: "Tom Sorell (ed.)",
         year: "1996",
         note: "Chapter-length surveys by different hands, useful for finding out what the disagreements are before choosing a side.",
@@ -221,6 +244,7 @@ export const SHELVES = [
       {
         id: "oxford-handbook",
         title: "The Oxford Handbook of Hobbes",
+        href: "https://openlibrary.org/works/OL21119332W",
         author: "A. P. Martinich and Kinch Hoekstra (eds)",
         year: "2016",
         note: "The larger and more recent survey, and the place to see what the field looks like now.",

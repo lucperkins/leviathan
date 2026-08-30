@@ -93,6 +93,39 @@ const tidyVerses = (v) =>
     : null;
 
 /**
+ * Wikisource's King James text: one page per book, with `#Chapter_N` headings
+ * and `#C:V` anchors on every verse. Public domain, no ads, and the same
+ * authorised version Hobbes worked from.
+ */
+export function scriptureHref(book, chapter, verses) {
+  const first = verses ? parseInt(verses, 10) : NaN;
+  const fragment = Number.isNaN(first) ? `Chapter_${chapter}` : `${chapter}:${first}`;
+  return `https://en.wikisource.org/wiki/Bible_(King_James)/${book.replace(/ /g, "_")}#${fragment}`;
+}
+
+/**
+ * Every citation in a run of text, as {index, length, book, chapter, verses}.
+ * Shared by the index page, which counts them, and rehype-scripture, which
+ * turns them into links in the chapter text, so both agree on what counts as
+ * a citation.
+ */
+export function* matchCitations(text) {
+  for (const m of text.matchAll(new RegExp(CITE.source, "gi"))) {
+    const key = m[1].toLowerCase().replace(/\./g, "").replace(/\s+/g, " ").trim();
+    const book = LOOKUP.get(key);
+    if (!book) continue;
+    yield {
+      index: m.index,
+      length: m[0].length,
+      text: m[0],
+      book,
+      chapter: Number(m[2]),
+      verses: tidyVerses(m[3]),
+    };
+  }
+}
+
+/**
  * Every scriptural citation in the chapter texts, grouped by book and
  * reference, with the places Hobbes cites it. Only the reference is recorded:
  * the passage itself is left to the external link.
@@ -137,12 +170,7 @@ export function scriptureIndex() {
 
   for (const r of all) {
     r.label = r.verses ? `${r.book} ${r.chapter}:${r.verses}` : `${r.book} ${r.chapter}`;
-    // Wikisource's King James text: one page per book, with `#Chapter_N`
-    // headings and `#C:V` anchors on every verse. Public domain, no ads, and
-    // the same authorised version Hobbes quotes.
-    const first = r.verses ? parseInt(r.verses, 10) : NaN;
-    const fragment = Number.isNaN(first) ? `Chapter_${r.chapter}` : `${r.chapter}:${first}`;
-    r.href = `https://en.wikisource.org/wiki/Bible_(King_James)/${r.book.replace(/ /g, "_")}#${fragment}`;
+    r.href = scriptureHref(r.book, r.chapter, r.verses);
     r.cited.sort((a, b) => a.number - b.number || (a.para ?? 0) - (b.para ?? 0));
   }
 

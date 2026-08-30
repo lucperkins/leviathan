@@ -17,7 +17,7 @@ function textOf(node) {
  *   marginalia:
  *     - heading: "The First Book"
  *       label: "Bellarmine: the Church is a mixed monarchy"
- *       href: "/interlocutors/bellarmine/#de-summo-pontifice"
+ *       href: "/touchstones/bellarmine/#de-summo-pontifice"
  *
  * `heading` is matched against the heading's own text, so it survives the
  * anchor wrapping that rehype-concept-headings adds.

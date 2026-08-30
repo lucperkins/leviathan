@@ -91,7 +91,7 @@ const fullTitle = (ch) => (ch.part ? `Chapter ${ch.number}, ${ch.title}` : ch.ti
  * On the editorial pages, link quotations of Hobbes to the paragraph of the
  * chapter they come from.
  *
- * Runs on concept, interlocutor, theme, and "Hobbes himself" pages.
+ * Runs on concept, touchstone, theme, and "Hobbes himself" pages.
  *
  * - Blockquotes get a footer: "Leviathan, Chapter 2 ¶7" (full title on hover),
  *   linked to /chapters/<id>/?hl=<opening words>#p7; the chapter page
@@ -104,7 +104,7 @@ const fullTitle = (ch) => (ch.part ? `Chapter ${ch.number}, ${ch.title}` : ch.ti
  */
 export default function rehypeQuoteSources() {
   return (tree, file) => {
-    if (!/\/content\/(concepts|interlocutors|themes|hobbes)\//.test(file.path ?? "")) return;
+    if (!/\/content\/(concepts|touchstones|themes|hobbes)\//.test(file.path ?? "")) return;
     const chapters = loadChapters();
 
     // Blockquotes

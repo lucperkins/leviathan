@@ -43,7 +43,7 @@ export default (Alpine: Alpine) => {
 
   /** Sidebar accordion section; open state persisted per section id. */
   Alpine.data("navSection", (id: string) => ({
-    open: Alpine.$persist(true).as(`leviathan:nav:${id}`),
+    open: Alpine.$persist(false).as(`leviathan:nav:${id}`),
     init() {
       // Never hide the page being read.
       if (this.$el.querySelector('[aria-current="page"]')) this.open = true;

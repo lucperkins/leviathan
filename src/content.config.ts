@@ -27,7 +27,7 @@ const chapters = defineCollection({
   }),
 });
 
-/** Shared shape for anything that gets a tooltip + page: concepts, interlocutors. */
+/** Shared shape for anything that gets a tooltip + page: concepts, touchstones. */
 const refSchema = z.object({
   title: z.string(),
   summary: z.string(),
@@ -42,8 +42,8 @@ const concepts = defineCollection({
   schema: refSchema.extend({ hobbes: z.string().optional() }),
 });
 
-const interlocutors = defineCollection({
-  loader: glob({ pattern: "**/*.mdx", base: "./src/content/interlocutors" }),
+const touchstones = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/touchstones" }),
   schema: refSchema.extend({
     dates: z.string().optional(),
     /** Surname (or other key) to sort by; defaults to the last word of the title. */
@@ -110,4 +110,4 @@ const hobbes = defineCollection({
     }),
 });
 
-export const collections = { chapters, concepts, hobbes, interlocutors, themes, works };
+export const collections = { chapters, concepts, hobbes, touchstones, themes, works };

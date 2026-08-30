@@ -10,7 +10,8 @@
     "astro": "astro",
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
-    "check": "astro check"
+    "check": "astro check",
+    "check:links": "bun run scripts/check-links.mjs"
   },
   "dependencies": {
     "@alpinejs/persist": "^3.16.3",

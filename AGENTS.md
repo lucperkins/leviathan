@@ -19,7 +19,14 @@ text to explanatory pages. Static site, no backend.
   `storybook` (port 6006) in parallel. Site must stay on 3000.
 
 Commands: `bun run build`, `bun run build-storybook`, `bun run check`
-(`astro check`; needs TypeScript 6.x), `process-compose up`.
+(`astro check`; needs TypeScript 6.x), `bun run check:links`, `process-compose up`.
+
+`check:links` (`scripts/check-links.mjs`) reads the built `dist/` and checks
+every internal href and src: that the page exists, and that a `#fragment`
+names an id on it. It is a Bun script rather than htmltest so that it runs the
+same way in the dev shell and in CI, which has bun and nothing else; it runs
+after `build` in the deploy workflow. External links are skipped — the point
+is the several thousand internal ones the rehype plugins generate.
 
 ## Deployment
 
