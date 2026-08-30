@@ -360,9 +360,14 @@ concept-ref[data-kind="touchstone"] {
   font-size: 0.95rem;
   line-height: 1.4;
 }
+/* Hobbes's outline runs nine levels deep, so each one has to be cheap: at the
+   old 2rem a level the deepest entries started 16rem into a 42rem column and
+   the text broke into slivers. Every line carries its own enumerator (I., A.,
+   1., a., 1), a), 1], a], i)), which is what actually marks the level; the
+   rule and the indent only have to keep them apart. */
 .prose-chapter .science-table ul {
   list-style: none;
-  margin: 0 0 0 1.25rem;
+  margin: 0 0 0 0.85rem;
   padding: 0;
   border-left: 1px solid var(--color-stone-200);
 }
@@ -372,7 +377,8 @@ concept-ref[data-kind="touchstone"] {
 }
 .prose-chapter .science-table li {
   margin: 0;
-  padding: 0.2rem 0 0.2rem 0.75rem;
+  padding: 0.15rem 0 0.15rem 0.6rem;
+  text-wrap: pretty;
 }
 .prose-chapter .science-table li + li {
   margin-top: 0;
@@ -1601,6 +1607,16 @@ a.external::after {
   }
   .prose-chapter .pullquote p {
     font-size: 1.3rem;
+  }
+  /* Nine levels will not fit a phone at desktop indents. */
+  .prose-chapter .science-table ul {
+    margin-left: 0.5rem;
+  }
+  .prose-chapter .science-table li {
+    padding-left: 0.45rem;
+  }
+  .prose-chapter .science-table {
+    font-size: 0.9rem;
   }
 }
 
