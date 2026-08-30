@@ -7,12 +7,6 @@ import { toString } from "hast-util-to-string";
 const CHAPTER_DIR = "src/content/chapters";
 
 const normalise = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
-const roman = (n) => {
-  const map = [[50, "L"], [40, "XL"], [10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]];
-  let out = "";
-  for (const [v, r] of map) while (n >= v) { out += r; n -= v; }
-  return out;
-};
 const fromRoman = (s) => {
   const v = { I: 1, V: 5, X: 10, L: 50 };
   let n = 0;
