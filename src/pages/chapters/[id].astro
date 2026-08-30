@@ -25,7 +25,7 @@ const refs = await getAllRefs();
 ---
 
 <Layout title={chapter.data.title}>
-  <ChapterHeader number={chapter.data.number} title={chapter.data.title} />
+  <ChapterHeader number={chapter.data.number} title={chapter.data.title} part={chapter.data.part} />
   <Prose x-data="quoteTarget" x-on:click="onClick($event)">
     <Content />
   </Prose>

@@ -29,9 +29,9 @@ function loadChapters() {
       const paras = content
         .split(/\n\s*\n/)
         .map((b) => b.trim())
-        .filter((b) => b && !/^(#|[-*]\s|\d+[.)]\s|<|>)/.test(b)) // only real paragraphs
+        .filter((b) => b && !/^(#|[-*]\s|\d+[.)]\s|<|>)/.test(b) && !/^\*\*[^*]+\*\*$/.test(b)) // only real paragraphs; bold-only display lines are unnumbered
         .map((b) => normalise(b.replace(/\n/g, " ")));
-      return { id: f.replace(/\.mdx$/, ""), number: data.number, title: data.title, paras };
+      return { id: f.replace(/\.mdx$/, ""), number: data.number, title: data.title, part: data.part, paras };
     });
 }
 
@@ -72,9 +72,9 @@ const link = (href, text, title) => ({
   children: [{ type: "text", value: text }],
 });
 
-/** Short form for footers ("Chapter 6", arabic to match the sidebar); the full title goes in the link's hover text. */
-const label = (ch) => `Chapter ${ch.number}`;
-const fullTitle = (ch) => `Chapter ${ch.number}, ${ch.title}`;
+/** Short form for footers ("Chapter 6", arabic to match the sidebar); the full title goes in the link's hover text. Front matter has no number. */
+const label = (ch) => (ch.part ? `Chapter ${ch.number}` : ch.title);
+const fullTitle = (ch) => (ch.part ? `Chapter ${ch.number}, ${ch.title}` : ch.title);
 
 /**
  * On concept and author pages, link quotations of Hobbes to the paragraph

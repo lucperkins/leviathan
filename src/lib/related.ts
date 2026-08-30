@@ -2,7 +2,7 @@ import type { CollectionEntry } from "astro:content";
 
 export const chapterLink = (ch: CollectionEntry<"chapters">) => ({
   href: `/chapters/${ch.id}/`,
-  label: `Chapter ${ch.data.number}: ${ch.data.title}`,
+  label: ch.data.part ? `Chapter ${ch.data.number}: ${ch.data.title}` : ch.data.title,
 });
 
 /** "Read in Leviathan" lists: chapters in book order regardless of frontmatter order. */

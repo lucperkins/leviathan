@@ -7,25 +7,31 @@ const alt =
   "The frontispiece of Leviathan, 1651: a crowned giant composed of hundreds of small human figures rises above a landscape, holding a sword in one hand and a bishop's crozier in the other. Below, two columns of small panels show the instruments of civil and ecclesiastical power.";
 ---
 
-<Layout title="Home" wide>
-  <section class="grid items-center gap-10 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] md:gap-14">
+<Layout title="Home">
+  <section class="flex flex-col gap-10 md:gap-14">
     <div>
       <p class="text-xs font-semibold tracking-[0.2em] text-stone-500 uppercase dark:text-stone-400">
         Thomas Hobbes · 1651
       </p>
-      <h1 class="mt-3 font-serif text-6xl leading-none font-semibold tracking-tight md:text-7xl">Leviathan</h1>
-      <p class="mt-5 font-serif text-xl leading-snug text-stone-600 italic dark:text-stone-400">
+      <h1 class="mt-5 font-serif text-6xl leading-none font-semibold tracking-tight md:text-7xl">Leviathan</h1>
+      <p class="mt-7 font-serif text-xl leading-snug text-stone-600 italic dark:text-stone-400">
         or The Matter, Forme and Power of a Common-Wealth Ecclesiasticall and Civil
       </p>
-      <p class="mt-6 text-sm tracking-wide text-stone-500 dark:text-stone-400">
+      <p class="mt-8 text-sm tracking-wide text-stone-500 dark:text-stone-400">
         <span class="font-serif">Non est potestas Super Terram quae Comparetur ei.</span>
-        <span class="ml-2 text-xs uppercase">Job 41</span>
+        <a
+          href="https://www.biblegateway.com/passage/?search=Job%2041&version=KJV"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="external ml-2 text-xs uppercase underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900 dark:decoration-stone-600 dark:hover:text-stone-100"
+          >Job 41</a
+        >
       </p>
-      <p class="mt-8 max-w-prose text-base leading-relaxed text-stone-700 dark:text-stone-300">
+      <p class="mt-10 max-w-prose text-base leading-relaxed text-stone-700 dark:text-stone-300">
         A reading edition of the 1651 text, with the terms Hobbes defines explained where they occur, his
         sources traced, and the book's great themes followed across its chapters.
       </p>
-      <div class="mt-8 flex flex-wrap gap-3">
+      <div class="mt-10 flex flex-wrap gap-3">
         <a
           href="/chapters/01-of-sense/"
           class="inline-flex items-center gap-2 rounded bg-stone-900 px-4 py-2 text-sm font-medium text-stone-50 transition-colors hover:bg-stone-700 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-stone-300"
@@ -48,12 +54,12 @@ const alt =
         </a>
       </div>
     </div>
-    <figure class="md:justify-self-end">
-      <div class="mx-auto max-w-sm md:max-w-none">
+    <figure>
+      <div>
         <Lightbox
           src={frontispiece}
-          widths={[480, 720, 1080]}
-          sizes="(min-width: 768px) 24rem, 90vw"
+          widths={[480, 720, 1080, 1440]}
+          sizes="(min-width: 768px) 42rem, 90vw"
           alt={alt}
           caption="Frontispiece of Leviathan, engraved by Abraham Bosse in consultation with Hobbes, 1651. British Library copy, via Wikimedia Commons."
           class="w-full rounded border border-stone-200 shadow-[0_24px_48px_-24px_rgb(0_0_0/0.45)] dark:border-stone-800"
@@ -65,7 +71,7 @@ const alt =
     </figure>
   </section>
 
-  <section class="mx-auto mt-20 max-w-2xl">
+  <section class="mt-20">
     <h2 class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">About the frontispiece</h2>
     <div class="prose-chapter mt-4 font-serif text-lg leading-relaxed">
       <p>

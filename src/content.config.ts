@@ -5,9 +5,11 @@ import { glob } from "astro/loaders";
 const chapters = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/chapters" }),
   schema: z.object({
+    /** Ordering key. Chapters are 1–47; front matter (the epistle, the introduction) is ≤ 0. */
     number: z.number(),
     title: z.string(),
-    part: z.string(),
+    /** One of PARTS in src/lib/parts.ts. Front matter has no part. */
+    part: z.string().optional(),
     /** Verbatim sentences to set out as pull quotes after the paragraph they occur in. */
     pullquotes: z.array(z.string()).default([]),
   }),
