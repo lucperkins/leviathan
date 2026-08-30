@@ -1,6 +1,6 @@
 # Leviathan — agent notes
 
-An interactive reading of Thomas Hobbes' *Leviathan* (1651). Chapter text on
+An interactive reading of Thomas Hobbes's *Leviathan* (1651). Chapter text on
 the right, navigation on the left, with hover tooltips that link terms in the
 text to explanatory pages. Static site, no backend.
 
@@ -74,9 +74,9 @@ paragraphs unwrapped, Gutenberg's standalone marginal headings turned into
 notes from the 1651 edition, not editorial additions. Chapter IX's table of
 the sciences is hand-built as a nested list inside `<div class="science-table">`
 (Gutenberg encodes it by indentation, which the extractor cannot parse). Only Chapters I–III are in so far; the rest are added deliberately,
-not in bulk. Keep Hobbes' spelling; do not modernise.
+not in bulk. Keep Hobbes's spelling; do not modernise.
 
-Author pages: brief account of the author, then Hobbes' relationship to them
+Author pages: brief account of the author, then Hobbes's relationship to them
 (what he took, what he rejected, with quotations from the text).
 
 Theme pages (`/themes/<id>/`) are essays on broad topics that run through the
