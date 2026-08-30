@@ -57,11 +57,14 @@ const {
     aria-label={alt}
   >
     <figure class="m-0 flex flex-col items-center gap-4">
+      {/* alt is empty on purpose: the dialog carries the description in its
+          aria-label, and a real alt here renders as a wall of text in the
+          middle of the screen while the full-size file loads. */}
       <Image
         src={src}
         width={1200}
         quality={quality}
-        alt={alt}
+        alt=""
         loading="lazy"
         decoding="async"
         class="block max-h-[66vh] max-w-full rounded object-contain"

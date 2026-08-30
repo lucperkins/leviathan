@@ -185,8 +185,7 @@ concept-ref:focus-visible {
 .concept-tip__kind {
   font-size: 0.65rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   color: var(--color-stone-400);
 }
 concept-ref[data-kind="touchstone"] {
@@ -624,44 +623,6 @@ a.external::after {
   stroke-width: 2;
 }
 
-/* Definitions shown with their borrowed terms marked. */
-.seam {
-  border-left: 2px solid var(--color-stone-300);
-  padding-left: 1rem;
-}
-.dark .seam {
-  border-color: var(--color-stone-700);
-}
-.seam dt {
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-stone-500);
-}
-.seam__chap {
-  margin-left: 0.5rem;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-}
-.seam dd {
-  margin: 0.5rem 0 0;
-  font-family: var(--font-serif);
-  font-size: 1.0625rem;
-  line-height: 1.6;
-}
-.borrow {
-  font-weight: 600;
-}
-.borrow sup {
-  margin-left: 0.1em;
-  font-size: 0.62em;
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  color: var(--color-rubric);
-}
-
-
 /* Marginal annotations on a chapter heading: what argument the passage answers.
    They sit in the right margin only where the viewport can spare the room. */
 .prose-chapter h3.has-note {
@@ -822,8 +783,7 @@ a.external::after {
 .toc-part__count {
   margin-left: auto;
   font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   color: var(--color-stone-400);
   white-space: nowrap;
 }
@@ -975,8 +935,7 @@ a.external::after {
 .thinker__count {
   margin-left: auto;
   font-size: 0.7rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   color: var(--color-stone-400);
   white-space: nowrap;
 }
@@ -1193,8 +1152,7 @@ a.external::after {
   font-family: var(--font-sans);
   font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   color: var(--color-stone-500);
 }
 .prose-chapter .chapter-footnotes .footnotes li {
@@ -1219,11 +1177,10 @@ a.external::after {
 .dark .section-index li:last-child {
   border-bottom-color: var(--color-stone-800);
 }
+/* Title first, then the descriptor under it: "Thucydides" over "Eight Bookes
+   of the Peloponnesian Warre, 1629". */
 .section-index__link {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.2rem 0.7rem;
+  display: block;
 }
 .section-index__title {
   font-family: var(--font-serif);
@@ -1245,8 +1202,13 @@ a.external::after {
   text-decoration-color: var(--color-stone-400);
 }
 .section-index__meta {
+  display: block;
+  margin-top: 0.15rem;
   font-size: 0.8rem;
   color: var(--color-stone-500);
+}
+.dark .section-index__meta {
+  color: var(--color-stone-400);
 }
 .section-index__summary {
   margin-top: 0.4rem;
@@ -1378,8 +1340,7 @@ a.external::after {
 .chain__prompt-label {
   font-family: var(--font-sans);
   font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   color: var(--color-stone-400);
 }
 .chain__picker {
@@ -1451,8 +1412,7 @@ a.external::after {
 .chain__where {
   font-family: var(--font-sans);
   font-size: 0.7rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   color: var(--color-stone-400);
   text-decoration: underline;
   text-decoration-color: var(--color-stone-300);
@@ -1569,4 +1529,42 @@ a.external::after {
   font-size: 1.3rem;
   font-weight: 600;
   line-height: 1.25;
+}
+
+/* The small label above a page title: "Appendix", "Theme", "Chapter 13". It
+   used to be set in wide-tracked capitals; the only all-caps left on the site
+   is Hobbes's own marginal headings in the chapter text. */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--color-stone-500);
+}
+.dark .eyebrow {
+  color: var(--color-stone-400);
+}
+
+/* "Related concepts", "Read in Leviathan": a heading rather than a label. */
+.related-heading {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-stone-700);
+}
+.dark .related-heading {
+  color: var(--color-stone-300);
+}
+
+/* Previous/next, above the link to the neighbouring page. */
+.prevnext-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--color-stone-400);
+}
+.dark .prevnext-label {
+  color: var(--color-stone-500);
 }

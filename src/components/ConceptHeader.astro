@@ -13,7 +13,7 @@ const { title, summary, kind = "Concept", meta } = Astro.props;
 ---
 
 <header class="mb-8">
-  <p class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">{kind}</p>
+  <p class="eyebrow">{kind}</p>
   <h1 class="mt-1 font-serif text-3xl font-semibold">{title}</h1>
   {meta && <p class="mt-1 text-sm text-stone-500 dark:text-stone-400">{meta}</p>}
   <p class="mt-3 text-lg text-stone-600 dark:text-stone-400 summary" set:html={inlineMarkdown(summary)} />

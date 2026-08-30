@@ -1,8 +1,18 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Lightbox from "../components/Lightbox.astro";
+// @ts-ignore -- plain-JS rehype helpers, so the footnote's quotation lands on
+// the paragraph and is highlighted there, like quotations everywhere else.
+import { loadChapters, locate, quoteHref } from "../plugins/rehype-quote-sources.mjs";
 import ResumeReading from "../components/ResumeReading.astro";
 import frontispiece from "../assets/frontispiece.jpg";
+
+/** The sentence in Chapter 28 where Hobbes explains the book's title. */
+const KING_OF_THE_PROUD = "having set forth the great power of Leviathan, called him King of the Proud";
+const proud = locate(loadChapters(), KING_OF_THE_PROUD);
+const proudHref = proud
+  ? quoteHref(proud.chapter.id, proud.para, KING_OF_THE_PROUD)
+  : "/chapters/28-of-punishments-and-rewards/";
 
 const alt =
   "The frontispiece of Leviathan, 1651: a crowned giant composed of hundreds of small human figures rises above a landscape, holding a sword in one hand and a bishop's crozier in the other. Below, two columns of small panels show the instruments of civil and ecclesiastical power.";
@@ -11,7 +21,7 @@ const alt =
 <Layout title="Home">
   <section class="flex flex-col gap-14 md:gap-20">
     <div>
-      <p class="text-xs font-semibold tracking-[0.2em] text-stone-500 uppercase dark:text-stone-400">
+      <p class="eyebrow">
         <a
           href="/hobbes/"
           class="underline decoration-stone-300 underline-offset-4 transition-colors hover:text-stone-900 dark:decoration-stone-600 dark:hover:text-stone-100"
@@ -27,18 +37,25 @@ const alt =
         > Ecclesiasticall and Civil
       </p>
       <p class="mt-10 text-sm tracking-wide text-stone-500 dark:text-stone-400">
-        <span class="font-serif">Non est potestas Super Terram quae Comparetur ei.</span>
+        <span class="font-serif"
+          >Non est potestas Super Terram quae Comparetur ei.<sup class="fn-ref"
+            ><a id="fnref-1" href="#fn-1">1</a></sup
+          ></span
+        >
         <a
           href="https://en.wikisource.org/wiki/Bible_(King_James)/Job#Chapter_41"
           target="_blank"
           rel="noopener noreferrer"
-          class="external ml-2 text-xs uppercase underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900 dark:decoration-stone-600 dark:hover:text-stone-100"
+          class="external ml-2 text-xs underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900 dark:decoration-stone-600 dark:hover:text-stone-100"
           >Job 41</a
         >
       </p>
       <p class="mt-12 max-w-prose text-base leading-relaxed text-stone-700 dark:text-stone-300">
-        A reading edition of the 1651 text, with the terms Hobbes defines explained where they occur, his
-        sources traced, and the book's great themes followed across its chapters.
+        A reading edition of the complete 1651 text. Every term Hobbes defines is explained where it occurs
+        and every scripture he cites is linked; the chain of definitions is traced from motion to the
+        common-wealth, the arguments he answers are set beside the chapters that answer them, and the great
+        themes, the man himself, his other nine books, and the two centuries of reply are followed across
+        the rest of the site.
       </p>
       <div class="mt-12 flex flex-wrap gap-4">
         <ResumeReading />
@@ -166,5 +183,27 @@ const alt =
     <p class="mt-6 text-xs text-stone-500 dark:text-stone-400">
       British Library copy of the 1651 edition, via Wikimedia Commons. Public domain.
     </p>
+    <div class="chapter-footnotes">
+      <p class="chapter-footnotes__title" id="notes">Notes</p>
+      <ol class="footnotes">
+        <li id="fn-1">
+          <a href="#fnref-1" class="footnotes__num" aria-label="Back to the text">1</a>
+          <span>
+            “There is no power on earth to be compared to him.” The motto runs across the top of the
+            frontispiece, and is the <a
+              class="external"
+              href="https://en.wikipedia.org/wiki/Vulgate"
+              target="_blank"
+              rel="noopener noreferrer">Vulgate</a
+            >'s Job 41:24 — the verse numbered 41:33 in the King James
+            text Hobbes worked from, where it reads “Upon earth there is not his like, who is made
+            without fear.” He takes the comparison up himself at the end of{" "}
+            <a href="/chapters/28-of-punishments-and-rewards/" class="chapter-link">Chapter 28</a>, where
+            God, “<a href={proudHref} class="chapter-link">having set forth the great power of Leviathan, called
+            him King of the Proud</a>.”
+          </span>
+        </li>
+      </ol>
+    </div>
   </section>
 </Layout>
