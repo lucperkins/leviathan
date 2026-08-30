@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import ChapterHeader from "../../components/ChapterHeader.astro";
+import { inlineMarkdown } from "../../lib/inline";
 import ConceptRefs from "../../components/ConceptRefs.astro";
 import PrevNext from "../../components/PrevNext.astro";
 import Prose from "../../components/Prose.astro";
@@ -26,6 +27,7 @@ const refs = await getAllRefs();
 
 <Layout title={chapter.data.title}>
   <ChapterHeader number={chapter.data.number} title={chapter.data.title} part={chapter.data.part} />
+  {chapter.data.note && <p class="chapter-note" set:html={inlineMarkdown(chapter.data.note)} />}
   <Prose x-data="quoteTarget" x-on:click="onClick($event)">
     <Content />
   </Prose>

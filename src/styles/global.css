@@ -849,3 +849,31 @@ a.external::after {
 .dark .toc-list a:focus-visible .toc-list__title {
   color: var(--color-stone-50);
 }
+
+/* Editorial headnote above a chapter, set apart from Hobbes's own text. */
+.chapter-note {
+  margin-bottom: 2rem;
+  border-left: 2px solid var(--color-stone-300);
+  padding-left: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--color-stone-600);
+}
+.dark .chapter-note {
+  border-color: var(--color-stone-700);
+  color: var(--color-stone-400);
+}
+.chapter-note a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-400);
+  text-underline-offset: 2px;
+}
+.chapter-note a:hover,
+.chapter-note a:focus-visible {
+  color: var(--color-stone-900);
+}
+.dark .chapter-note a:hover,
+.dark .chapter-note a:focus-visible {
+  color: var(--color-stone-100);
+}

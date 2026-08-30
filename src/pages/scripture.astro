@@ -24,7 +24,7 @@ const cite = (c: { id: string; para: number | null }) => (c.para ? `/chapters/${
       books.map((b: { book: string; refs: unknown[] }) => (
         <a href={`#${slug(b.book)}`} class="text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">
           {b.book}
-          <span class="text-xs text-stone-400 dark:text-stone-600">{b.refs.length}</span>
+          <span class="ml-1 text-xs text-stone-400 dark:text-stone-600">{b.refs.length}</span>
         </a>
       ))
     }
@@ -65,7 +65,7 @@ const cite = (c: { id: string; para: number | null }) => (c.para ? `/chapters/${
     </h2>
     <div class="prose-chapter mt-4 font-serif text-lg leading-relaxed">
       <p>
-        Hobbes writes his citations in the old style, with a full stop where we would put a colon, so that
+        Hobbes writes his citations in the old style, with a full stop where we would put a colon, so that{" "}
         <em>Gen. 17.7,8</em> means Genesis 17:7–8. His spellings are not consistent, and neither are his printer's:
         Matthew appears as Mat., Matth., Matt. and Math., Isaiah as Esay, and Ezekiel once as Exekiel. All of them
         have been resolved to the modern names here.
