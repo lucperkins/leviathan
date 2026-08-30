@@ -26,7 +26,7 @@ const touchstones = (await getCollection("touchstones")).map((a) => ({ id: a.id,
 const themes = (await getCollection("themes")).map((t) => ({ id: t.id, title: t.data.title, sort: titleSortKey(t.data.title) }));
 const hobbes = (await getCollection("hobbes")).map((h) => ({ id: h.id, title: h.data.title, sort: String(h.data.order) }));
 const works = (await getCollection("works")).map((w) => ({ id: w.id, title: w.data.title, sort: String(w.data.year) }));
-const kindred = (await getCollection("kindred")).map((k) => ({ id: k.id, title: k.data.title, sort: String(k.data.year + 1000).padStart(5, "0") }));
+const kindred = (await getCollection("kindred")).map((k) => ({ id: k.id, title: k.data.navTitle ?? k.data.title, sort: String(k.data.year + 1000).padStart(5, "0") }));
 
 /** Editorial apparatus rather than a content collection. */
 const appendix = [

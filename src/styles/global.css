@@ -1564,3 +1564,33 @@ a.external::after {
 .dark .prevnext-label {
   color: var(--color-stone-500);
 }
+
+/* Links written by hand in editorial prose — to a chapter, a theme, a concept,
+   a kindred spirit, one of his other books, or off the site. They carried no
+   class and so no styling at all, which made them invisible as links. The
+   generated ones (.chapter-link, .scripture-ref) and the page furniture
+   (.heading-anchor, .para-num, pull quotes, footnote markers) style
+   themselves and are left alone. */
+.prose-chapter a:not([class]),
+.prose-chapter a.external {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.prose-chapter a:not([class]):hover,
+.prose-chapter a:not([class]):focus-visible,
+.prose-chapter a.external:hover,
+.prose-chapter a.external:focus-visible {
+  text-decoration-color: var(--color-stone-900);
+}
+.dark .prose-chapter a:not([class]),
+.dark .prose-chapter a.external {
+  text-decoration-color: var(--color-stone-600);
+}
+.dark .prose-chapter a:not([class]):hover,
+.dark .prose-chapter a:not([class]):focus-visible,
+.dark .prose-chapter a.external:hover,
+.dark .prose-chapter a.external:focus-visible {
+  text-decoration-color: var(--color-stone-100);
+}

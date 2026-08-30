@@ -82,6 +82,8 @@ const kindred = defineCollection({
     dates: z.string(),
     /** Sort key: birth year, negative for BC. */
     year: z.number(),
+    /** Sidebar label, where it differs from the title. */
+    navTitle: z.string().optional(),
     summary: z.string(),
     chapters: z.array(reference("chapters")).default([]),
     concepts: z.array(reference("concepts")).default([]),
