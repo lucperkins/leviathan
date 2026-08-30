@@ -684,6 +684,8 @@ a.external::after {
 @media (min-width: 82rem) {
   .margin-note {
     position: absolute;
+    /* Above the margin-nav rail, so a note's link stays clickable. */
+    z-index: 30;
     top: 0;
     left: 100%;
     width: 11rem;
@@ -779,11 +781,7 @@ a.external::after {
   display: flex;
   align-items: baseline;
   gap: 0.9rem;
-  border-bottom: 1px solid var(--color-stone-200);
   padding-bottom: 0.6rem;
-}
-.dark .toc-part {
-  border-color: var(--color-stone-800);
 }
 .toc-part__numeral {
   font-family: var(--font-serif);
@@ -1661,4 +1659,62 @@ a.external::after {
 }
 .dark .site-chrome {
   background-color: oklch(18.5% 0.005 52);
+}
+
+/* Turning the page from the margins. A rail down each side of the window,
+   invisible until the pointer is on it. Only above 80rem: below that the
+   reading column is close enough to the edges that a rail would sit on the
+   text, and the buttons at the foot of the page are the way through. */
+.margin-nav {
+  display: none;
+}
+@media (min-width: 80rem) {
+  .margin-nav {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 20;
+    display: flex;
+    width: 3.5rem;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--default-transition-duration) var(--default-transition-timing-function);
+  }
+  .margin-nav--prev {
+    left: 20rem;
+    cursor: w-resize;
+    background: linear-gradient(to right, rgb(0 0 0 / 0.05), transparent);
+  }
+  .margin-nav--next {
+    right: 0;
+    cursor: e-resize;
+    background: linear-gradient(to left, rgb(0 0 0 / 0.05), transparent);
+  }
+  .margin-nav:hover,
+  .margin-nav:focus-visible {
+    opacity: 1;
+  }
+  .margin-nav__mark {
+    display: flex;
+    height: 2.5rem;
+    width: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background-color: var(--color-stone-100);
+    color: var(--color-stone-500);
+    box-shadow: 0 6px 18px -12px rgb(0 0 0 / 0.4);
+    backdrop-filter: blur(2px);
+  }
+  .dark .margin-nav__mark {
+    background-color: var(--color-stone-800);
+    color: var(--color-stone-300);
+  }
+  .dark .margin-nav--prev {
+    background: linear-gradient(to right, rgb(255 255 255 / 0.05), transparent);
+  }
+  .dark .margin-nav--next {
+    background: linear-gradient(to left, rgb(255 255 255 / 0.05), transparent);
+  }
 }

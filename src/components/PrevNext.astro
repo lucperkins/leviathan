@@ -4,6 +4,8 @@ interface Item {
   href: string;
   title: string;
 }
+import MarginNav from "./MarginNav.astro";
+
 interface Props {
   prev?: Item;
   next?: Item;
@@ -35,3 +37,5 @@ const { prev, next, kind = "page" } = Astro.props;
     </nav>
   )
 }
+
+<MarginNav prev={prev} next={next} />

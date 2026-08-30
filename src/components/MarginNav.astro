@@ -1,0 +1,40 @@
+---
+/**
+ * Click the margins to turn the page. Two rails down the far left and right of
+ * the window, invisible until the pointer is over them, when a chevron and a
+ * faint wash fade in and the cursor turns into a left or right arrow.
+ *
+ * Only on wide screens, where there is margin to spare: below that the reading
+ * column reaches the edges and the buttons at the foot of the page are the
+ * only sensible way through. They duplicate those buttons exactly, so they are
+ * hidden from assistive technology rather than announced twice.
+ */
+interface Props {
+  prev?: { href: string; title: string };
+  next?: { href: string; title: string };
+}
+const { prev, next } = Astro.props;
+---
+
+{
+  prev && (
+    <a class="margin-nav margin-nav--prev" href={prev.href} aria-hidden="true" tabindex="-1">
+      <span class="margin-nav__mark">
+        <svg viewBox="0 0 16 16" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 3 5 8l5 5" />
+        </svg>
+      </span>
+    </a>
+  )
+}
+{
+  next && (
+    <a class="margin-nav margin-nav--next" href={next.href} aria-hidden="true" tabindex="-1">
+      <span class="margin-nav__mark">
+        <svg viewBox="0 0 16 16" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 3 5 5-5 5" />
+        </svg>
+      </span>
+    </a>
+  )
+}

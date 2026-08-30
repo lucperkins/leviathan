@@ -175,7 +175,7 @@ export const SHELVES = [
   {
     title: "The argument as philosophy",
     blurb:
-      "Books that treat the covenant as a live problem rather than a historical one, mostly from the game theoretic turn of the 1980s.",
+      "Books that treat the covenant as a live problem rather than a historical one, mostly from the game-theoretic turn of the 1980s.",
     works: [
       {
         id: "gauthier-logic",
