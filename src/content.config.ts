@@ -43,6 +43,8 @@ const themes = defineCollection({
   schema: z.object({
     title: z.string(),
     summary: z.string(),
+    /** Hobbes's own spelling of the theme's key term, shown under the title (e.g. "Soveraignty"). */
+    hobbes: z.string().optional(),
     chapters: z.array(reference("chapters")).default([]),
     concepts: z.array(reference("concepts")).default([]),
   }),

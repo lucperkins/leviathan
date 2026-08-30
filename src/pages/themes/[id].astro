@@ -27,7 +27,12 @@ const concepts = conceptLinks(await getEntries(theme.data.concepts));
 ---
 
 <Layout title={theme.data.title}>
-  <ConceptHeader kind="Theme" title={theme.data.title} summary={theme.data.summary} />
+  <ConceptHeader
+    kind="Theme"
+    title={theme.data.title}
+    meta={theme.data.hobbes && `Hobbes's spelling: ${theme.data.hobbes}`}
+    summary={theme.data.summary}
+  />
   <Prose>
     <Content />
   </Prose>

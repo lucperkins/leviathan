@@ -55,7 +55,7 @@ Three collections, all MDX under `src/content/`, loaded with `glob`:
 | `chapters` | `chapters/NN-slug.mdx` | `number`, `title`, `part` (one of `PARTS` in `src/lib/parts.ts`), `pullquotes?` |
 | `concepts` | `concepts/slug.mdx` | `title`, `summary`, `terms?`, `chapters` (refs) |
 | `authors`  | `authors/slug.mdx`  | same as concepts + `dates?` |
-| `themes`   | `themes/slug.mdx`   | `title`, `summary`, `chapters` (refs), `concepts` (refs) |
+| `themes`   | `themes/slug.mdx`   | `title`, `summary`, `hobbes?`, `chapters` (refs), `concepts` (refs) |
 
 `concepts` and `authors` are **ref collections**: each entry gets (a) a brief
 `summary` shown in tooltips and (b) a full page at `/concepts/<id>/` or
@@ -84,6 +84,13 @@ which elucidate what Hobbes means by a specific term; themes are **not**
 tooltip-linked in chapter text. They link out to related concepts and
 chapters via `RelatedLinks`. A blockquote from the book's unnumbered
 introduction is attributed with a trailing `— Introduction` line.
+
+Theme prose uses **modern spelling** ("commonwealth", "sovereign", "kingdom
+of darkness"); Hobbes's spelling appears only inside quotations and quoted
+titles. Where the theme's key term is spelled differently by Hobbes, set
+`hobbes:` in the frontmatter (e.g. `Soveraignty`) and it is shown under the
+title as "Hobbes's spelling: …". Concept pages keep Hobbes's spelling in their
+titles, since they explain his terms.
 
 ## How the tooltips work
 
