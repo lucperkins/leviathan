@@ -9,6 +9,7 @@ import rehypeConceptHeadings from "./src/plugins/rehype-concept-headings.mjs";
 import rehypeChapterParagraphs from "./src/plugins/rehype-chapter-paragraphs.mjs";
 import rehypeQuoteSources from "./src/plugins/rehype-quote-sources.mjs";
 import rehypePullquotes from "./src/plugins/rehype-pullquotes.mjs";
+import rehypeChapterLinks from "./src/plugins/rehype-chapter-links.mjs";
 import refWatch from "./src/integrations/ref-watch.mjs";
 
 export default defineConfig({
@@ -22,6 +23,7 @@ export default defineConfig({
         rehypeChapterParagraphs,
         rehypeQuoteSources,
         rehypePullquotes,
+        rehypeChapterLinks,
       ],
     }),
   },

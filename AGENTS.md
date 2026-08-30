@@ -109,7 +109,13 @@ titles, since they explain his terms.
    through Vite's watcher and invalidates compiled chapter modules on
    add/remove/change so step 1 re-runs. Nothing external is needed for
    this — no watchexec, no restart.
-4. `src/plugins/rehype-concept-headings.mjs` gives `h2–h4` on chapter, concept,
+4. `src/plugins/rehype-chapter-links.mjs`: on concept/author/theme pages,
+   prose mentions like "Chapter XVII" or "Chapters XIV and XV" are rewritten
+   to arabic numerals (matching the sidebar) and linked to the chapter page
+   when it is loaded. Write chapter numbers in prose however you like (roman
+   or arabic); the reader always sees "Chapter 17". Quote footers use arabic
+   too. Part numbers stay roman ("Part III").
+5. `src/plugins/rehype-concept-headings.mjs` gives `h2–h4` on chapter, concept,
    and author pages ids and wraps them in self-links (`.heading-anchor`).
 5. `src/plugins/rehype-pullquotes.mjs`: a chapter's frontmatter `pullquotes`
    (verbatim sentences) are set out as `<aside id="quote-N" class="pullquote">`
@@ -120,7 +126,7 @@ titles, since they explain his terms.
    chapter pages (`<p id="p7">`) and prefixes each with a light `¶7` self-link
    (`.para-num`, positioned in the left margin; excluded from highlighting), and `rehype-quote-sources.mjs` links
    quotations of Hobbes on concept/author pages to those paragraphs: every
-   blockquote gets a "Leviathan, Chapter II ¶7" footer (full chapter title on hover), and
+   blockquote gets a "Leviathan, Chapter 2 ¶7" footer (full chapter title on hover), and
    inline `"…"` quotations of five or more words become links. Links look
    like `/chapters/<id>/?hl=<first six words>&to=<last six words>#p7`; the
    Alpine `quoteTarget` component on chapter pages finds that span in

@@ -437,3 +437,20 @@ concept-ref[data-kind="author"] {
   color: var(--color-stone-100);
   text-decoration-color: var(--color-stone-100);
 }
+
+/* Chapter mentions in editorial prose */
+.prose-chapter .chapter-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.prose-chapter .chapter-link:hover {
+  text-decoration-color: var(--color-stone-900);
+}
+.dark .prose-chapter .chapter-link {
+  text-decoration-color: var(--color-stone-600);
+}
+.dark .prose-chapter .chapter-link:hover {
+  text-decoration-color: var(--color-stone-100);
+}

@@ -78,9 +78,9 @@ const link = (href, text, title) => ({
   children: [{ type: "text", value: text }],
 });
 
-/** Short form for footers ("Chapter VI"); the full title goes in the link's hover text. */
-const label = (ch) => `Chapter ${roman(ch.number)}`;
-const fullTitle = (ch) => `Chapter ${roman(ch.number)}, ${ch.title}`;
+/** Short form for footers ("Chapter 6", arabic to match the sidebar); the full title goes in the link's hover text. */
+const label = (ch) => `Chapter ${ch.number}`;
+const fullTitle = (ch) => `Chapter ${ch.number}, ${ch.title}`;
 
 /**
  * On concept and author pages, link quotations of Hobbes to the paragraph
@@ -88,7 +88,7 @@ const fullTitle = (ch) => `Chapter ${roman(ch.number)}, ${ch.title}`;
  *
  * Runs on concept, author, and theme pages.
  *
- * - Blockquotes get a footer: "Leviathan, Chapter II ¶7" (full title on hover),
+ * - Blockquotes get a footer: "Leviathan, Chapter 2 ¶7" (full title on hover),
  *   linked to /chapters/<id>/?hl=<opening words>#p7; the chapter page
  *   highlights those words on arrival. A trailing "— Chapter XVII" line inside
  *   the blockquote gives the source explicitly; it is used as a plain
@@ -131,7 +131,7 @@ export default function rehypeQuoteSources() {
         const ch = chapters.find((c) => c.number === explicit);
         content = ch
           ? [{ type: "text", value: "Leviathan, " }, link(`/chapters/${ch.id}/`, label(ch), fullTitle(ch))]
-          : [{ type: "text", value: `Leviathan, Chapter ${roman(explicit)}` }];
+          : [{ type: "text", value: `Leviathan, Chapter ${explicit}` }];
       } else {
         return;
       }
