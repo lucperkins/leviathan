@@ -5,6 +5,7 @@ import BackButton from "../components/BackButton.astro";
 import ChapterNav from "../components/ChapterNav.astro";
 import ListNav from "../components/ListNav.astro";
 import SiteTitle from "../components/SiteTitle.astro";
+import { authorSortKey } from "../lib/related";
 import ThemeToggle from "../components/ThemeToggle.astro";
 
 interface Props {
@@ -19,7 +20,7 @@ const currentPath = Astro.url.pathname.endsWith("/")
 
 const chapters = (await getCollection("chapters")).map((ch) => ({ id: ch.id, ...ch.data }));
 const concepts = (await getCollection("concepts")).map((c) => ({ id: c.id, title: c.data.title }));
-const authors = (await getCollection("authors")).map((a) => ({ id: a.id, title: a.data.title }));
+const authors = (await getCollection("authors")).map((a) => ({ id: a.id, title: a.data.title, sort: authorSortKey(a) }));
 const themes = (await getCollection("themes")).map((t) => ({ id: t.id, title: t.data.title }));
 ---
 

@@ -55,7 +55,7 @@ Three collections, all MDX under `src/content/`, loaded with `glob`:
 |---|---|---|
 | `chapters` | `chapters/NN-slug.mdx` | `number`, `title`, `part` (one of `PARTS` in `src/lib/parts.ts`), `pullquotes?` |
 | `concepts` | `concepts/slug.mdx` | `title`, `summary`, `terms?`, `chapters` (refs) |
-| `authors`  | `authors/slug.mdx`  | same as concepts + `dates?` |
+| `authors`  | `authors/slug.mdx`  | same as concepts + `dates?`, `sortName?` (surname; defaults to the title's last word — authors sort by it in the sidebar and prev/next) |
 | `themes`   | `themes/slug.mdx`   | `title`, `summary`, `hobbes?`, `chapters` (refs), `concepts` (refs) |
 
 `concepts` and `authors` are **ref collections**: each entry gets (a) a brief

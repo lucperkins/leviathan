@@ -17,3 +17,10 @@ export const conceptLink = (c: CollectionEntry<"concepts">) => ({
   href: `/concepts/${c.id}/`,
   label: c.data.title,
 });
+
+/** Authors sort by surname: `sortName` if given, else the last word of the title. */
+export const authorSortKey = (a: CollectionEntry<"authors">) =>
+  a.data.sortName ?? a.data.title.trim().split(/\s+/).at(-1)!;
+
+export const sortAuthors = (authors: CollectionEntry<"authors">[]) =>
+  [...authors].sort((x, y) => authorSortKey(x).localeCompare(authorSortKey(y)));

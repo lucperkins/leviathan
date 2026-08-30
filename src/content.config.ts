@@ -30,6 +30,8 @@ const authors = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/authors" }),
   schema: refSchema.extend({
     dates: z.string().optional(),
+    /** Surname (or other key) to sort by; defaults to the last word of the title. */
+    sortName: z.string().optional(),
   }),
 });
 

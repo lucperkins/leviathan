@@ -5,12 +5,12 @@ import ConceptHeader from "../../components/ConceptHeader.astro";
 import PrevNext from "../../components/PrevNext.astro";
 import Prose from "../../components/Prose.astro";
 import RelatedLinks from "../../components/RelatedLinks.astro";
-import { chapterLinks } from "../../lib/related";
+import { chapterLinks, sortAuthors } from "../../lib/related";
 import { neighbours } from "../../lib/sequence";
 
 export async function getStaticPaths() {
-  // Same order as the sidebar: alphabetical by title.
-  const authors = (await getCollection("authors")).sort((a, b) => a.data.title.localeCompare(b.data.title));
+  // Same order as the sidebar: by surname.
+  const authors = sortAuthors(await getCollection("authors"));
   return authors.map((author, i) => ({
     params: { id: author.id },
     props: {

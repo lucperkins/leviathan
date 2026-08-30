@@ -7,12 +7,14 @@ interface Props {
   title: string;
   /** URL prefix, e.g. "/concepts". */
   basePath: string;
-  items: { id: string; title: string }[];
+  /** `sort` overrides the key used for ordering (e.g. an author's surname). */
+  items: { id: string; title: string; sort?: string }[];
   currentPath?: string;
 }
 const { sectionId, title, basePath, items, currentPath } = Astro.props;
 
-const sorted = [...items].sort((a, b) => a.title.localeCompare(b.title));
+const key = (i: { title: string; sort?: string }) => i.sort ?? i.title;
+const sorted = [...items].sort((a, b) => key(a).localeCompare(key(b)));
 ---
 
 <nav aria-label={title} class="text-sm">
