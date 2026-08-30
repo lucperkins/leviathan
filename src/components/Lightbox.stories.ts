@@ -9,5 +9,10 @@ export default {
 
 /** Click the image to open it in a modal; Escape or the backdrop closes it. */
 export const Default = {
-  args: { src: frontispiece, alt: "The frontispiece of Leviathan, 1651.", widths: [480, 720] },
+  args: {
+    src: frontispiece,
+    alt: "The frontispiece of Leviathan, 1651.",
+    caption: "Frontispiece engraved by Abraham Bosse, 1651. British Library copy, via Wikimedia Commons.",
+    widths: [480, 720],
+  },
 };

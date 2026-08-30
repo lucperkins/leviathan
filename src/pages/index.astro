@@ -2,49 +2,96 @@
 import Layout from "../layouts/Layout.astro";
 import Lightbox from "../components/Lightbox.astro";
 import frontispiece from "../assets/frontispiece.jpg";
+
+const alt =
+  "The frontispiece of Leviathan, 1651: a crowned giant composed of hundreds of small human figures rises above a landscape, holding a sword in one hand and a bishop's crozier in the other. Below, two columns of small panels show the instruments of civil and ecclesiastical power.";
 ---
 
-<Layout title="Home">
-  <h1 class="font-serif text-4xl font-semibold">Leviathan</h1>
-  <p class="mt-2 text-lg text-stone-600 dark:text-stone-400">
-    or The Matter, Forme and Power of a Common-Wealth Ecclesiasticall and Civil
-  </p>
-  <p class="mt-3 text-base text-stone-500 dark:text-stone-400">by Thomas Hobbes, 1651</p>
+<Layout title="Home" wide>
+  <section class="grid items-center gap-10 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] md:gap-14">
+    <div>
+      <p class="text-xs font-semibold tracking-[0.2em] text-stone-500 uppercase dark:text-stone-400">
+        Thomas Hobbes · 1651
+      </p>
+      <h1 class="mt-3 font-serif text-6xl leading-none font-semibold tracking-tight md:text-7xl">Leviathan</h1>
+      <p class="mt-5 font-serif text-xl leading-snug text-stone-600 italic dark:text-stone-400">
+        or The Matter, Forme and Power of a Common-Wealth Ecclesiasticall and Civil
+      </p>
+      <p class="mt-6 text-sm tracking-wide text-stone-500 dark:text-stone-400">
+        <span class="font-serif">Non est potestas Super Terram quae Comparetur ei.</span>
+        <span class="ml-2 text-xs uppercase">Job 41</span>
+      </p>
+      <p class="mt-8 max-w-prose text-base leading-relaxed text-stone-700 dark:text-stone-300">
+        A reading edition of the 1651 text, with the terms Hobbes defines explained where they occur, his
+        sources traced, and the book's great themes followed across its chapters.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a
+          href="/chapters/01-of-sense/"
+          class="inline-flex items-center gap-2 rounded bg-stone-900 px-4 py-2 text-sm font-medium text-stone-50 transition-colors hover:bg-stone-700 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-stone-300"
+        >
+          <svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 5.5C8.6 4.3 6.6 3.8 3 4v11c3.6-.2 5.6.3 7 1.5 1.4-1.2 3.4-1.7 7-1.5V4c-3.6-.2-5.6.3-7 1.5Z" />
+            <path d="M10 5.5v11" />
+          </svg>
+          Start reading
+        </a>
+        <a
+          href="/themes/the-state-of-nature/"
+          class="inline-flex items-center gap-2 rounded border border-stone-300 px-4 py-2 text-sm font-medium text-stone-700 transition-colors hover:border-stone-500 hover:text-stone-900 dark:border-stone-700 dark:text-stone-300 dark:hover:border-stone-500 dark:hover:text-stone-100"
+        >
+          <svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="10" cy="10" r="7.25" />
+            <path d="m13 7-1.8 4.2L7 13l1.8-4.2Z" />
+          </svg>
+          Explore the themes
+        </a>
+      </div>
+    </div>
+    <figure class="md:justify-self-end">
+      <div class="mx-auto max-w-sm md:max-w-none">
+        <Lightbox
+          src={frontispiece}
+          widths={[480, 720, 1080]}
+          sizes="(min-width: 768px) 24rem, 90vw"
+          alt={alt}
+          caption="Frontispiece of Leviathan, engraved by Abraham Bosse in consultation with Hobbes, 1651. British Library copy, via Wikimedia Commons."
+          class="w-full rounded border border-stone-200 shadow-[0_24px_48px_-24px_rgb(0_0_0/0.45)] dark:border-stone-800"
+        />
+      </div>
+      <figcaption class="mt-3 text-center text-xs text-stone-500 dark:text-stone-400">
+        Engraved by Abraham Bosse, 1651. Click to enlarge.
+      </figcaption>
+    </figure>
+  </section>
 
-  <figure class="mt-10">
-    <Lightbox
-      src={frontispiece}
-      alt="The frontispiece of Leviathan, 1651: a crowned giant composed of hundreds of small human figures rises above a landscape, holding a sword in one hand and a bishop's crozier in the other. Below, two columns of small panels show the instruments of civil and ecclesiastical power."
-      class="w-full rounded border border-stone-200 dark:border-stone-800"
-    />
-    <figcaption class="mt-3 text-sm text-stone-500 dark:text-stone-400">
-      Frontispiece engraved by Abraham Bosse, 1651, in consultation with Hobbes. British Library copy, via
-      Wikimedia Commons. Public domain.
-    </figcaption>
-  </figure>
-
-  <div class="prose-chapter mt-10 font-serif text-lg leading-relaxed">
-    <p>
-      The engraving is the argument of the book in a single image. A giant wearing a crown looks out over a
-      peaceful landscape: fields, a river, a walled town with its church, a few figures going about their
-      business. His body is made of people, hundreds of them, standing close together and facing inward, so
-      that the sovereign is nothing but the subjects who compose him. This is the common-wealth as Hobbes
-      defines it in <a href="/chapters/17-of-the-causes-generation-and-definition-of-a-common-wealth/" class="chapter-link">Chapter 17</a>: one person, of whose acts a great multitude have made themselves the author.
+  <section class="mx-auto mt-20 max-w-2xl">
+    <h2 class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">About the frontispiece</h2>
+    <div class="prose-chapter mt-4 font-serif text-lg leading-relaxed">
+      <p>
+        The engraving is the argument of the book in a single image. A giant wearing a crown looks out over a
+        peaceful landscape: fields, a river, a walled town with its church, a few figures going about their
+        business. His body is made of people, hundreds of them, standing close together and facing inward, so
+        that the sovereign is nothing but the subjects who compose him. This is the common-wealth as Hobbes
+        defines it in <a href="/chapters/17-of-the-causes-generation-and-definition-of-a-common-wealth/" class="chapter-link">Chapter 17</a>: one person, of whose acts a great multitude have made themselves the author.
+      </p>
+      <p>
+        In his right hand he holds a sword, the civil power; in his left, a bishop's crozier, the ecclesiastical
+        power. Hobbes's point, argued at length in Parts III and IV, is that both belong to the same hand. The
+        two columns of panels beneath repeat the pairing. On the sword's side: a castle, a crown, a cannon, a
+        trophy of weapons, and a battle. On the crozier's side: a church, a mitre, a thunderbolt of
+        excommunication, the forked distinctions of scholastic logic, and an ecclesiastical court. Each is the
+        civil or spiritual counterpart of the other.
+      </p>
+      <p>
+        Across the top runs a line from the Book of Job, chapter 41, where God describes the sea monster
+        Leviathan: <em>Non est potestas Super Terram quae Comparetur ei</em>, "There is no power on earth which
+        can be compared to him." Hobbes took his title from the same verses. The creature that nothing on earth
+        can match is the state, and the picture shows what it is made of.
+      </p>
+    </div>
+    <p class="mt-6 text-xs text-stone-500 dark:text-stone-400">
+      British Library copy of the 1651 edition, via Wikimedia Commons. Public domain.
     </p>
-    <p>
-      In his right hand he holds a sword, the civil power; in his left, a bishop's crozier, the ecclesiastical
-      power. Hobbes's point, argued at length in Parts III and IV, is that both belong to the same hand. The
-      two columns of panels beneath repeat the pairing. On the sword's side: a castle, a crown, a cannon, a
-      trophy of weapons, and a battle. On the crozier's side: a church, a mitre, a thunderbolt of
-      excommunication, the forked distinctions of scholastic logic, and an ecclesiastical court. Each is the
-      civil or spiritual counterpart of the other.
-    </p>
-    <p>
-      Across the top runs a line from the Book of Job, chapter 41, where God describes the sea monster
-      Leviathan: <em>Non est potestas Super Terram quae Comparetur ei</em>, "There is no power on earth which
-      can be compared to him." Hobbes took his title from the same verses. The creature that nothing on earth
-      can match is the state, and the picture shows what it is made of.
-    </p>
-    <p>Select a chapter, theme, concept, or author from the left to begin.</p>
-  </div>
+  </section>
 </Layout>

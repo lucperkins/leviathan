@@ -10,8 +10,10 @@ import ThemeToggle from "../components/ThemeToggle.astro";
 
 interface Props {
   title: string;
+  /** Wider content column (used by the home page hero). */
+  wide?: boolean;
 }
-const { title } = Astro.props;
+const { title, wide = false } = Astro.props;
 
 const isHome = Astro.url.pathname === "/";
 const currentPath = Astro.url.pathname.endsWith("/")
@@ -81,7 +83,7 @@ const themes = (await getCollection("themes")).map((t) => ({ id: t.id, title: t.
         </script>
       </aside>
       <main class="flex-1 px-12 pt-12 pb-32">
-        <div class="mx-auto max-w-2xl">
+        <div class:list={["mx-auto", wide ? "max-w-5xl" : "max-w-2xl"]}>
           {!isHome && <BackButton />}
           <slot />
         </div>
