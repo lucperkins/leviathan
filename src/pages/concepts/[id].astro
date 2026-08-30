@@ -26,9 +26,12 @@ const { Content } = await render(concept);
 const chapters = chapterLinks(await getEntries(concept.data.chapters));
 ---
 
-<Layout title={concept.data.title}
-    meta={hobbesForm(concept.data.title, concept.data.hobbes)}>
-  <ConceptHeader title={concept.data.title} summary={concept.data.summary} />
+<Layout title={concept.data.title}>
+  <ConceptHeader
+    title={concept.data.title}
+    meta={hobbesForm(concept.data.title, concept.data.hobbes)}
+    summary={concept.data.summary}
+  />
   <Prose>
     <Content />
   </Prose>
