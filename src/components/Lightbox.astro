@@ -17,6 +17,8 @@ interface Props {
   widths?: number[];
   sizes?: string;
   class?: string;
+  /** Above the fold: fetch immediately instead of lazily. */
+  priority?: boolean;
 }
 const {
   src,
@@ -25,12 +27,22 @@ const {
   widths = [480, 720, 1080],
   sizes = "(min-width: 1024px) 42rem, 100vw",
   class: className,
+  priority = false,
 } = Astro.props;
 ---
 
 <div x-data="lightbox">
   <button type="button" x-on:click="open()" class="block w-full cursor-zoom-in" title="View full size">
-    <Image src={src} widths={widths} sizes={sizes} alt={alt} class={className} />
+    <Image
+      src={src}
+      width={Math.max(...widths)}
+      widths={widths}
+      sizes={sizes}
+      alt={alt}
+      class={className}
+      loading={priority ? "eager" : "lazy"}
+      fetchpriority={priority ? "high" : "auto"}
+    />
   </button>
   <dialog
     x-ref="dialog"
@@ -40,7 +52,14 @@ const {
     aria-label={alt}
   >
     <figure class="m-0 flex flex-col items-center gap-4">
-      <img src={src.src} alt={alt} class="block max-h-[66vh] max-w-full rounded object-contain" />
+      <Image
+        src={src}
+        width={1200}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        class="block max-h-[66vh] max-w-full rounded object-contain"
+      />
       {caption && <figcaption class="max-w-prose text-center text-sm leading-relaxed text-stone-300">{caption}</figcaption>}
     </figure>
     <button

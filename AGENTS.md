@@ -214,3 +214,25 @@ Styling for all of this is plain CSS at the bottom of `global.css`
   the flake sees new files. Commit only when asked.
 - The chapter extraction script is not in the repo yet (it lived in a
   scratchpad); if it is added, put it at `scripts/extract-chapters.ts`.
+
+## TODO
+
+- **Make the site mobile-friendly.** It is currently desktop-only by
+  assumption. Known blockers, roughly in order:
+  - `Layout.astro` renders the sidebar as a fixed `w-80` `h-screen` `sticky`
+    `<aside>` with no breakpoint at all, so on a phone it eats the screen.
+    It needs to collapse to a drawer behind a toggle below (say) `md`.
+  - `<main>` uses `px-12 pt-12 pb-32`; the horizontal padding is too generous
+    for narrow viewports.
+  - Chapter paragraph numbers (`.para-num`) are positioned
+    `absolute; right: 100%`, so they sit outside the viewport once the column
+    reaches the screen edge. They need to move inline, or be hidden, on small
+    screens.
+  - The derivation diagrams on `/definitions/` set `min-width: 40rem` inside
+    an `overflow-x-auto` container. They scroll rather than break, but the
+    hover-to-trace interaction has no touch equivalent.
+  - Already handled and worth keeping that way: `.margin-note` falls back to
+    an inline block below `82rem`, and the `/contents/` chapter grid drops to
+    one column below `48rem`.
+  - Check the lightbox dialog and the `/scripture/` reference rows, which
+    wrap but have not been looked at on a small screen.
