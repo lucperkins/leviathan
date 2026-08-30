@@ -1,0 +1,20 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import SectionIndex from "../../components/SectionIndex.astro";
+
+const sections = (await getCollection("hobbes")).sort((a, b) => a.data.order - b.data.order);
+const entries = sections.map((s) => ({
+  href: `/hobbes/${s.id}/`,
+  title: s.data.title,
+  summary: s.data.summary,
+}));
+---
+
+<Layout title="Hobbes himself">
+  <SectionIndex
+    title="Hobbes himself"
+    intro="Four short pieces on the man rather than the book: where he came from, what he did, what he was like, and what he believed. Read in that order. Much of what is known about the third comes from John Aubrey, who was a friend and a magpie in roughly equal measure."
+    entries={entries}
+  />
+</Layout>

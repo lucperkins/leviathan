@@ -1,0 +1,33 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionIndex from "../components/SectionIndex.astro";
+
+const entries = [
+  {
+    href: "/definitions/",
+    title: "The chain of definitions",
+    summary:
+      "Hobbes builds the book out of one continuous system of definitions, each assembled from terms fixed earlier. Two diagrams trace the dependencies from motion to the common-wealth, and from there to the church.",
+  },
+  {
+    href: "/scripture/",
+    title: "Scriptural references",
+    summary:
+      "Every passage Hobbes cites by chapter and verse, resolved to modern book names and linked to the King James text, with the paragraphs where he uses each one.",
+  },
+  {
+    href: "/thinkers/",
+    title: "Thinkers named",
+    summary:
+      "Everyone named as a writer or an authority, grouped as the book uses them, with a closing list of the people a reader expects and does not find.",
+  },
+];
+---
+
+<Layout title="Appendix">
+  <SectionIndex
+    title="Appendix"
+    intro="Apparatus rather than argument. Each of these is built from the text itself at build time, so they stay in step with the chapters as they are edited."
+    entries={entries}
+  />
+</Layout>

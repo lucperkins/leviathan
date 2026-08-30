@@ -1,0 +1,21 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import SectionIndex from "../../components/SectionIndex.astro";
+
+const themes = (await getCollection("themes")).sort((a, b) => a.data.title.localeCompare(b.data.title));
+const entries = themes.map((t) => ({
+  href: `/themes/${t.id}/`,
+  title: t.data.title,
+  meta: t.data.hobbes,
+  summary: t.data.summary,
+}));
+---
+
+<Layout title="Themes">
+  <SectionIndex
+    title="Themes"
+    intro="Large subjects that run the length of the book, each gathering passages from chapters that sit far apart. Unlike the [concepts](/concepts/), these are not terms Hobbes stops to define; they are the arguments his definitions were built to serve. Where he has his own word for one, it is given beside the title."
+    entries={entries}
+  />
+</Layout>

@@ -1,0 +1,22 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import SectionIndex from "../../components/SectionIndex.astro";
+import { sortInterlocutors } from "../../lib/related";
+
+const people = sortInterlocutors(await getCollection("interlocutors"));
+const entries = people.map((p) => ({
+  href: `/interlocutors/${p.id}/`,
+  title: p.data.title,
+  meta: p.data.dates,
+  summary: p.data.summary,
+}));
+---
+
+<Layout title="Interlocutors">
+  <SectionIndex
+    title="Interlocutors"
+    intro="The thinkers whose arguments the book takes on, at enough length to be worth an essay. Not all of them are named in it: Aquinas never is, though most of what Hobbes attacks as scholasticism is his. For everyone Hobbes does name, however briefly, see [Thinkers named](/thinkers/)."
+    entries={entries}
+  />
+</Layout>

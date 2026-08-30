@@ -10,8 +10,11 @@ interface Props {
   /** `sort` overrides the key used for ordering (e.g. an author's surname). */
   items: { id: string; title: string; sort?: string }[];
   currentPath?: string;
+  /** Landing page for the section, listed first. */
+  indexHref?: string;
+  indexTitle?: string;
 }
-const { sectionId, title, basePath, items, currentPath } = Astro.props;
+const { sectionId, title, basePath, items, currentPath, indexHref, indexTitle } = Astro.props;
 
 const key = (i: { title: string; sort?: string }) => i.sort ?? i.title;
 const sorted = [...items].sort((a, b) => key(a).localeCompare(key(b)));
@@ -20,6 +23,24 @@ const sorted = [...items].sort((a, b) => key(a).localeCompare(key(b)));
 <nav aria-label={title} class="text-sm">
   <NavSection id={sectionId} title={title}>
     <ul class="space-y-1">
+      {
+        indexHref && indexTitle && (
+          <li>
+            <a
+              href={indexHref}
+              aria-current={currentPath === indexHref ? "page" : undefined}
+              class:list={[
+                "block rounded py-1 pr-7 pl-2 leading-snug transition-colors",
+                currentPath === indexHref
+                  ? "bg-stone-800 text-stone-50 dark:bg-stone-100 dark:text-stone-900"
+                  : "text-stone-500 hover:bg-stone-200 dark:text-stone-400 dark:hover:bg-stone-800",
+              ]}
+            >
+              {indexTitle}
+            </a>
+          </li>
+        )
+      }
       {
         sorted.map((item) => {
           const href = `${basePath}/${item.id}/`;

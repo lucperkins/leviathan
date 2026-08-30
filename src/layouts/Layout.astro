@@ -65,11 +65,11 @@ const appendix = [
           <ChapterNav chapters={chapters} currentPath={currentPath} />
           {/* The rule splits the book section's bottom margin so the gap to Themes equals the gaps below it. */}
           <div class="-mt-2 border-t border-stone-200 pt-2 dark:border-stone-800">
-            <ListNav sectionId="hobbes" title="Hobbes himself" basePath="/hobbes" items={hobbes} currentPath={currentPath} />
-            <ListNav sectionId="themes" title="Themes" basePath="/themes" items={themes} currentPath={currentPath} />
-            <ListNav sectionId="concepts" title="Concepts" basePath="/concepts" items={concepts} currentPath={currentPath} />
-            <ListNav sectionId="interlocutors" title="Interlocutors" basePath="/interlocutors" items={interlocutors} currentPath={currentPath} />
-            <ListNav sectionId="appendix" title="Appendix" basePath="" items={appendix} currentPath={currentPath} />
+            <ListNav sectionId="hobbes" title="Hobbes himself" basePath="/hobbes" items={hobbes} currentPath={currentPath} indexHref="/hobbes/" indexTitle="Overview" />
+            <ListNav sectionId="themes" title="Themes" basePath="/themes" items={themes} currentPath={currentPath} indexHref="/themes/" indexTitle="Overview" />
+            <ListNav sectionId="concepts" title="Concepts" basePath="/concepts" items={concepts} currentPath={currentPath} indexHref="/concepts/" indexTitle="Overview" />
+            <ListNav sectionId="interlocutors" title="Interlocutors" basePath="/interlocutors" items={interlocutors} currentPath={currentPath} indexHref="/interlocutors/" indexTitle="Overview" />
+            <ListNav sectionId="appendix" title="Appendix" basePath="" items={appendix} currentPath={currentPath} indexHref="/appendix/" indexTitle="Overview" />
           </div>
         </div>
         <div class="border-t border-stone-200 px-4 py-3 dark:border-stone-800">

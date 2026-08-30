@@ -1,0 +1,49 @@
+---
+/**
+ * Landing page for a section of the site: a short account of what the section
+ * is, then every entry in it with its summary, in the same order as the
+ * sidebar. Takes plain data so it renders in Storybook.
+ */
+import { inlineMarkdown } from "../lib/inline";
+
+export interface IndexEntry {
+  href: string;
+  title: string;
+  /** Small line beside the title: an interlocutor's dates, Hobbes's spelling of a theme. */
+  meta?: string;
+  summary: string;
+}
+
+interface Props {
+  title: string;
+  intro: string;
+  entries: IndexEntry[];
+  /** Small label above the title. */
+  eyebrow?: string;
+}
+const { title, intro, entries, eyebrow } = Astro.props;
+---
+
+<header class="mb-10">
+  {
+    eyebrow && (
+      <p class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">{eyebrow}</p>
+    )
+  }
+  <h1 class="mt-1 font-serif text-3xl font-semibold">{title}</h1>
+  <p class="mt-3 max-w-prose text-lg text-stone-600 dark:text-stone-400" set:html={inlineMarkdown(intro)} />
+</header>
+
+<ul class="section-index">
+  {
+    entries.map((entry) => (
+      <li>
+        <a class="section-index__link" href={entry.href}>
+          <span class="section-index__title">{entry.title}</span>
+          {entry.meta && <span class="section-index__meta">{entry.meta}</span>}
+        </a>
+        <p class="section-index__summary" set:html={inlineMarkdown(entry.summary)} />
+      </li>
+    ))
+  }
+</ul>
