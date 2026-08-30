@@ -375,7 +375,7 @@ concept-ref[data-kind="author"] {
   font-size: 0.7rem;
   font-style: normal;
   line-height: 1;
-  color: var(--color-stone-300);
+  color: var(--color-stone-400);
   text-decoration: none;
   user-select: none;
   white-space: nowrap;
@@ -385,7 +385,7 @@ concept-ref[data-kind="author"] {
   color: var(--color-stone-700);
 }
 .dark .para-num {
-  color: var(--color-stone-700);
+  color: var(--color-stone-600);
 }
 .dark .para-num:hover,
 .dark .para-num:focus-visible {
