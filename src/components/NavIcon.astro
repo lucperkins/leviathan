@@ -3,7 +3,9 @@
  * The small mark beside a top-level sidebar section. Keyed by the section's
  * id, so NavSection can look one up without every call site passing it; the
  * nested part sections inside the book get none. Drawn in the same idiom as
- * the buttons on the home page, which point at the same places.
+ * the buttons on the home page, which point at the same places. It takes its
+ * colour from whatever it sits in, so the mark and the label beside it always
+ * match.
  */
 interface Props {
   name: string;
@@ -37,7 +39,7 @@ const paths = ICONS[name];
       stroke-width="1.4"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class="shrink-0 text-stone-400 dark:text-stone-600"
+      class="shrink-0"
     >
       {paths.map((d) => (
         <path d={d} />

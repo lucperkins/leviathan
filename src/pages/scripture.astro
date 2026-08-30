@@ -39,15 +39,15 @@ const cite = (c: { id: string; para: number | null }) => (c.para ? `/chapters/${
           </h2>
           <ul class="mt-3 divide-y divide-stone-200 border-t border-stone-200 dark:divide-stone-800 dark:border-stone-800">
             {b.refs.map((r: any) => (
-              <li class="scripture-ref">
-                <a class="external scripture-ref__ref" href={r.href} target="_blank" rel="noopener noreferrer">
+              <li class="scripture-row">
+                <a class="external scripture-row__ref" href={r.href} target="_blank" rel="noopener noreferrer">
                   {r.label}
                 </a>
-                <span class="scripture-ref__cites">
+                <span class="scripture-row__cites">
                   {r.cited.map((c: any) => (
                     <a href={cite(c)} title={c.title}>
                       {c.part ? `${c.number}` : c.title}
-                      {c.para && <span class="scripture-ref__para">&para;{c.para}</span>}
+                      {c.para && <span class="scripture-row__para">&para;{c.para}</span>}
                     </a>
                   ))}
                 </span>

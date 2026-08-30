@@ -26,7 +26,7 @@ const { id, title, open = false, nested = false } = Astro.props;
   x-on:toggle="open = $el.open"
 >
   <summary
-    class="flex cursor-pointer list-none items-center justify-between rounded py-1 pr-3 pl-3 text-sm font-semibold text-stone-500 select-none hover:bg-stone-200 hover:text-stone-700 dark:hover:bg-stone-800 dark:hover:text-stone-300 [&::-webkit-details-marker]:hidden"
+    class="flex cursor-pointer list-none items-center justify-between rounded py-1 pr-3 pl-3 text-sm font-semibold text-stone-500 select-none dark:text-stone-400 hover:bg-stone-200 hover:text-stone-700 dark:hover:bg-stone-800 dark:hover:text-stone-300 [&::-webkit-details-marker]:hidden"
   >
     <span class="flex min-w-0 items-center gap-2">
       {!nested && <NavIcon name={id} />}
