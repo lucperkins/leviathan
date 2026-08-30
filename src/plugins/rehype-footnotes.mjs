@@ -1,26 +1,18 @@
 import { visit } from "unist-util-visit";
 
-/** Minimal inline markdown for footnote text: *emphasis* and [links](/href). */
+/** Minimal inline markdown for footnote text: **bold**, *emphasis*, [links](/href). */
 function inline(text) {
   const out = [];
-  const pattern = /\[([^\]]+)\]\(([^)]+)\)|\*([^*]+)\*/g;
+  const pattern = /\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*|\*([^*]+)\*/g;
   let last = 0;
   for (const m of text.matchAll(pattern)) {
     if (m.index > last) out.push({ type: "text", value: text.slice(last, m.index) });
     if (m[1] !== undefined) {
-      out.push({
-        type: "element",
-        tagName: "a",
-        properties: { href: m[2] },
-        children: [{ type: "text", value: m[1] }],
-      });
+      out.push({ type: "element", tagName: "a", properties: { href: m[2] }, children: inline(m[1]) });
+    } else if (m[3] !== undefined) {
+      out.push({ type: "element", tagName: "strong", properties: {}, children: [{ type: "text", value: m[3] }] });
     } else {
-      out.push({
-        type: "element",
-        tagName: "em",
-        properties: {},
-        children: [{ type: "text", value: m[3] }],
-      });
+      out.push({ type: "element", tagName: "em", properties: {}, children: [{ type: "text", value: m[4] }] });
     }
     last = m.index + m[0].length;
   }

@@ -1083,6 +1083,23 @@ a.external::after {
 .dark .footnotes__num {
   color: var(--color-stone-500);
 }
+.footnotes a:not(.footnotes__back) {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.dark .footnotes a:not(.footnotes__back) {
+  text-decoration-color: var(--color-stone-600);
+}
+.footnotes a:not(.footnotes__back):hover,
+.footnotes a:not(.footnotes__back):focus-visible {
+  text-decoration-color: var(--color-stone-700);
+}
+.dark .footnotes a:not(.footnotes__back):hover,
+.dark .footnotes a:not(.footnotes__back):focus-visible {
+  text-decoration-color: var(--color-stone-200);
+}
 .footnotes__back {
   color: var(--color-stone-400);
   text-decoration: none;
