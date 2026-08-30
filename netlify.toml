@@ -5,8 +5,10 @@
 [build.environment]
   NODE_VERSION = "24"
 
-# Whole-site HTTP Basic Auth; the password lives in the SITE_PASSWORD env var
-# (set in the Netlify UI or `netlify env:set`), never in the repo.
-[[edge_functions]]
-  path = "/*"
-  function = "password"
+# Keep the site out of search engines and well-behaved crawlers (robots.txt
+# in public/ does the same for bots that read it). These are requests, not
+# enforcement; only authentication can actually block a scraper.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive, noimageindex"

@@ -6,7 +6,6 @@
   ],
   "exclude": [
     "dist",
-    "netlify",
     "node_modules",
     "storybook-static"
   ]

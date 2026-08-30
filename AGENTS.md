@@ -31,11 +31,12 @@ Commands: `bun run build`, `bun run build-storybook`, `bun run check`
   (production) and on PRs (preview alias); it uses the `NETLIFY_AUTH_TOKEN`
   and `NETLIFY_SITE_ID` repo secrets. `netlify deploy --build --prod` from
   the linked checkout also works for a manual deploy.
-- The site is behind HTTP Basic Auth implemented as a Netlify edge function
-  (`netlify/edge-functions/password.ts`, declared in `netlify.toml`). Any
-  username; the password is the `SITE_PASSWORD` Netlify env var (set with
-  `netlify env:set`, never committed). Netlify's native site password is a
-  Pro-plan feature and the API rejects it on Starter, hence the function.
+- No password (removed 2026-08-29; Netlify's native site password needs a
+  Pro team, and the interim edge function was dropped). Instead the site asks
+  not to be crawled: `public/robots.txt` disallows everything, `netlify.toml`
+  sets `X-Robots-Tag: noindex, nofollow, noarchive, noimageindex` on every
+  response, and `Layout.astro` carries a matching `<meta name="robots">`.
+  These are requests, not enforcement.
 
 
 **Start and stop the dev servers only through process-compose** — never run
