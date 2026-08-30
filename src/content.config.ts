@@ -2,7 +2,7 @@ import { defineCollection, reference } from "astro:content";
 import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 
-/** Editorial footnotes: `after` is matched in the text, the note collected at the foot. */
+/** Editorial footnotes, available to every collection: `after` is matched in the text, the note collected at the foot. */
 const footnotes = z.array(z.object({ after: z.string(), text: z.string() })).default([]);
 
 const chapters = defineCollection({
@@ -33,6 +33,7 @@ const refSchema = z.object({
   summary: z.string(),
   terms: z.array(z.string()).optional(),
   chapters: z.array(reference("chapters")).default([]),
+  footnotes,
 });
 
 const concepts = defineCollection({
@@ -64,6 +65,28 @@ const themes = defineCollection({
     hobbes: z.string().optional(),
     chapters: z.array(reference("chapters")).default([]),
     concepts: z.array(reference("concepts")).default([]),
+    footnotes,
+  }),
+});
+
+/**
+ * His other books. Short pages: what each one is, what it does that Leviathan
+ * does not, and where the same argument sits in Leviathan. Read in the order
+ * they were written, so `year` sorts them.
+ */
+const works = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/works" }),
+  schema: z.object({
+    title: z.string(),
+    /** Shown under the title: "1642, printed for the public in 1647". */
+    dates: z.string(),
+    /** Sort key: when it was written, not when it was printed. */
+    year: z.number(),
+    summary: z.string(),
+    chapters: z.array(reference("chapters")).default([]),
+    concepts: z.array(reference("concepts")).default([]),
+    themes: z.array(reference("themes")).default([]),
+    footnotes,
   }),
 });
 
@@ -87,4 +110,4 @@ const hobbes = defineCollection({
     }),
 });
 
-export const collections = { chapters, concepts, hobbes, interlocutors, themes };
+export const collections = { chapters, concepts, hobbes, interlocutors, themes, works };

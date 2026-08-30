@@ -1,0 +1,21 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Shelves from "../components/Shelves.astro";
+// @ts-ignore -- plain-JS data, like the other appendix pages
+import { SHELVES, TOTAL } from "../lib/library.mjs";
+---
+
+<Layout title="Further reading">
+  <header class="mb-8">
+    <p class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">Appendix</p>
+    <h1 class="mt-1 font-serif text-3xl font-semibold">Further reading</h1>
+    <p class="mt-3 max-w-prose text-lg text-stone-600 dark:text-stone-400">
+      {TOTAL} books about <em>Leviathan</em>, or about the man who wrote it. The list is deliberately short: these
+      are the ones that set the terms other people argue in, not everything worth reading. Each is described by
+      what it claims, so a reader can tell which quarrel they are being invited into. For the books that answer
+      him rather than explain him, see <a href="/after-hobbes/" class="chapter-link">after Hobbes</a>.
+    </p>
+  </header>
+
+  <Shelves shelves={SHELVES} />
+</Layout>

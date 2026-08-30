@@ -1,0 +1,39 @@
+---
+import { getCollection, getEntries, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import ConceptHeader from "../../components/ConceptHeader.astro";
+import PrevNext from "../../components/PrevNext.astro";
+import Prose from "../../components/Prose.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+import { chapterLinks, conceptLinks, themeLinks } from "../../lib/related";
+import { neighbours } from "../../lib/sequence";
+
+export async function getStaticPaths() {
+  // Chronological, like the sidebar: the order he wrote them in.
+  const works = (await getCollection("works")).sort((a, b) => a.data.year - b.data.year);
+  return works.map((work, i) => ({
+    params: { id: work.id },
+    props: {
+      work,
+      ...neighbours(works, i, (w) => ({ href: `/works/${w.id}/`, title: w.data.title })),
+    },
+  }));
+}
+
+const { work, prev, next } = Astro.props;
+const { Content } = await render(work);
+const chapters = chapterLinks(await getEntries(work.data.chapters));
+const concepts = conceptLinks(await getEntries(work.data.concepts));
+const themes = themeLinks(await getEntries(work.data.themes));
+---
+
+<Layout title={work.data.title}>
+  <ConceptHeader kind="Other work" title={work.data.title} meta={work.data.dates} summary={work.data.summary} />
+  <Prose>
+    <Content />
+  </Prose>
+  <RelatedLinks title="Related themes" items={themes} />
+  <RelatedLinks title="Related concepts" items={concepts} />
+  <RelatedLinks title="Read in Leviathan" items={chapters} />
+  <PrevNext kind="work" prev={prev} next={next} />
+</Layout>

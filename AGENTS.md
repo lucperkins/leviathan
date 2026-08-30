@@ -57,6 +57,14 @@ Three collections, all MDX under `src/content/`, loaded with `glob`:
 | `concepts` | `concepts/slug.mdx` | `title`, `summary`, `terms?`, `chapters` (refs) |
 | `authors`  | `authors/slug.mdx`  | same as concepts + `dates?`, `sortName?` (surname; defaults to the title's last word — authors sort by it in the sidebar and prev/next) |
 | `themes`   | `themes/slug.mdx`   | `title`, `summary`, `hobbes?`, `chapters` (refs), `concepts` (refs) |
+| `works`    | `works/slug.mdx`    | `title`, `dates`, `year` (sort key), `summary`, `chapters`/`concepts`/`themes` (refs) |
+
+Every collection also takes `footnotes` (`after` is matched in the text, the
+note collected at the foot; see `rehype-footnotes.mjs`). The marker is placed
+after any punctuation that follows the match, and the note's number links back
+to it. Notes about people end with a pointer to `/thinkers/`, said accurately:
+"Listed among the people Hobbes names" for those on that page, "Not among…"
+for contemporaries like Bramhall, Wallis, and Cromwell who are not in the book.
 
 `concepts` and `authors` are **ref collections**: each entry gets (a) a brief
 `summary` shown in tooltips and (b) a full page at `/concepts/<id>/` or
@@ -125,7 +133,7 @@ titles, since they explain his terms.
 6. `src/plugins/rehype-chapter-paragraphs.mjs` numbers top-level paragraphs on
    chapter pages (`<p id="p7">`) and prefixes each with a light `¶7` self-link
    (`.para-num`, positioned in the left margin; excluded from highlighting), and `rehype-quote-sources.mjs` links
-   quotations of Hobbes on concept/author pages to those paragraphs: every
+   quotations of Hobbes on concept, author, theme, and Hobbes-himself pages to those paragraphs: every
    blockquote gets a "Leviathan, Chapter 2 ¶7" footer (full chapter title on hover), and
    inline `"…"` quotations of five or more words become links. Links look
    like `/chapters/<id>/?hl=<first six words>&to=<last six words>#p7`; the
@@ -149,6 +157,32 @@ same duration. Don't hard-code other durations.
 Styling for all of this is plain CSS at the bottom of `global.css`
 (`concept-ref`, `.concept-tip*`, `.heading-anchor`, `.prose-chapter`).
 
+## The apparatus pages
+
+- `/definitions/` has the two hand-built SVG figures (`src/diagrams/`) and,
+  below them, the walkable chain: `src/lib/definitions.ts` holds each term's
+  defining sentence with its borrowings marked inline as `{word|id}`, and
+  `derivation()` computes what a term rests on. The page's `DEFINED` map merges
+  that data with the ids that exist only in the figures. Adding a term means
+  editing one entry; the edges follow.
+- `/thinkers/` is generated from `src/lib/thinkers.mjs`. `mentions` is
+  hand-verified in context, so it cannot be generated, but it is checked:
+  `src/lib/mentions.mjs` counts the `tokens` across the chapter text and the
+  page warns unless `mentions + excluded` matches. Editing a chapter that names
+  someone will fail loudly there.
+- `/scripture/` links verses to Wikisource's King James text (public domain,
+  with `#Chapter_N` and `#C:V` anchors), not to a commercial Bible site.
+- `/further-reading/` is the one appendix page not generated from the text: a
+  short reading list in `src/lib/library.mjs`, each entry described by what it
+  claims. Entries have stable `id` anchors so pages can link to a book.
+- `/works/` is his other nine books, in the order he wrote them (`year`).
+  Brisk pages: what each is, what it does that *Leviathan* does not, and where
+  the same argument sits in *Leviathan*.
+- `/hobbes/` runs in `order`: life, career, character, faith, contemporaries,
+  impact. The life page carries `HobbesMap`, whose coastline is projected from
+  Natural Earth at build time into `src/lib/map.ts` — no map library, nothing
+  fetched at runtime.
+
 ## Layout and navigation
 
 - `src/layouts/Layout.astro` fetches all collections and renders the sidebar:
@@ -168,6 +202,10 @@ Styling for all of this is plain CSS at the bottom of `global.css`
 - Favicon: `public/favicon.svg` (sword and crozier crossed under a crown,
   after the frontispiece) plus PNG renders `favicon-32.png` and
   `apple-touch-icon.png` made with sharp.
+- `ResumeReading` on the home page links back to wherever the reader left off.
+  Chapter pages record it (`readingPosition`, the paragraph nearest the top of
+  the viewport) in `localStorage["leviathan:reading"]`; the button starts hidden
+  and appears only when a position exists.
 - `BackButton` sits at the top of every page except the home page: `history.back()` if
   the referrer is same-origin, otherwise a link to `/`.
 - Every chapter, concept, author, and theme page ends with `PrevNext` (chapters by
@@ -212,10 +250,14 @@ Styling for all of this is plain CSS at the bottom of `global.css`
   for the expected markup rather than assuming.
 - Git is initialised but nothing is committed; stage with `git add -A` so
   the flake sees new files. Commit only when asked.
+- Marginalia are on Chapters 15, 21, 30, 42, 44, and 46. The plugin warns when
+  a `heading` does not match, so a mistyped heading fails the same way.
 - The chapter extraction script is not in the repo yet (it lived in a
   scratchpad); if it is added, put it at `scripts/extract-chapters.ts`.
 
 ## TODO
+
+The two main ones, in no particular order.
 
 - **Make the site mobile-friendly.** It is currently desktop-only by
   assumption. Known blockers, roughly in order:
@@ -236,3 +278,22 @@ Styling for all of this is plain CSS at the bottom of `global.css`
     one column below `48rem`.
   - Check the lightbox dialog and the `/scripture/` reference rows, which
     wrap but have not been looked at on a small screen.
+
+- **The book's impact, and the main lines of interpretation.** Nothing on the
+  site yet covers what happened to *Leviathan* after 1651 or how it has been
+  read since. Two related pieces:
+  - *Impact*: written, at `/hobbes/impact/`. What remains is the interpretations
+    half. The original note follows.
+  - *Impact*: the reception (the 1666 Commons committee on atheism and
+    profaneness, the 1683 Oxford burning), and the afterlife in Spinoza,
+    Locke, Rousseau, Bentham, Schmitt, and modern game-theoretic readings.
+    Some of this already sits in `themes/contractarianism.mdx`, which the new
+    page should link to rather than repeat.
+  - *Interpretations*: the standing disagreements — whether Hobbes is an
+    egoist or a natural-law theorist (the Taylor–Warrender thesis), whether
+    the religion of Parts III and IV is sincere or tactical (already opened in
+    `hobbes/faith.mdx`), Skinner's contextual reading against Strauss's, and
+    what "absolutism" does and does not commit him to.
+  - Shape is undecided: a theme page, a new top-level section beside
+    `/thinkers/`, or two pages. Themes are essays on topics inside the book,
+    so a reception essay may not belong in that collection.

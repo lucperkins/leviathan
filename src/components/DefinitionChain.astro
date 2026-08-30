@@ -1,0 +1,78 @@
+---
+/**
+ * The chain of definitions, walked rather than drawn.
+ *
+ * Pick a term and the page shows its derivation: every earlier definition it
+ * rests on, in the order Hobbes fixes them, with the borrowed words in each
+ * sentence as buttons that re-root the chain. All the cards are rendered
+ * server-side and shown or hidden by the Alpine `definitionChain` component,
+ * so the text is in the HTML whether or not the script runs.
+ */
+import { DEFINITIONS, derivation, segments } from "../lib/definitions";
+
+interface Props {
+  /** Term to open on. */
+  start?: string;
+  /** Chapter link per term id, resolved by the page to a paragraph where it can. */
+  hrefs: Record<string, string>;
+}
+const { start = "commonwealth", hrefs } = Astro.props;
+
+const chains = Object.fromEntries(DEFINITIONS.map((d) => [d.id, derivation(d.id).map((x) => x.id)]));
+const terms = Object.fromEntries(DEFINITIONS.map((d) => [d.id, d.term]));
+---
+
+<section class="chain" x-data={`definitionChain(${JSON.stringify({ chains, terms, start })})`}>
+  <p class="chain__prompt">
+    <span class="chain__prompt-label">Derive</span>
+    <span class="chain__picker">
+      {
+        DEFINITIONS.map((d) => (
+          <button
+            type="button"
+            class="chain__pick"
+            x-on:click={`select(${JSON.stringify(d.id)})`}
+            x-bind:class={`root === ${JSON.stringify(d.id)} && "is-root"`}
+          >
+            {d.term}
+          </button>
+        ))
+      }
+    </span>
+  </p>
+
+  <p class="chain__summary" x-text="summary">
+    Commonwealth is reached in 12 steps, from motion.
+  </p>
+
+  <ol class="chain__list">
+    {
+      DEFINITIONS.map((d) => (
+        <li
+          class="chain__card"
+          x-show={`chain.includes(${JSON.stringify(d.id)})`}
+          x-bind:class={`root === ${JSON.stringify(d.id)} && "is-root"`}
+        >
+          <p class="chain__head">
+            <span class="chain__name">{d.term}</span>
+            <a class="chain__where" href={hrefs[d.id] ?? `/chapters/${d.chapterId}/`}>
+              {d.chapter > 0 ? `Chapter ${d.chapter}` : "The Introduction"}
+            </a>
+          </p>
+          <p class="chain__text">
+            {segments(d.text).map((s) =>
+              "text" in s ? (
+                s.text
+              ) : (
+                <button type="button" class="chain__borrow" x-on:click={`select(${JSON.stringify(s.of)})`}>
+                  {s.word}
+                </button>
+              ),
+            )}
+          </p>
+          {d.note && <p class="chain__note">{d.note}</p>}
+        </li>
+      ))
+    }
+  </ol>
+</section>

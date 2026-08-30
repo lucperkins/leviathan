@@ -3,6 +3,33 @@
 /* Class-based dark mode: `.dark` on <html>, toggled by the ThemeToggle component. */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/*
+ * Sepia: the warm paper setting e-readers offer, and the third state of the
+ * theme toggle. Every colour on the site is a stone shade, and Tailwind v4
+ * compiles those to var(--color-stone-N), so retinting the ramp here turns the
+ * whole page warm without touching a single utility class or hand-written
+ * rule. The lightness of each step is kept close to Tailwind's, so contrast
+ * relationships carry over; what changes is chroma and hue.
+ *
+ * The class is `theme-sepia` rather than `sepia` because Tailwind ships a
+ * `sepia` filter utility, and a bare `.sepia` on <html> would put a
+ * sepia() filter over the whole page as well as retinting it.
+ */
+.theme-sepia {
+  color-scheme: light;
+  --color-stone-50: oklch(94.5% 0.03 88);
+  --color-stone-100: oklch(91.5% 0.034 86);
+  --color-stone-200: oklch(86.5% 0.038 84);
+  --color-stone-300: oklch(80% 0.042 80);
+  --color-stone-400: oklch(66% 0.045 66);
+  --color-stone-500: oklch(53% 0.048 58);
+  --color-stone-600: oklch(43% 0.045 55);
+  --color-stone-700: oklch(36% 0.042 52);
+  --color-stone-800: oklch(28% 0.035 48);
+  --color-stone-900: oklch(23% 0.03 46);
+  --color-stone-950: oklch(17% 0.025 45);
+}
+
 /* Alpine: hide elements until it has booted. */
 [x-cloak] {
   display: none !important;
@@ -657,6 +684,10 @@ a.external::after {
   color: var(--color-stone-800);
   text-decoration-color: var(--color-stone-500);
 }
+/* Stone-500 sits too close to the dark background; lift it 5% in lightness. */
+.dark .margin-note {
+  color: oklch(from var(--color-stone-500) calc(l + 0.05) c h);
+}
 .dark .margin-note a {
   text-decoration-color: var(--color-stone-700);
 }
@@ -880,6 +911,29 @@ a.external::after {
   color: var(--color-stone-100);
 }
 
+/* Sidebar: a thin scrollbar, so a long chapter list does not put a wide
+   platform scrollbar down the middle of the page. */
+[data-nav-scroll] {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-stone-300) transparent;
+}
+.dark [data-nav-scroll] {
+  scrollbar-color: var(--color-stone-700) transparent;
+}
+[data-nav-scroll]::-webkit-scrollbar {
+  width: 6px;
+}
+[data-nav-scroll]::-webkit-scrollbar-track {
+  background: transparent;
+}
+[data-nav-scroll]::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: var(--color-stone-300);
+}
+.dark [data-nav-scroll]::-webkit-scrollbar-thumb {
+  background: var(--color-stone-700);
+}
+
 /* Appendix: the index of thinkers Hobbes names, and the ones he does not. */
 .thinker__head {
   display: flex;
@@ -891,6 +945,23 @@ a.external::after {
   font-family: var(--font-serif);
   font-size: 1.125rem;
   font-weight: 600;
+}
+.thinker__name a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.dark .thinker__name a {
+  text-decoration-color: var(--color-stone-600);
+}
+.thinker__name a:hover,
+.thinker__name a:focus-visible {
+  text-decoration-color: var(--color-stone-700);
+}
+.dark .thinker__name a:hover,
+.dark .thinker__name a:focus-visible {
+  text-decoration-color: var(--color-stone-200);
 }
 .thinker__dates {
   font-size: 0.8rem;
@@ -950,43 +1021,9 @@ a.external::after {
 .dark .omission {
   border-color: var(--color-stone-800);
 }
-.omission__name {
-  display: block;
-  font-family: var(--font-serif);
-  font-size: 1.0625rem;
-  font-weight: 600;
-}
-.omission__name a {
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-color: var(--color-stone-300);
-  text-underline-offset: 3px;
-}
-.dark .omission__name a {
-  text-decoration-color: var(--color-stone-600);
-}
-.omission__name a:hover,
-.omission__name a:focus-visible {
-  text-decoration-color: var(--color-stone-700);
-}
-.dark .omission__name a:hover,
-.dark .omission__name a:focus-visible {
-  text-decoration-color: var(--color-stone-200);
-}
 .omission__and {
   font-weight: 400;
   color: var(--color-stone-500);
-}
-.omission__why {
-  display: block;
-  margin-top: 0.2rem;
-  max-width: 62ch;
-  font-family: var(--font-serif);
-  line-height: 1.55;
-  color: var(--color-stone-600);
-}
-.dark .omission__why {
-  color: var(--color-stone-400);
 }
 
 /* Hand-written glosses in prose: historical detail that is not one of Hobbes's
@@ -1062,6 +1099,7 @@ a.external::after {
 .fn-ref {
   margin-left: 0.1em;
   font-size: 0.65em;
+  scroll-margin-top: 2rem;
 }
 .fn-ref a {
   color: var(--color-stone-500);
@@ -1087,6 +1125,7 @@ a.external::after {
 .footnotes li {
   display: flex;
   gap: 0.6rem;
+  scroll-margin-top: 2rem;
   font-family: var(--font-serif);
   font-size: 0.95rem;
   line-height: 1.55;
@@ -1095,6 +1134,8 @@ a.external::after {
 .dark .footnotes li {
   color: var(--color-stone-400);
 }
+/* The number links back to the marker in the text, so it carries the whole
+   return journey; there is no separate ↩. */
 .footnotes__num {
   flex: none;
   width: 1.1rem;
@@ -1102,38 +1143,35 @@ a.external::after {
   font-size: 0.7rem;
   font-variant-numeric: tabular-nums;
   color: var(--color-stone-400);
+  text-decoration: none;
+}
+.footnotes__num:hover,
+.footnotes__num:focus-visible {
+  color: var(--color-stone-800);
 }
 .dark .footnotes__num {
   color: var(--color-stone-500);
 }
-.footnotes a:not(.footnotes__back) {
+.dark .footnotes__num:hover,
+.dark .footnotes__num:focus-visible {
+  color: var(--color-stone-200);
+}
+.footnotes a:not(.footnotes__num) {
   color: inherit;
   text-decoration: underline;
   text-decoration-color: var(--color-stone-300);
   text-underline-offset: 3px;
 }
-.dark .footnotes a:not(.footnotes__back) {
+.dark .footnotes a:not(.footnotes__num) {
   text-decoration-color: var(--color-stone-600);
 }
-.footnotes a:not(.footnotes__back):hover,
-.footnotes a:not(.footnotes__back):focus-visible {
+.footnotes a:not(.footnotes__num):hover,
+.footnotes a:not(.footnotes__num):focus-visible {
   text-decoration-color: var(--color-stone-700);
 }
-.dark .footnotes a:not(.footnotes__back):hover,
-.dark .footnotes a:not(.footnotes__back):focus-visible {
+.dark .footnotes a:not(.footnotes__num):hover,
+.dark .footnotes a:not(.footnotes__num):focus-visible {
   text-decoration-color: var(--color-stone-200);
-}
-.footnotes__back {
-  color: var(--color-stone-400);
-  text-decoration: none;
-}
-.footnotes__back:hover,
-.footnotes__back:focus-visible {
-  color: var(--color-stone-800);
-}
-.dark .footnotes__back:hover,
-.dark .footnotes__back:focus-visible {
-  color: var(--color-stone-200);
 }
 
 /* Editorial footnotes at the foot of a chapter. */
@@ -1215,4 +1253,252 @@ a.external::after {
 }
 .dark .section-index__summary {
   color: var(--color-stone-400);
+}
+
+/* The map of Hobbes's England on /hobbes/life/. One SVG unit is a degree of
+   latitude, so stroke widths are in those units too and stay proportional. */
+.hobbes-map {
+  margin: 2.5rem 0;
+}
+.hobbes-map svg {
+  display: block;
+  width: 100%;
+  max-width: 24rem;
+  margin: 0 auto;
+  overflow: visible;
+}
+.hobbes-map__land path {
+  fill: var(--color-stone-100);
+  stroke: var(--color-stone-300);
+  stroke-width: 0.015;
+  stroke-linejoin: round;
+}
+.dark .hobbes-map__land path {
+  fill: var(--color-stone-900);
+  stroke: var(--color-stone-700);
+}
+.hobbes-map__journey {
+  fill: none;
+  stroke: var(--color-stone-400);
+  stroke-width: 0.02;
+  stroke-dasharray: 0.08 0.07;
+  stroke-linecap: round;
+}
+.dark .hobbes-map__journey {
+  stroke: var(--color-stone-600);
+}
+.hobbes-map__place {
+  cursor: pointer;
+}
+.hobbes-map__place:focus {
+  outline: none;
+}
+.hobbes-map__halo {
+  fill: transparent;
+}
+.hobbes-map__dot {
+  fill: var(--color-stone-500);
+  transition: fill var(--default-transition-duration), r var(--default-transition-duration);
+}
+.hobbes-map__place:is(:hover, :focus-visible, .is-active) .hobbes-map__dot {
+  fill: var(--color-stone-900);
+  r: 0.11;
+}
+.dark .hobbes-map__place:is(:hover, :focus-visible, .is-active) .hobbes-map__dot {
+  fill: var(--color-stone-100);
+}
+.hobbes-map__place:focus-visible .hobbes-map__halo {
+  stroke: var(--color-stone-500);
+  stroke-width: 0.02;
+}
+.hobbes-map__label {
+  font-family: var(--font-sans);
+  font-size: 0.16px;
+  letter-spacing: 0.01px;
+  fill: var(--color-stone-500);
+  transition: fill var(--default-transition-duration);
+}
+.hobbes-map__place:is(:hover, :focus-visible, .is-active) .hobbes-map__label {
+  fill: var(--color-stone-900);
+}
+.dark .hobbes-map__place:is(:hover, :focus-visible, .is-active) .hobbes-map__label {
+  fill: var(--color-stone-100);
+}
+.hobbes-map__caption {
+  margin: 1rem auto 0;
+  max-width: 30rem;
+  min-height: 4.5rem;
+}
+.hobbes-map__note {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--color-stone-600);
+}
+.dark .hobbes-map__note {
+  color: var(--color-stone-400);
+}
+.hobbes-map__note a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.dark .hobbes-map__note a {
+  text-decoration-color: var(--color-stone-600);
+}
+.hobbes-map__when {
+  margin-left: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--color-stone-400);
+}
+.hobbes-map__what {
+  display: block;
+  margin-top: 0.2rem;
+}
+
+/* The walkable chain of definitions on /definitions/. */
+.chain {
+  margin-top: 2rem;
+}
+.chain__prompt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.chain__prompt-label {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-stone-400);
+}
+.chain__picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.5rem;
+}
+.chain__pick {
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--color-stone-500);
+  transition: color var(--default-transition-duration), border-color var(--default-transition-duration);
+}
+.chain__pick:hover,
+.chain__pick:focus-visible {
+  color: var(--color-stone-900);
+}
+.dark .chain__pick:hover,
+.dark .chain__pick:focus-visible {
+  color: var(--color-stone-100);
+}
+.chain__pick.is-root {
+  border-bottom-color: var(--color-stone-500);
+  color: var(--color-stone-900);
+}
+.dark .chain__pick.is-root {
+  color: var(--color-stone-100);
+}
+.chain__summary {
+  margin-top: 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--color-stone-400);
+}
+.chain__list {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  max-width: 46rem;
+  list-style: none;
+  padding: 0;
+  counter-reset: chain;
+}
+.chain__card {
+  border-left: 2px solid var(--color-stone-200);
+  padding: 0.1rem 0 0.1rem 1rem;
+}
+.dark .chain__card {
+  border-color: var(--color-stone-800);
+}
+.chain__card.is-root {
+  border-color: var(--color-stone-500);
+}
+.chain__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+.chain__name {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.chain__where {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-stone-400);
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.dark .chain__where {
+  text-decoration-color: var(--color-stone-700);
+}
+.chain__where:hover,
+.chain__where:focus-visible {
+  color: var(--color-stone-800);
+}
+.dark .chain__where:hover,
+.dark .chain__where:focus-visible {
+  color: var(--color-stone-200);
+}
+.chain__text {
+  margin-top: 0.3rem;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-stone-700);
+}
+.dark .chain__text {
+  color: var(--color-stone-300);
+}
+.chain__borrow {
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--color-stone-400);
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--default-transition-duration);
+}
+.chain__borrow:hover,
+.chain__borrow:focus-visible {
+  text-decoration-style: solid;
+  text-decoration-color: var(--color-stone-800);
+}
+.dark .chain__borrow:hover,
+.dark .chain__borrow:focus-visible {
+  text-decoration-color: var(--color-stone-200);
+}
+.chain__note {
+  margin-top: 0.35rem;
+  max-width: 52ch;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--color-stone-500);
 }

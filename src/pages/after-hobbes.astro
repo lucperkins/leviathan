@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Shelves from "../components/Shelves.astro";
+// @ts-ignore -- plain-JS data, like the other appendix pages
+import { REPLIES, REPLIES_TOTAL } from "../lib/library.mjs";
+---
+
+<Layout title="After Hobbes">
+  <header class="mb-8">
+    <p class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">Appendix</p>
+    <h1 class="mt-1 font-serif text-3xl font-semibold">After Hobbes</h1>
+    <p class="mt-3 max-w-prose text-lg text-stone-600 dark:text-stone-400">
+      {REPLIES_TOTAL} works that answer <em>Leviathan</em> rather than expound it, from the generation that read
+      it first to arguments still being made. The story of how the book was received and used is told on
+      <a href="/hobbes/impact/" class="chapter-link">his impact</a>; this is the list, with each claim stated so
+      the disagreements are visible. Several are discussed at greater length on the
+      <a href="/themes/contractarianism/" class="chapter-link">contractarianism</a> and
+      <a href="/themes/law/" class="chapter-link">law</a> pages, and the notes send you there rather than
+      repeating the argument.
+    </p>
+  </header>
+
+  <Shelves shelves={REPLIES} />
+</Layout>

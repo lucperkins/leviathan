@@ -137,9 +137,12 @@ export function scriptureIndex() {
 
   for (const r of all) {
     r.label = r.verses ? `${r.book} ${r.chapter}:${r.verses}` : `${r.book} ${r.chapter}`;
-    r.href = `https://www.biblegateway.com/passage/?search=${encodeURIComponent(
-      r.verses ? `${r.book} ${r.chapter}:${r.verses.replace(/\s/g, "")}` : `${r.book} ${r.chapter}`,
-    )}&version=KJV`;
+    // Wikisource's King James text: one page per book, with `#Chapter_N`
+    // headings and `#C:V` anchors on every verse. Public domain, no ads, and
+    // the same authorised version Hobbes quotes.
+    const first = r.verses ? parseInt(r.verses, 10) : NaN;
+    const fragment = Number.isNaN(first) ? `Chapter_${r.chapter}` : `${r.chapter}:${first}`;
+    r.href = `https://en.wikisource.org/wiki/Bible_(King_James)/${r.book.replace(/ /g, "_")}#${fragment}`;
     r.cited.sort((a, b) => a.number - b.number || (a.para ?? 0) - (b.para ?? 0));
   }
 

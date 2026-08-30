@@ -50,7 +50,10 @@ export default function rehypeFootnotes() {
         const at = node.value.indexOf(note.after);
         if (at < 0) return;
 
-        const end = at + note.after.length;
+        // The marker goes after the punctuation, not before it: "Godolphin;1",
+        // never "Godolphin1;". A dash is the one mark it precedes.
+        let end = at + note.after.length;
+        while (end < node.value.length && /[.,;:!?)\]'"’”]/.test(node.value[end])) end++;
         const marker = el("sup", { className: ["fn-ref"] }, [
           el("a", { id: `fnref-${n}`, href: `#fn-${n}` }, [{ type: "text", value: String(n) }]),
         ]);
@@ -79,16 +82,13 @@ export default function rehypeFootnotes() {
           { className: ["footnotes"] },
           notes.map((note, i) =>
             el("li", { id: `fn-${i + 1}` }, [
-              el("span", { className: ["footnotes__num"] }, [{ type: "text", value: String(i + 1) }]),
-              el("span", {}, [
-                ...inline(note.text),
-                { type: "text", value: " " },
-                el(
-                  "a",
-                  { href: `#fnref-${i + 1}`, className: ["footnotes__back"], ariaLabel: "Back to the text" },
-                  [{ type: "text", value: "↩" }],
-                ),
-              ]),
+              // The number is the way back: it returns to the marker it belongs to.
+              el(
+                "a",
+                { href: `#fnref-${i + 1}`, className: ["footnotes__num"], ariaLabel: "Back to the text" },
+                [{ type: "text", value: String(i + 1) }],
+              ),
+              el("span", {}, inline(note.text)),
             ]),
           ),
         ),

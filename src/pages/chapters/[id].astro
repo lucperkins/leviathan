@@ -23,6 +23,8 @@ export async function getStaticPaths() {
 const { chapter, prev, next } = Astro.props;
 const { Content } = await render(chapter);
 const refs = await getAllRefs();
+/** How the resume link names this chapter; the front matter has no number. */
+const label = chapter.data.part ? `Chapter ${chapter.data.number}` : chapter.data.title;
 ---
 
 <Layout title={chapter.data.title}>
@@ -31,6 +33,7 @@ const refs = await getAllRefs();
   <Prose x-data="quoteTarget" x-on:click="onClick($event)">
     <Content />
   </Prose>
+  <div x-data="readingPosition" data-id={chapter.id} data-label={label} hidden></div>
   <PrevNext kind="chapter" prev={prev} next={next} />
   <ConceptRefs refs={refs} />
 </Layout>

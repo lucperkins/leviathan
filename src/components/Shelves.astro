@@ -1,0 +1,96 @@
+---
+/**
+ * A shelved list of books: section navigation, then each shelf with its
+ * entries. Used by /further-reading/ and /after-hobbes/, which hold different
+ * lists in the same shape. An entry links the book itself where it has an
+ * entry of its own, and otherwise puts the link on the author; the year sits
+ * on the right, where the mention counts sit on /thinkers/.
+ */
+interface Work {
+  id: string;
+  title: string;
+  href?: string;
+  author: string;
+  authorHref?: string;
+  year: string;
+  note: string;
+}
+interface Shelf {
+  title: string;
+  blurb: string;
+  works: Work[];
+}
+interface Props {
+  shelves: Shelf[];
+}
+const { shelves } = Astro.props;
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+const external = (href?: string) => Boolean(href?.startsWith("http"));
+---
+
+<nav
+  aria-label="Sections"
+  class="mb-10 flex flex-wrap gap-x-3 gap-y-1 border-y border-stone-200 py-3 text-sm dark:border-stone-800"
+>
+  {
+    shelves.map((s) => (
+      <a
+        href={`#${slug(s.title)}`}
+        class="text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
+      >
+        {s.title}
+      </a>
+    ))
+  }
+</nav>
+
+<div class="space-y-12">
+  {
+    shelves.map((s) => (
+      <section>
+        <h2
+          id={slug(s.title)}
+          class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400"
+        >
+          <a href={`#${slug(s.title)}`} class="heading-anchor">
+            {s.title}
+          </a>
+        </h2>
+        <p class="mt-2 max-w-prose text-sm text-stone-500 dark:text-stone-400">{s.blurb}</p>
+        <ul class="mt-5 space-y-5">
+          {s.works.map((w) => (
+            <li class="thinker" id={w.id}>
+              <p class="thinker__head">
+                <span class="thinker__name">
+                  {w.href ? (
+                    <a
+                      class={external(w.href) ? "external" : undefined}
+                      href={w.href}
+                      target={external(w.href) ? "_blank" : undefined}
+                      rel={external(w.href) ? "noopener noreferrer" : undefined}
+                    >
+                      {w.title}
+                    </a>
+                  ) : (
+                    w.title
+                  )}
+                </span>
+                <span class="thinker__dates">
+                  {w.authorHref ? (
+                    <a class="external" href={w.authorHref} target="_blank" rel="noopener noreferrer">
+                      {w.author}
+                    </a>
+                  ) : (
+                    w.author
+                  )}
+                </span>
+                <span class="thinker__count">{w.year}</span>
+              </p>
+              <p class="thinker__note">{w.note}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</div>

@@ -15,6 +15,20 @@ const config: StorybookConfig = {
   core: {
     builder: "@storybook/builder-vite",
   },
+  /**
+   * The dev server watches the project root, so `bun run build` or
+   * `build-storybook` in another terminal rewrites files under it and forces a
+   * full page reload in whatever story is open. Ignore the build outputs.
+   * Vite's own defaults are restated because this list replaces them.
+   */
+  async viteFinal(config) {
+    config.server ??= {};
+    config.server.watch = {
+      ...config.server.watch,
+      ignored: ["**/.git/**", "**/node_modules/**", "**/dist/**", "**/storybook-static/**", "**/.astro/**"],
+    };
+    return config;
+  },
 };
 
 export default config;

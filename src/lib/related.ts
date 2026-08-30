@@ -24,3 +24,12 @@ export const interlocutorSortKey = (a: CollectionEntry<"interlocutors">) =>
 
 export const sortInterlocutors = (interlocutors: CollectionEntry<"interlocutors">[]) =>
   [...interlocutors].sort((x, y) => interlocutorSortKey(x).localeCompare(interlocutorSortKey(y)));
+
+export const themeLink = (t: CollectionEntry<"themes">) => ({
+  href: `/themes/${t.id}/`,
+  label: t.data.title,
+});
+
+/** Related themes: alphabetical, matching the sidebar. */
+export const themeLinks = (themes: CollectionEntry<"themes">[]) =>
+  [...themes].sort((a, b) => a.data.title.localeCompare(b.data.title)).map(themeLink);

@@ -4,6 +4,8 @@ import Layout from "../layouts/Layout.astro";
 import { loadChapters, locate, quoteHref } from "../plugins/rehype-quote-sources.mjs";
 // @ts-ignore
 import { CATEGORIES, OMISSIONS } from "../lib/thinkers.mjs";
+// @ts-ignore
+import { rawMentions } from "../lib/mentions.mjs";
 
 const chapters = loadChapters();
 const unresolved: string[] = [];
@@ -24,6 +26,19 @@ const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(
 
 const total = CATEGORIES.reduce((n: number, c: any) => n + c.people.length, 0);
 if (unresolved.length) console.warn(`[thinkers] unresolved: ${unresolved.join(", ")}`);
+
+/**
+ * The counts are hand-verified in context, so they cannot simply be generated:
+ * three of the four "Thomas"es are Becket, the apostle, and Hobbes himself.
+ * What can be checked is that they still add up. Every entry must satisfy
+ * `mentions + excluded === occurrences in the text`, so editing a chapter that
+ * names someone fails loudly here instead of quietly making the number a lie.
+ */
+const miscounted = CATEGORIES.flatMap((c: any) => c.people)
+  .map((p: any) => ({ p, raw: rawMentions(p.tokens) }))
+  .filter(({ p, raw }: any) => raw !== p.mentions + (p.excluded ?? 0))
+  .map(({ p, raw }: any) => `${p.name}: says ${p.mentions}${p.excluded ? ` + ${p.excluded} excluded` : ""}, text has ${raw}`);
+if (miscounted.length) console.warn(`[thinkers] mention counts out of date — ${miscounted.join("; ")}`);
 ---
 
 <Layout title="Thinkers named">
@@ -32,8 +47,8 @@ if (unresolved.length) console.warn(`[thinkers] unresolved: ${unresolved.join(",
     <h1 class="mt-1 font-serif text-3xl font-semibold">Thinkers named</h1>
     <p class="mt-3 max-w-prose text-lg text-stone-600 dark:text-stone-400">
       Everyone Hobbes names as a writer or an authority: {total} people, in a book of nearly half a million words.
-      He held that words are wise men's counters and the money of fools, and he cites accordingly. Each name links to
-      the passage where it appears.
+      He held that words are wise men's counters and the money of fools, and he cites accordingly. Each name links
+      out to Wikipedia; each entry links to the passage where it appears.
     </p>
   </header>
 
@@ -73,7 +88,11 @@ if (unresolved.length) console.warn(`[thinkers] unresolved: ${unresolved.join(",
             {c.people.map((p: any) => (
               <li class="thinker">
                 <p class="thinker__head">
-                  <span class="thinker__name">{p.name}</span>
+                  <span class="thinker__name">
+                    <a class="external" href={p.wikipedia} target="_blank" rel="noopener noreferrer">
+                      {p.name}
+                    </a>
+                  </span>
                   <span class="thinker__dates">{p.dates}</span>
                   <span class="thinker__count">
                     {p.mentions} {p.mentions === 1 ? "mention" : "mentions"}
@@ -105,21 +124,24 @@ if (unresolved.length) console.warn(`[thinkers] unresolved: ${unresolved.join(",
       is carried by its definitions rather than by whose name is attached to it, so the moderns he does name are
       almost all people he means to take apart.
     </p>
-    <ul class="mt-6 space-y-4">
+    <ul class="mt-6 space-y-5">
       {
         OMISSIONS.map((o: any) => (
-          <li class="omission">
-            <span class="omission__name">
-              {o.names.map(([text, href]: [string, string], i: number) => (
-                <>
-                  {i > 0 && <span class="omission__and"> and </span>}
-                  <a class="external" href={href} target="_blank" rel="noopener noreferrer">
-                    {text}
-                  </a>
-                </>
-              ))}
-            </span>
-            <span class="omission__why" set:html={o.why} />
+          <li class="thinker omission">
+            <p class="thinker__head">
+              <span class="thinker__name">
+                {o.names.map(([text, href]: [string, string], i: number) => (
+                  <>
+                    {i > 0 && <span class="omission__and"> and </span>}
+                    <a class="external" href={href} target="_blank" rel="noopener noreferrer">
+                      {text}
+                    </a>
+                  </>
+                ))}
+              </span>
+              <span class="thinker__count">no mentions</span>
+            </p>
+            <p class="thinker__note" set:html={o.why} />
           </li>
         ))
       }

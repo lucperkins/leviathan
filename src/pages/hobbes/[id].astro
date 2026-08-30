@@ -8,7 +8,7 @@ import Prose from "../../components/Prose.astro";
 import { neighbours } from "../../lib/sequence";
 
 export async function getStaticPaths() {
-  // Read in sequence, not alphabetically: life, career, character, faith.
+  // Read in sequence, not alphabetically: life, career, character, faith, contemporaries, impact.
   const sections = (await getCollection("hobbes")).sort((a, b) => a.data.order - b.data.order);
   return sections.map((section, i) => ({
     params: { id: section.id },

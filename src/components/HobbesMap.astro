@@ -1,0 +1,70 @@
+---
+/**
+ * The five places Hobbes lived, on a map of the country he lived in.
+ *
+ * The coastline and the positions both come from `src/lib/map.ts`, projected
+ * at build time, so there is no map library and nothing is fetched at runtime.
+ * Hovering or focusing a place previews it; clicking pins it, so a reader on a
+ * touch screen gets the same thing. The panel below the map is rendered for
+ * every place and shown one at a time, which keeps the prose in the HTML.
+ */
+import { LAND, PLACES, VIEW } from "../lib/map";
+
+const journey = ["Westport", "Oxford", "Derbyshire", "Paris", "London"]
+  .map((n) => PLACES.find((p) => p.name === n))
+  .filter((p) => p !== undefined)
+  .map((p) => `${p.x},${p.y}`)
+  .join(" ");
+---
+
+<figure class="hobbes-map" x-data="hobbesMap">
+  <svg viewBox={VIEW} role="img" aria-label="A map of southern Britain and northern France, marking the five places Thomas Hobbes lived.">
+    <g class="hobbes-map__land">
+      {LAND.map((d) => <path d={d} />)}
+    </g>
+    <polyline class="hobbes-map__journey" points={journey} />
+    {
+      PLACES.map((p, i) => (
+        <g
+          class="hobbes-map__place"
+          tabindex="0"
+          role="button"
+          aria-label={`${p.name}, ${p.when}`}
+          x-bind:class={`active === ${i} && "is-active"`}
+          x-on:mouseenter={`preview(${i})`}
+          x-on:mouseleave="clear()"
+          x-on:focus={`preview(${i})`}
+          x-on:blur="clear()"
+          x-on:click={`pin(${i})`}
+          x-on:keydown.enter.prevent={`pin(${i})`}
+          x-on:keydown.space.prevent={`pin(${i})`}
+        >
+          <circle class="hobbes-map__halo" cx={p.x} cy={p.y} r="0.22" />
+          <circle class="hobbes-map__dot" cx={p.x} cy={p.y} r="0.075" />
+          <text
+            class="hobbes-map__label"
+            x={(p.side === "left" ? p.x - 0.18 : p.x + 0.18).toFixed(2)}
+            y={(p.y + 0.09).toFixed(2)}
+            text-anchor={p.side === "left" ? "end" : "start"}
+          >
+            {p.name}
+          </text>
+        </g>
+      ))
+    }
+  </svg>
+
+  <figcaption class="hobbes-map__caption">
+    {
+      PLACES.map((p, i) => (
+        <span class="hobbes-map__note" x-show={`active === ${i}`} x-cloak={i === 0 ? undefined : true}>
+          <a href={p.href}>
+            <strong>{p.name}</strong>
+          </a>
+          <span class="hobbes-map__when">{p.when}</span>
+          <span class="hobbes-map__what">{p.what}</span>
+        </span>
+      ))
+    }
+  </figcaption>
+</figure>

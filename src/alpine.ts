@@ -8,6 +8,20 @@ declare module "alpinejs" {
   }
 }
 
+/** The three settings of the theme toggle; null in storage means follow the system. */
+type Theme = "light" | "sepia" | "dark";
+
+/** Where the reader last was, kept in localStorage under `leviathan:reading`. */
+interface Reading {
+  /** Chapter id, e.g. "13-of-the-naturall-condition-of-mankind". */
+  id: string;
+  /** What to call it in the resume link: "Chapter 13", or the title for the front matter. */
+  label: string;
+  /** Paragraph id ("p7"), or null on the chapters that are not numbered. */
+  para: string | null;
+  at: number;
+}
+
 /** Shape of the `conceptRef` component, so `Alpine.bind` handlers can type `this`. */
 interface ConceptRef {
   $el: HTMLElement;
@@ -126,26 +140,137 @@ export default (Alpine: Alpine) => {
    * only CHANGES it: on toggle, or when the system preference changes while
    * no explicit choice is stored.
    */
+  /**
+   * Light, sepia, and dark, cycled in that order by the toggle. `stored` is
+   * null until the reader chooses, in which case the system preference decides
+   * between light and dark; choosing anything pins it. Layout.astro applies
+   * the same rule before paint.
+   */
   Alpine.data("theme", () => ({
-    stored: Alpine.$persist(null as "light" | "dark" | null).as("leviathan:theme"),
-    dark: document.documentElement.classList.contains("dark"),
+    stored: Alpine.$persist(null as Theme | null).as("leviathan:theme"),
+    mode: (document.documentElement.classList.contains("dark")
+      ? "dark"
+      : document.documentElement.classList.contains("theme-sepia")
+        ? "sepia"
+        : "light") as Theme,
     init() {
       const media = window.matchMedia("(prefers-color-scheme: dark)");
       media.addEventListener("change", (e) => {
-        if (!this.stored) this.set(e.matches);
+        if (!this.stored) this.set(e.matches ? "dark" : "light");
       });
     },
-    set(dark: boolean) {
-      this.dark = dark;
-      document.documentElement.classList.toggle("dark", dark);
+    /** The one the toggle will move to, which is also the icon it shows. */
+    get next(): Theme {
+      return this.mode === "light" ? "sepia" : this.mode === "sepia" ? "dark" : "light";
     },
-    toggle() {
-      this.stored = this.dark ? "light" : "dark";
-      this.set(this.stored === "dark");
+    get label() {
+      return { light: "Light mode", sepia: "Sepia mode", dark: "Dark mode" }[this.next];
+    },
+    set(mode: Theme) {
+      this.mode = mode;
+      document.documentElement.classList.toggle("dark", mode === "dark");
+      document.documentElement.classList.toggle("theme-sepia", mode === "sepia");
+    },
+    cycle() {
+      this.stored = this.next;
+      this.set(this.stored);
     },
   }));
 
   /** Sidebar scroll offset, remembered for the session so the nav stays put across pages. */
+  /**
+   * Chapter pages: remember where the reader got to, so the home page can
+   * offer to send them back. The paragraph nearest the top of the viewport is
+   * taken to be the one being read; scrolling saves on a short debounce.
+   */
+  Alpine.data("readingPosition", () => ({
+    saved: Alpine.$persist(null as Reading | null).as("leviathan:reading"),
+    timer: undefined as number | undefined,
+    init() {
+      const { id, label } = (this.$el as HTMLElement).dataset as { id: string; label: string };
+      this.record(id, label);
+      const later = () => {
+        window.clearTimeout(this.timer);
+        this.timer = window.setTimeout(() => this.record(id, label), 400);
+      };
+      window.addEventListener("scroll", later, { passive: true });
+      window.addEventListener("pagehide", () => this.record(id, label));
+    },
+    /** The last paragraph whose top has passed the reading line. */
+    paragraph(): string | null {
+      let found: string | null = null;
+      for (const p of document.querySelectorAll<HTMLElement>(".prose-chapter p[id^='p']")) {
+        if (p.getBoundingClientRect().top > 140) break;
+        found = p.id;
+      }
+      return found;
+    },
+    record(id: string, label: string) {
+      this.saved = { id, label, para: this.paragraph(), at: Date.now() };
+    },
+  }));
+
+  /** Home page: a link back to wherever `readingPosition` last left the reader. */
+  Alpine.data("resumeReading", () => ({
+    saved: Alpine.$persist(null as Reading | null).as("leviathan:reading"),
+    get href() {
+      if (!this.saved) return "/chapters/the-epistle-dedicatory/";
+      return `/chapters/${this.saved.id}/${this.saved.para ? `#${this.saved.para}` : ""}`;
+    },
+    get label() {
+      return this.saved ? `Resume ${this.saved.label}` : "";
+    },
+  }));
+
+  /**
+   * The map on /hobbes/life/. One place is always shown; hovering or focusing
+   * another previews it without losing the pinned one, so the panel never goes
+   * empty and a click still works on a touch screen.
+   */
+  Alpine.data("hobbesMap", () => ({
+    pinned: 0,
+    hover: null as number | null,
+    get active() {
+      return this.hover ?? this.pinned;
+    },
+    preview(i: number) {
+      this.hover = i;
+    },
+    clear() {
+      this.hover = null;
+    },
+    pin(i: number) {
+      this.pinned = i;
+      this.hover = null;
+    },
+  }));
+
+  /**
+   * The chain of definitions on /definitions/. `chains` maps a term to its
+   * whole derivation, computed at build time; picking a term shows those cards
+   * and hides the rest, and clicking a borrowed word inside a sentence re-roots
+   * the chain on the term it points to.
+   */
+  Alpine.data(
+    "definitionChain",
+    ({ chains, terms, start }: { chains: Record<string, string[]>; terms: Record<string, string>; start: string }) => ({
+      chains,
+      terms,
+      root: start,
+      get chain() {
+        return this.chains[this.root] ?? [];
+      },
+      get summary() {
+        const steps = this.chain.length - 1;
+        if (steps <= 0) return `${this.terms[this.root]} is where the chain starts.`;
+        return `${this.terms[this.root]} rests on ${steps} earlier definition${steps === 1 ? "" : "s"}, in the order below.`;
+      },
+      select(id: string) {
+        if (this.chains[id]) this.root = id;
+      },
+    }),
+  );
+
   Alpine.data("navScroll", () => ({
     pending: false,
     save() {

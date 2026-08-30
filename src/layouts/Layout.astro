@@ -25,12 +25,15 @@ const concepts = (await getCollection("concepts")).map((c) => ({ id: c.id, title
 const interlocutors = (await getCollection("interlocutors")).map((a) => ({ id: a.id, title: a.data.title, sort: interlocutorSortKey(a) }));
 const themes = (await getCollection("themes")).map((t) => ({ id: t.id, title: t.data.title }));
 const hobbes = (await getCollection("hobbes")).map((h) => ({ id: h.id, title: h.data.title, sort: String(h.data.order) }));
+const works = (await getCollection("works")).map((w) => ({ id: w.id, title: w.data.title, sort: String(w.data.year) }));
 
 /** Editorial apparatus rather than a content collection. */
 const appendix = [
   { id: "definitions", title: "The chain of definitions" },
   { id: "scripture", title: "Scriptural references" },
   { id: "thinkers", title: "Thinkers named" },
+  { id: "further-reading", title: "Further reading" },
+  { id: "after-hobbes", title: "After Hobbes" },
 ];
 ---
 
@@ -50,8 +53,9 @@ const appendix = [
         try {
           stored = JSON.parse(localStorage.getItem("leviathan:theme") || "null");
         } catch {}
-        const dark = stored ? stored === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
-        document.documentElement.classList.toggle("dark", dark);
+        const mode = stored ?? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.classList.toggle("dark", mode === "dark");
+        document.documentElement.classList.toggle("theme-sepia", mode === "sepia");
       })();
     </script>
   </head>
@@ -66,6 +70,7 @@ const appendix = [
           {/* The rule splits the book section's bottom margin so the gap to Themes equals the gaps below it. */}
           <div class="-mt-2 border-t border-stone-200 pt-2 dark:border-stone-800">
             <ListNav sectionId="hobbes" title="Hobbes himself" basePath="/hobbes" items={hobbes} currentPath={currentPath} indexHref="/hobbes/" indexTitle="Overview" />
+            <ListNav sectionId="works" title="Other works" basePath="/works" items={works} currentPath={currentPath} indexHref="/works/" indexTitle="Overview" />
             <ListNav sectionId="themes" title="Themes" basePath="/themes" items={themes} currentPath={currentPath} indexHref="/themes/" indexTitle="Overview" />
             <ListNav sectionId="concepts" title="Concepts" basePath="/concepts" items={concepts} currentPath={currentPath} indexHref="/concepts/" indexTitle="Overview" />
             <ListNav sectionId="interlocutors" title="Interlocutors" basePath="/interlocutors" items={interlocutors} currentPath={currentPath} indexHref="/interlocutors/" indexTitle="Overview" />

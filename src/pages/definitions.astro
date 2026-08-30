@@ -3,6 +3,8 @@ import Layout from "../layouts/Layout.astro";
 // @ts-ignore -- plain-JS rehype helper, shared so the diagram links use the
 // same paragraph numbering as quotations on concept and interlocutor pages.
 import { loadChapters, locate, quoteHref } from "../plugins/rehype-quote-sources.mjs";
+import DefinitionChain from "../components/DefinitionChain.astro";
+import { DEFINITIONS } from "../lib/definitions";
 import fig1 from "../diagrams/fig1.svg?raw";
 import fig2 from "../diagrams/fig2.svg?raw";
 
@@ -12,86 +14,26 @@ import fig2 from "../diagrams/fig2.svg?raw";
  * build time so the link lands on the paragraph and highlights it; a term
  * without a quote just links to its chapter.
  */
+/**
+ * Where each term in the diagrams is defined. The terms that appear in the
+ * chain of definitions bring their chapter and defining quote with them from
+ * src/lib/definitions.ts; the rest are ids that exist only in the figures.
+ */
 const DEFINED: Record<string, { chapter: string; quote?: string }> = {
-  motion: { chapter: "the-introduction" },
-  sense: { chapter: "01-of-sense", quote: "So that Sense in all cases, is nothing els but originall fancy" },
-  imagination: { chapter: "02-of-imagination", quote: "Imagination therefore is nothing but Decaying Sense" },
+  ...Object.fromEntries(DEFINITIONS.map((d) => [d.id, { chapter: d.chapterId, quote: d.quote }])),
   trayne: { chapter: "03-of-the-consequence-or-trayne-of-imaginations" },
-  speech: { chapter: "04-of-speech", quote: "The generall use of Speech, is to transferre our Mentall Discourse" },
   speech2: { chapter: "04-of-speech", quote: "The generall use of Speech, is to transferre our Mentall Discourse" },
-  reason: { chapter: "05-of-reason-and-science", quote: "Reason, in this sense, is nothing but Reckoning" },
-  endeavour: {
-    chapter: "06-of-the-interiour-beginnings-of-voluntary-motions",
-    quote: "These small beginnings of Motion, within the body of Man",
-  },
-  appetite: {
-    chapter: "06-of-the-interiour-beginnings-of-voluntary-motions",
-    quote: "This Endeavour, when it is toward something which causes it",
-  },
-  good: {
-    chapter: "06-of-the-interiour-beginnings-of-voluntary-motions",
-    quote: "whatsoever is the object of any mans Appetite or Desire",
-  },
-  will: {
-    chapter: "06-of-the-interiour-beginnings-of-voluntary-motions",
-    quote: "In Deliberation, the last Appetite, or Aversion",
-  },
-  religion: {
-    chapter: "06-of-the-interiour-beginnings-of-voluntary-motions",
-    quote: "Feare of power invisible, feigned by the mind",
-  },
-  power: {
-    chapter: "10-of-power-worth-dignity-honour-and-worthiness",
-    quote: "The POWER of a Man, (to take it Universally,) is his present means",
-  },
   restless: {
     chapter: "11-of-the-difference-of-manners",
     quote: "a generall inclination of all mankind, a perpetuall and restlesse desire",
-  },
-  warre: {
-    chapter: "13-of-the-naturall-condition-of-mankind",
-    quote: "during the time men live without a common Power to keep them all in awe",
-  },
-  right: {
-    chapter: "14-of-the-first-and-second-naturall-lawes-and-of-contracts",
-    quote: "The RIGHT OF NATURE, which Writers commonly call Jus Naturale",
-  },
-  law: {
-    chapter: "14-of-the-first-and-second-naturall-lawes-and-of-contracts",
-    quote: "is a Precept, or generall Rule, found out by Reason",
-  },
-  covenant: {
-    chapter: "14-of-the-first-and-second-naturall-lawes-and-of-contracts",
-    quote: "The mutuall transferring of Right, is that which men call CONTRACT",
-  },
-  justice: { chapter: "15-of-other-lawes-of-nature", quote: "the definition of INJUSTICE, is no other than" },
-  person: {
-    chapter: "16-of-persons-authors-and-things-personated",
-    quote: "whose words or actions are considered, either as his own",
   },
   person2: {
     chapter: "16-of-persons-authors-and-things-personated",
     quote: "whose words or actions are considered, either as his own",
   },
-  commonwealth: {
-    chapter: "17-of-the-causes-generation-and-definition-of-a-common-wealth",
-    quote: "One Person, of whose Acts a great Multitude, by mutuall Covenants",
-  },
-  sovereign: {
-    chapter: "17-of-the-causes-generation-and-definition-of-a-common-wealth",
-    quote: "he that carryeth this Person, as called",
-  },
   sovereign2: {
     chapter: "17-of-the-causes-generation-and-definition-of-a-common-wealth",
     quote: "he that carryeth this Person, as called",
-  },
-  civill: {
-    chapter: "26-of-civill-lawes",
-    quote: "CIVILL LAW, Is to every Subject, those Rules, which the Common-wealth hath Commanded",
-  },
-  punishment: {
-    chapter: "28-of-punishments-and-rewards",
-    quote: "A PUNISHMENT, is an Evill inflicted by publique Authority",
   },
   holy: {
     chapter: "35-of-the-signification-in-scripture-of-kingdome-of-god-of-holy-sacred-and-sacrament",
@@ -106,10 +48,6 @@ const DEFINED: Record<string, { chapter: string; quote?: string }> = {
     quote: "The name of PROPHET, signifieth in Scripture sometimes Prolocutor",
   },
   miracle: { chapter: "37-of-miracles-and-their-use", quote: "A MIRACLE, is a work of God" },
-  church: {
-    chapter: "39-of-the-signification-in-scripture-of-the-word-church",
-    quote: "I define a CHURCH to be",
-  },
   eccl: { chapter: "42-of-power-ecclesiasticall" },
   teach: { chapter: "42-of-power-ecclesiasticall" },
   juris: {
@@ -137,6 +75,7 @@ function termHref(id: string) {
   return quoteHref(hit.chapter.id, hit.para, entry.quote);
 }
 
+const chainHrefs = Object.fromEntries(DEFINITIONS.map((d) => [d.id, termHref(d.id)]));
 const resolve = (svg: string) => svg.replace(/__H_([a-z0-9]+)__/g, (_m: string, id: string) => termHref(id));
 const figure1 = resolve(fig1);
 const figure2 = resolve(fig2);
@@ -186,43 +125,12 @@ if (unresolved.length) console.warn(`[definitions] unresolved term links: ${unre
       <a href="#reading-the-seams" class="heading-anchor">Reading the seams</a>
     </h2>
     <p class="mt-4 max-w-prose font-serif text-lg leading-relaxed">
-      The dependencies are visible in the sentences themselves. In each definition below, the words carrying a
-      superscript are terms Hobbes has already defined, and the chapter that defined them.
+      The dependencies are in the sentences themselves. Choose a term below and the definitions it rests on
+      appear beneath it, in the order Hobbes fixes them; the marked words inside each sentence are terms already
+      defined, and clicking one starts the chain again from there.
     </p>
 
-    <dl class="mt-8 grid gap-6 md:grid-cols-2">
-      <div class="seam">
-        <dt>Imagination <span class="seam__chap">Chapter 2</span></dt>
-        <dd>Imagination therefore is nothing but Decaying <b class="borrow">Sense<sup>1</sup></b>.</dd>
-      </div>
-      <div class="seam">
-        <dt>Will <span class="seam__chap">Chapter 6</span></dt>
-        <dd>
-          In <b class="borrow">Deliberation<sup>6</sup></b>, the last <b class="borrow">Appetite<sup>6</sup></b>,
-          or <b class="borrow">Aversion<sup>6</sup></b>, immediately adhaering to the action, or to the omission
-          thereof, is that wee call the WILL.
-        </dd>
-      </div>
-      <div class="seam">
-        <dt>Common-wealth <span class="seam__chap">Chapter 17</span></dt>
-        <dd>
-          One <b class="borrow">Person<sup>16</sup></b>, of whose Acts a great Multitude, by mutuall{" "}
-          <b class="borrow">Covenants<sup>14</sup></b> one with another, have made themselves every one the{" "}
-          <b class="borrow">Author<sup>16</sup></b>, to the end he may use the strength and{" "}
-          <b class="borrow">means<sup>10</sup></b> of them all, as he shall think expedient, for their{" "}
-          <b class="borrow">Peace<sup>14</sup></b> and Common Defence.
-        </dd>
-      </div>
-      <div class="seam">
-        <dt>Church <span class="seam__chap">Chapter 39</span></dt>
-        <dd>
-          A company of men professing Christian <b class="borrow">Religion<sup>6</sup></b>, united in the{" "}
-          <b class="borrow">person<sup>16</sup></b> of one <b class="borrow">Soveraign<sup>17</sup></b>; at whose{" "}
-          <b class="borrow">command<sup>26</sup></b> they ought to assemble, and without whose{" "}
-          <b class="borrow">authority<sup>16</sup></b> they ought not to assemble.
-        </dd>
-      </div>
-    </dl>
+    <DefinitionChain hrefs={chainHrefs} />
 
     <p class="mt-8 max-w-prose font-serif text-lg leading-relaxed">
       The last of these is the one that does the work of Part III. By the time Hobbes defines a church, every
