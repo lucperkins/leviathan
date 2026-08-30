@@ -22,16 +22,6 @@ function passage(p: any) {
 
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
-/** Numbered in reading order, so a marker's number matches its place at the foot. */
-const notes: { n: number; name: string; text: string }[] = [];
-for (const c of CATEGORIES as any[]) {
-  for (const p of c.people) {
-    if (p.footnote) {
-      notes.push({ n: notes.length + 1, name: p.name, text: p.footnote });
-      p.footnoteNumber = notes.length;
-    }
-  }
-}
 const total = CATEGORIES.reduce((n: number, c: any) => n + c.people.length, 0);
 if (unresolved.length) console.warn(`[thinkers] unresolved: ${unresolved.join(", ")}`);
 ---
@@ -89,16 +79,7 @@ if (unresolved.length) console.warn(`[thinkers] unresolved: ${unresolved.join(",
                     {p.mentions} {p.mentions === 1 ? "mention" : "mentions"}
                   </span>
                 </p>
-                <p class="thinker__note">
-                  <Fragment set:html={p.note} />
-                  {p.footnoteNumber && (
-                    <sup class="fn-ref">
-                      <a id={`fnref-${p.footnoteNumber}`} href={`#fn-${p.footnoteNumber}`}>
-                        {p.footnoteNumber}
-                      </a>
-                    </sup>
-                  )}
-                </p>
+                <p class="thinker__note" set:html={p.note} />
                 <p class="thinker__links">
                   <a href={passage(p)}>Chapter {parseInt(p.chapter, 10)}</a>
                   {p.interlocutor && <a href={`/interlocutors/${p.interlocutor}/`}>Full entry</a>}
@@ -135,27 +116,4 @@ if (unresolved.length) console.warn(`[thinkers] unresolved: ${unresolved.join(",
       }
     </ul>
   </section>
-
-  {
-    notes.length > 0 && (
-      <section class="mt-16">
-        <h2 id="notes" class="text-xs font-semibold tracking-widest text-stone-500 uppercase dark:text-stone-400">
-          <a href="#notes" class="heading-anchor">Notes</a>
-        </h2>
-        <ol class="footnotes mt-4">
-          {notes.map((f) => (
-            <li id={`fn-${f.n}`}>
-              <span class="footnotes__num">{f.n}</span>
-              <span>
-                <Fragment set:html={f.text} />{" "}
-                <a href={`#fnref-${f.n}`} class="footnotes__back" aria-label={`Back to ${f.name}`}>
-                  &#8617;
-                </a>
-              </span>
-            </li>
-          ))}
-        </ol>
-      </section>
-    )
-  }
 </Layout>

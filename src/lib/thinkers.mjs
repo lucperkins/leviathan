@@ -234,8 +234,6 @@ export const CATEGORIES = [
         dates: "1584–1654",
         mentions: 1,
         note: "The one contemporary Hobbes sends readers to rather than argues with. Anyone wanting the origin of titles of honour is pointed at Selden's treatise on the subject, and that is the whole of the mention.",
-        footnote:
-          "The treatise is Selden's <em>Titles of Honor</em> (1614). This is the only place in the book where Hobbes recommends a contemporary's work rather than disputing it — Bellarmine, Beza, Coke, and Suárez are all there to be taken apart — and the name appears only in the possessive, as \"Mr. Seldens most excellent Treatise.\"",
         chapter: "10-of-power-worth-dignity-honour-and-worthiness",
         quote: "in Mr. Seldens most excellent Treatise of that subject",
       },
