@@ -24,7 +24,12 @@ const chapters = (await getCollection("chapters")).map((ch) => ({ id: ch.id, ...
 const concepts = (await getCollection("concepts")).map((c) => ({ id: c.id, title: c.data.title }));
 const touchstones = (await getCollection("touchstones")).map((a) => ({ id: a.id, title: a.data.title, sort: touchstoneSortKey(a) }));
 const themes = (await getCollection("themes")).map((t) => ({ id: t.id, title: t.data.title, sort: titleSortKey(t.data.title) }));
-const readings = (await getCollection("readings")).map((r) => ({ id: r.id, title: r.data.title, sort: titleSortKey(r.data.title) }));
+// The section is called Readings, so the entries do not each repeat the word:
+// "Feminist readings" is listed as "Feminist".
+const readings = (await getCollection("readings")).map((r) => {
+  const short = r.data.title.replace(/ readings$/i, "");
+  return { id: r.id, title: short, sort: titleSortKey(short) };
+});
 const hobbes = (await getCollection("hobbes")).map((h) => ({ id: h.id, title: h.data.title, sort: String(h.data.order) }));
 const works = (await getCollection("works")).map((w) => ({ id: w.id, title: w.data.title, sort: String(w.data.year) }));
 const kindred = (await getCollection("kindred")).map((k) => ({ id: k.id, title: k.data.navTitle ?? k.data.title, sort: String(k.data.year + 1000).padStart(5, "0") }));
@@ -33,6 +38,7 @@ const kindred = (await getCollection("kindred")).map((k) => ({ id: k.id, title: 
 const appendix = [
   { id: "definitions", title: "The chain of definitions" },
   { id: "scripture", title: "Scriptural references" },
+  { id: "latin", title: "Latin glossary" },
   { id: "thinkers", title: "Thinkers named" },
   { id: "further-reading", title: "Further reading" },
   { id: "after-hobbes", title: "After Hobbes" },

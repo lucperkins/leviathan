@@ -692,9 +692,9 @@ a.external::after {
   }
 }
 
-/* Appendix: the index of scriptural references. Reference on the left, the
+/* Appendix: the index of scriptural references. The row: reference on the left, the
    places Hobbes cites it on the right, wrapping under it when space is short. */
-.scripture-ref {
+.scripture-row {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -702,7 +702,7 @@ a.external::after {
   gap: 0.25rem 1.5rem;
   padding: 0.4rem 0.1rem;
 }
-.scripture-ref__ref {
+.scripture-row__ref {
   font-family: var(--font-serif);
   font-size: 1rem;
   color: var(--color-stone-800);
@@ -710,15 +710,15 @@ a.external::after {
   text-decoration-color: var(--color-stone-300);
   text-underline-offset: 3px;
 }
-.dark .scripture-ref__ref {
+.dark .scripture-row__ref {
   color: var(--color-stone-200);
   text-decoration-color: var(--color-stone-700);
 }
-.scripture-ref__ref:hover,
-.scripture-ref__ref:focus-visible {
+.scripture-row__ref:hover,
+.scripture-row__ref:focus-visible {
   text-decoration-color: var(--color-stone-600);
 }
-.scripture-ref__cites {
+.scripture-row__cites {
   display: flex;
   flex-wrap: wrap;
   gap: 0.15rem 0.6rem;
@@ -726,25 +726,108 @@ a.external::after {
   font-variant-numeric: tabular-nums;
   color: var(--color-stone-500);
 }
-.scripture-ref__cites a {
+.scripture-row__cites a {
   color: inherit;
   text-decoration: none;
   white-space: nowrap;
 }
-.scripture-ref__cites a:hover,
-.scripture-ref__cites a:focus-visible {
+.scripture-row__cites a:hover,
+.scripture-row__cites a:focus-visible {
   color: var(--color-stone-900);
 }
-.dark .scripture-ref__cites a:hover,
-.dark .scripture-ref__cites a:focus-visible {
+.dark .scripture-row__cites a:hover,
+.dark .scripture-row__cites a:focus-visible {
   color: var(--color-stone-100);
 }
-.scripture-ref__para {
+.scripture-row__para {
   margin-left: 0.15rem;
   color: var(--color-stone-400);
 }
-.dark .scripture-ref__para {
+.dark .scripture-row__para {
   color: var(--color-stone-600);
+}
+
+/* Appendix: the glossary of Latin. Headword and literal translation on one
+   line, the gloss under it, and the places Hobbes uses it under that. */
+.latin-term {
+  padding: 1rem 0.1rem;
+}
+.latin-term__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.1rem 0.75rem;
+}
+.latin-term__word {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  color: var(--color-stone-900);
+  text-decoration: none;
+}
+.dark .latin-term__word {
+  color: var(--color-stone-100);
+}
+.latin-term__word:hover,
+.latin-term__word:focus-visible {
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-400);
+  text-underline-offset: 4px;
+}
+.latin-term__literal {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--color-stone-500);
+}
+.latin-term__body {
+  margin: 0;
+}
+.latin-term__gloss {
+  margin-top: 0.35rem;
+  max-width: 62ch;
+  line-height: 1.6;
+  color: var(--color-stone-700);
+}
+.dark .latin-term__gloss {
+  color: var(--color-stone-300);
+}
+.latin-term__gloss a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.latin-term__gloss a:hover,
+.latin-term__gloss a:focus-visible {
+  text-decoration-color: var(--color-stone-900);
+}
+.dark .latin-term__gloss a {
+  text-decoration-color: var(--color-stone-600);
+}
+.dark .latin-term__gloss a:hover,
+.dark .latin-term__gloss a:focus-visible {
+  text-decoration-color: var(--color-stone-100);
+}
+.latin-term__cites {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.9rem;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-stone-500);
+}
+.latin-term__cites a {
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.latin-term__cites a:hover,
+.latin-term__cites a:focus-visible {
+  color: var(--color-stone-900);
+}
+.dark .latin-term__cites a:hover,
+.dark .latin-term__cites a:focus-visible {
+  color: var(--color-stone-100);
 }
 
 /* The contents page: a printed table of contents rather than a nav list. */

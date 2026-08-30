@@ -1,0 +1,118 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { inlineMarkdown } from "../lib/inline";
+// @ts-ignore -- plain-JS helper, shares the chapter paragraph numbering
+import { latinIndex } from "../lib/latin.mjs";
+
+const { groups, total, absent } = latinIndex();
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
+/** "Chapter 14 ¶3" for the numbered chapters, the title for the front matter. */
+const cite = (c: { title: string; number: number; part?: string; para: number | null }) =>
+  c.part ? `Chapter ${c.number}${c.para ? ` ¶${c.para}` : ""}` : c.title;
+const href = (c: { id: string; para: number | null }) =>
+  c.para ? `/chapters/${c.id}/#p${c.para}` : `/chapters/${c.id}/`;
+---
+
+<Layout title="Latin glossary">
+  <header class="mb-8">
+    <p class="eyebrow">Appendix</p>
+    <h1 class="mt-1 font-serif text-3xl font-semibold">Latin glossary</h1>
+    <p class="mt-3 max-w-prose text-lg text-stone-600 dark:text-stone-400">
+      {total} Latin words and phrases Hobbes keeps in a book he wrote in English on purpose, with what they mean
+      and the paragraphs where he uses them. He is not showing off. Some are terms he is defining, some are the
+      Vulgate corrected against the King James, and the rest are the schools' jargon, quoted so that it can be
+      convicted in its own words.
+    </p>
+  </header>
+
+  <nav aria-label="Groups" class="mb-10 flex flex-wrap gap-x-4 gap-y-1 border-y border-stone-200 py-3 text-sm dark:border-stone-800">
+    {
+      groups.map((g: any) => (
+        <a href={`#${g.id}`} class="text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">
+          {g.title}
+          <span class="ml-1 text-xs text-stone-400 dark:text-stone-600">{g.terms.length}</span>
+        </a>
+      ))
+    }
+    <a href="#not-in-the-book" class="text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">
+      Not in the book
+      <span class="ml-1 text-xs text-stone-400 dark:text-stone-600">{absent.length}</span>
+    </a>
+  </nav>
+
+  <div class="space-y-12">
+    {
+      groups.map((g: any) => (
+        <section>
+          <h2 id={g.id} class="section-heading">
+            <a href={`#${g.id}`} class="heading-anchor">{g.title}</a>
+          </h2>
+          <p class="mt-2 max-w-prose text-stone-600 dark:text-stone-400">{g.blurb}</p>
+          <dl class="mt-5 divide-y divide-stone-200 border-t border-stone-200 dark:divide-stone-800 dark:border-stone-800">
+            {g.terms.map((t: any) => (
+              <div class="latin-term">
+                <dt class="latin-term__head" id={slug(t.term)}>
+                  <a href={`#${slug(t.term)}`} class="latin-term__word">{t.term}</a>
+                  <span class="latin-term__literal">{t.literal}</span>
+                </dt>
+                <dd class="latin-term__body">
+                  <p class="latin-term__gloss" set:html={inlineMarkdown(t.gloss)} />
+                  <p class="latin-term__cites">
+                    {t.cited.map((c: any) => (
+                      <a href={href(c)} title={c.part ? `${c.title}` : undefined}>{cite(c)}</a>
+                    ))}
+                  </p>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      ))
+    }
+  </div>
+
+  <section class="mt-16">
+    <h2 id="not-in-the-book" class="section-heading">
+      <a href="#not-in-the-book" class="heading-anchor">Not in the book</a>
+    </h2>
+    <p class="mt-2 max-w-prose text-stone-600 dark:text-stone-400">
+      The three most quoted pieces of Hobbesian Latin. One is in another of his books, one was added seventeen
+      years later, and one is on the picture rather than in the text.
+    </p>
+    <dl class="mt-5 divide-y divide-stone-200 border-t border-stone-200 dark:divide-stone-800 dark:border-stone-800">
+      {
+        absent.map((t: any) => (
+          <div class="latin-term latin-term--absent">
+            <dt class="latin-term__head" id={slug(t.term)}>
+              <a href={`#${slug(t.term)}`} class="latin-term__word">{t.term}</a>
+              <span class="latin-term__literal">{t.literal}</span>
+            </dt>
+            <dd class="latin-term__body">
+              <p class="latin-term__gloss" set:html={inlineMarkdown(t.gloss)} />
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <section class="mt-16 max-w-prose">
+    <h2 id="on-the-glossary" class="section-heading">
+      <a href="#on-the-glossary" class="heading-anchor">On the glossary</a>
+    </h2>
+    <div class="prose-chapter mt-4 font-serif text-lg leading-relaxed">
+      <p>
+        The entries are located in the chapter text at build time rather than typed out by hand, so a phrase
+        listed here is a phrase that is really there, and the paragraph numbers stay correct as the text is
+        corrected. Capitalisation follows the 1651 printer, who capitalises Latin about as consistently as he
+        capitalises everything else.
+      </p>
+      <p>
+        Greek is left out. Hobbes uses it in the same way and for the same reasons — <em>prosopon</em> beside{" "}
+        <em>persona</em>, <em>kurios</em> beside <em>dominus</em> — but transliterated, unaccented, and with the
+        printer guessing at the endings, so it wants a list of its own.
+      </p>
+    </div>
+  </section>
+</Layout>
