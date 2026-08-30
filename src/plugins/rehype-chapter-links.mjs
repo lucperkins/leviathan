@@ -32,13 +32,13 @@ const MENTION = /\b(Chapters?)(\s+)((?:[IVXLC]+|\d+)(?:(?:,\s*|\s+and\s+|\s*[–
 const NUMERAL = /([IVXLC]+|\d+)/g;
 
 /**
- * On concept, interlocutor, and theme pages, chapter mentions in prose become
+ * On concept, interlocutor, theme, and Hobbes pages, chapter mentions in prose become
  * arabic numerals (matching the sidebar) and link to the chapter page when
  * that chapter is loaded. Quotations and headings are left alone.
  */
 export default function rehypeChapterLinks() {
   return (tree, file) => {
-    if (!/\/content\/(concepts|interlocutors|themes)\//.test(file.path ?? "")) return;
+    if (!/\/content\/(concepts|hobbes|interlocutors|themes)\//.test(file.path ?? "")) return;
     const ids = loadChapterIds();
 
     visit(tree, "text", (node, index, parent) => {
