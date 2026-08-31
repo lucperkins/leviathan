@@ -1,11 +1,21 @@
 ---
+/**
+ * The sidebar masthead: title and author, with the site's mark held out to the
+ * right of them. The mark is decorative — the words beside it say the same
+ * thing — so it is hidden from assistive technology.
+ */
+import Mark from "./Mark.astro";
+
 interface Props {
   href?: string;
 }
 const { href = "/" } = Astro.props;
 ---
 
-<a href={href} class="block">
-  <span class="font-serif text-2xl font-semibold tracking-tight">Leviathan</span>
-  <span class="block text-xs text-stone-500 dark:text-stone-400">Thomas Hobbes, 1651</span>
+<a href={href} class="flex items-center justify-between gap-3">
+  <span class="block">
+    <span class="block font-serif text-2xl font-semibold tracking-tight">Leviathan</span>
+    <span class="block text-xs text-stone-500 dark:text-stone-400">Thomas Hobbes, 1651</span>
+  </span>
+  <Mark size={28} class="shrink-0 text-stone-400 dark:text-stone-500" />
 </a>
