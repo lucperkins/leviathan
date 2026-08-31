@@ -4,6 +4,7 @@ import Lightbox from "../components/Lightbox.astro";
 // @ts-ignore -- plain-JS rehype helpers, so the footnote's quotation lands on
 // the paragraph and is highlighted there, like quotations everywhere else.
 import { loadChapters, locate, quoteHref } from "../plugins/rehype-quote-sources.mjs";
+import Mark from "../components/Mark.astro";
 import ResumeReading from "../components/ResumeReading.astro";
 import frontispiece from "../assets/frontispiece.jpg";
 
@@ -21,6 +22,7 @@ const alt =
 <Layout title="Home">
   <section class="flex flex-col gap-14 md:gap-20">
     <div>
+      <Mark class="mb-7 text-stone-400 dark:text-stone-600" />
       <p class="eyebrow">
         <a
           href="/hobbes/"
