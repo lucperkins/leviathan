@@ -1,13 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- Crown over a sword and a crozier: the civil and ecclesiastical powers
-       held in one pair of hands, after the 1651 frontispiece. Kept in step
-       with src/components/Mark.astro, which is the same figure without the tile. -->
+  <!-- Sword and crozier crossed beneath a crown: the civil and ecclesiastical
+       powers held in one hand, after the 1651 frontispiece. The sword takes a
+       pommel rather than a crossguard, which at this size would read as a
+       second X. Kept in step with src/components/Mark.astro. -->
   <rect width="32" height="32" rx="6" fill="#292524"/>
   <path d="M7 11.5 8.5 5l4.5 4.2L16 4l3 5.2L23.5 5 25 11.5Z" fill="#fafaf9"/>
   <g fill="none" stroke="#fafaf9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M11.8 14v14.6"/>
-    <path d="M8.6 23.2h6.4"/>
-    <path d="M20.6 28.6V17.2"/>
-    <path d="M20.6 17.2a2.9 2.9 0 0 1 5.8 0"/>
+    <path d="M11 26.5 22 15.5"/>
+    <path d="M22.5 28 10 15.5"/>
+    <path d="M10 15.5c-2.8-2.8-1.2-6.6 2-5.4"/>
   </g>
+  <circle cx="9.6" cy="27.9" r="1.9" fill="#fafaf9"/>
 </svg>
