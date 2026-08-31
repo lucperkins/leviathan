@@ -2,13 +2,14 @@
   <!-- Sword and crozier crossed beneath a crown: the civil and ecclesiastical
        powers held in one hand, after the 1651 frontispiece. The sword takes a
        pommel rather than a crossguard, which at this size would read as a
-       second X. Kept in step with src/components/Mark.astro. -->
+       second X, and the crown sits clear above the crossing so the crook
+       never runs into it. Kept in step with src/components/Mark.astro. -->
   <rect width="32" height="32" rx="6" fill="#292524"/>
-  <path d="M7 11.5 8.5 5l4.5 4.2L16 4l3 5.2L23.5 5 25 11.5Z" fill="#fafaf9"/>
+  <path d="M7 10 8.5 3.5l4.5 4.2L16 2.5l3 5.2L23.5 3.5 25 10Z" fill="#fafaf9"/>
   <g fill="none" stroke="#fafaf9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M11 26.5 22 15.5"/>
-    <path d="M22.5 28 10 15.5"/>
-    <path d="M10 15.5c-2.8-2.8-1.2-6.6 2-5.4"/>
+    <path d="M11 27.5 22 16.5"/>
+    <path d="M22.5 29 10 16.5"/>
+    <path d="M10 16.5c-2.6-2.6-1.1-5 1.9-4.1"/>
   </g>
-  <circle cx="9.6" cy="27.9" r="1.9" fill="#fafaf9"/>
+  <circle cx="9.6" cy="28.9" r="1.9" fill="#fafaf9"/>
 </svg>
