@@ -1,0 +1,147 @@
+---
+/**
+ * A glossary of the book's foreign vocabulary: jump links, then each group,
+ * then the words a reader expects and will not find. Used by /latin/ and
+ * /greek/, which hold different lists in the same shape.
+ *
+ * An entry is a headword, a literal translation, a paragraph of gloss, and the
+ * places the text uses it. The citations come from the glossary index, which
+ * finds them in the chapter text at build time, so they are not typed by hand
+ * and cannot drift from the text.
+ */
+import config from "../../site.config";
+import { inlineMarkdown } from "../lib/inline";
+
+interface Cite {
+  id: string;
+  title: string;
+  number: number;
+  part?: string;
+  para: number | null;
+}
+interface Term {
+  term: string;
+  /** The word in its own alphabet, where it has one the 1651 printer did not set. */
+  script?: string;
+  lang?: string;
+  literal: string;
+  gloss: string;
+  cited?: Cite[];
+}
+interface Group {
+  id: string;
+  title: string;
+  blurb: string;
+  terms: Term[];
+}
+interface Props {
+  groups: Group[];
+  absent?: Term[];
+  absentTitle?: string;
+  absentIntro?: string;
+}
+const { groups, absent = [], absentTitle = "Not in the book", absentIntro } = Astro.props;
+
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
+/** "Chapter 14 ¶3" for the numbered units, the title for the front matter. */
+const { unitWord, basePath } = config.text;
+const cite = (c: Cite) => (c.part ? `${unitWord} ${c.number}${c.para ? ` ¶${c.para}` : ""}` : c.title);
+const href = (c: Cite) => (c.para ? `${basePath}/${c.id}/#p${c.para}` : `${basePath}/${c.id}/`);
+---
+
+<nav aria-label="Groups" class="mb-10 flex flex-wrap gap-x-4 gap-y-1 border-y border-stone-200 py-3 text-sm dark:border-stone-800">
+  {
+    groups.map((g) => (
+      <a href={`#${g.id}`} class="text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">
+        {g.title}
+        <span class="ml-1 text-xs text-stone-400 dark:text-stone-600">{g.terms.length}</span>
+      </a>
+    ))
+  }
+  {
+    absent.length > 0 && (
+      <a href="#not-in-the-book" class="text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">
+        {absentTitle}
+        <span class="ml-1 text-xs text-stone-400 dark:text-stone-600">{absent.length}</span>
+      </a>
+    )
+  }
+</nav>
+
+<div class="space-y-12">
+  {
+    groups.map((g) => (
+      <section>
+        <h2 id={g.id} class="section-heading">
+          <a href={`#${g.id}`} class="heading-anchor">
+            {g.title}
+          </a>
+        </h2>
+        <p class="mt-2 max-w-prose text-stone-600 dark:text-stone-400" set:html={inlineMarkdown(g.blurb)} />
+        <dl class="mt-5 divide-y divide-stone-200 border-t border-stone-200 dark:divide-stone-800 dark:border-stone-800">
+          {g.terms.map((t) => (
+            <div class="gloss-term">
+              <dt class="gloss-term__head" id={slug(t.term)}>
+                <a href={`#${slug(t.term)}`} class="gloss-term__word">
+                  {t.term}
+                </a>
+                {t.script && (
+                  <span class="gloss-term__script" lang={t.lang}>
+                    {t.script}
+                  </span>
+                )}
+                <span class="gloss-term__literal">{t.literal}</span>
+              </dt>
+              <dd class="gloss-term__body">
+                <p class="gloss-term__gloss" set:html={inlineMarkdown(t.gloss)} />
+                {t.cited && (
+                  <p class="gloss-term__cites">
+                    {t.cited.map((c) => (
+                      <a href={href(c)} title={c.part ? c.title : undefined}>
+                        {cite(c)}
+                      </a>
+                    ))}
+                  </p>
+                )}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    ))
+  }
+</div>
+
+{
+  absent.length > 0 && (
+    <section class="mt-16">
+      <h2 id="not-in-the-book" class="section-heading">
+        <a href="#not-in-the-book" class="heading-anchor">
+          {absentTitle}
+        </a>
+      </h2>
+      {absentIntro && <p class="mt-2 max-w-prose text-stone-600 dark:text-stone-400">{absentIntro}</p>}
+      <dl class="mt-5 divide-y divide-stone-200 border-t border-stone-200 dark:divide-stone-800 dark:border-stone-800">
+        {absent.map((t) => (
+          <div class="gloss-term">
+            <dt class="gloss-term__head" id={slug(t.term)}>
+              <a href={`#${slug(t.term)}`} class="gloss-term__word">
+                {t.term}
+              </a>
+              {t.script && (
+                <span class="gloss-term__script" lang={t.lang}>
+                  {t.script}
+                </span>
+              )}
+              <span class="gloss-term__literal">{t.literal}</span>
+            </dt>
+            <dd class="gloss-term__body">
+              <p class="gloss-term__gloss" set:html={inlineMarkdown(t.gloss)} />
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  )
+}

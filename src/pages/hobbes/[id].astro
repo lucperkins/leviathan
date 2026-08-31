@@ -1,38 +1,27 @@
 ---
-import { getCollection, render } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
-import ConceptHeader from "../../components/ConceptHeader.astro";
-import Lightbox from "../../components/Lightbox.astro";
-import PrevNext from "../../components/PrevNext.astro";
-import Prose from "../../components/Prose.astro";
-import { neighbours } from "../../lib/sequence";
+import { getCollection } from "astro:content";
+import EntryPage from "../../theme/components/EntryPage.astro";
+import Lightbox from "../../theme/components/Lightbox.astro";
+import { entryRoutes } from "../../theme/lib/routes";
 
 export async function getStaticPaths() {
   // Read in sequence, not alphabetically: life, career, character, faith, contemporaries, impact.
   const sections = (await getCollection("hobbes")).sort((a, b) => a.data.order - b.data.order);
-  return sections.map((section, i) => ({
-    params: { id: section.id },
-    props: {
-      section,
-      ...neighbours(sections, i, (s) => ({ href: `/hobbes/${s.id}/`, title: s.data.title })),
-    },
-  }));
+  return entryRoutes(sections, "/hobbes");
 }
 
-const { section, prev, next } = Astro.props;
-const { Content } = await render(section);
-const { image, imageAlt, imageCaption, imageCredit } = section.data;
+const { entry, prev, next } = Astro.props;
+const { image, imageAlt, imageCaption, imageCredit } = entry.data;
 ---
 
-<Layout title={section.data.title}>
-  <ConceptHeader kind="Hobbes himself" title={section.data.title} summary={section.data.summary} />
+<EntryPage entry={entry} kind="Hobbes himself" prev={prev} next={next} sequence="section">
   {
     image && (
       <figure class="mb-10">
         <div class="mx-auto max-w-xs">
           <Lightbox
             src={image}
-            alt={imageAlt ?? section.data.title}
+            alt={imageAlt ?? entry.data.title}
             caption={imageCaption}
             widths={[320, 480, 720]}
             sizes="(min-width: 768px) 20rem, 70vw"
@@ -45,8 +34,4 @@ const { image, imageAlt, imageCaption, imageCredit } = section.data;
       </figure>
     )
   }
-  <Prose>
-    <Content />
-  </Prose>
-  <PrevNext kind="section" prev={prev} next={next} />
-</Layout>
+</EntryPage>

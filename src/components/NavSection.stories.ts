@@ -1,4 +1,4 @@
-import NavSection from "./NavSection.astro";
+import NavSection from "../theme/components/NavSection.astro";
 
 const items = `
 <ul class="space-y-1">

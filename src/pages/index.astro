@@ -1,11 +1,11 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Lightbox from "../components/Lightbox.astro";
+import Layout from "../theme/layouts/Layout.astro";
+import Lightbox from "../theme/components/Lightbox.astro";
 // @ts-ignore -- plain-JS rehype helpers, so the footnote's quotation lands on
 // the paragraph and is highlighted there, like quotations everywhere else.
-import { loadChapters, locate, quoteHref } from "../plugins/rehype-quote-sources.mjs";
+import { loadChapters, locate, quoteHref } from "../lib/chapters.mjs";
 import Mark from "../components/Mark.astro";
-import ResumeReading from "../components/ResumeReading.astro";
+import ResumeReading from "../theme/components/ResumeReading.astro";
 import frontispiece from "../assets/frontispiece.jpg";
 
 /** The sentence in Chapter 28 where Hobbes explains the book's title. */

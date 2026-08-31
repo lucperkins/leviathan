@@ -1,4 +1,4 @@
-import Lightbox from "./Lightbox.astro";
+import Lightbox from "../theme/components/Lightbox.astro";
 import frontispiece from "../assets/frontispiece.jpg";
 
 export default {

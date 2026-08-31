@@ -1,4 +1,4 @@
-import Sidelight from "./Sidelight.astro";
+import Sidelight from "../theme/components/Sidelight.astro";
 
 export default {
   title: "Reading/Sidelight",

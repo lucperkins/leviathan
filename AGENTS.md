@@ -8,15 +8,34 @@ text to explanatory pages. Static site, no backend.
 
 - **Astro 7** (static output) + **@astrojs/mdx**, **Tailwind v4** via
   `@tailwindcss/vite` (no tailwind.config; theme tokens live in
-  `src/styles/global.css` under `@theme`).
+  `src/theme/styles/theme.css` under `@theme`).
 - **Bun** for everything (`bun install`, `bun run …`). Do not introduce npm
   or a `package-lock.json`.
 - **Storybook 10** with `storybook-astro` (renders `.astro` files directly).
-  Stories sit beside components: `src/components/X.stories.ts`.
+  Stories live in `src/components/X.stories.ts` — with the site, not the
+  theme, because their fixtures are Leviathan data.
 - **Nix flake** (`flake.nix`, `outputs = inputs:` style, `mkShellNoCC`)
   provides `bun` and `process-compose`. `.envrc` is `use flake`.
 - **process-compose.yaml** runs `install` → then `site` (port 3000) and
   `storybook` (port 6006) in parallel. Site must stay on 3000.
+
+## The theme (`src/theme/`)
+
+All reusable machinery lives in `src/theme/` — components, `layouts/Layout.astro`,
+the rehype plugin factories, `alpine.ts`, `styles/theme.css`, schema pieces
+(`content.ts`), lib machinery, and the ref-watch integration. It is written for
+"annotated primary text" sites in general and must contain nothing
+Leviathan-specific: `grep -ri "hobbes\|leviathan" src/theme --exclude=README.md`
+must stay empty. Everything site-specific reaches it through **`src/site.config.ts`**
+(type: `src/theme/config.ts`) — title, storage prefix, the text's shape
+(`text.*`), sidebar `sections`, tooltip `refKinds`, `apparatus` links,
+`essayCollections`, icons — plus the plugin options built from it in
+`astro.config.ts`. The full contract is in `src/theme/README.md`. The site keeps:
+pages (thin wrappers over theme components), content, data libs, bespoke
+components (`Mark`, `HobbesMap`, `FrontispieceMap`, `DefinitionChain`),
+Leviathan CSS in `src/styles/global.css`, and thin glue in `src/lib/`
+(`chapters.mjs`, `glossary.mjs`, `mentions.mjs`, `parts.ts`, `spelling.ts` bind
+theme machinery to this site's config so pages keep their old call sites).
 
 Commands: `bun run build`, `bun run build-storybook`, `bun run check`
 (`astro check`; needs TypeScript 6.x), `bun run check:links`, `process-compose up`.
@@ -56,17 +75,22 @@ process-compose does not own, report it rather than killing it.
 
 ## Content model (`src/content.config.ts`)
 
-Three collections, all MDX under `src/content/`, loaded with `glob`:
+Ten collections, all MDX under `src/content/`, loaded with `glob`.
+Schemas are assembled from the factories in `src/theme/content.ts`
+(`textUnitSchema`, `refEntrySchema`, `essaySchema`, `footnotesSchema`).
 
 | collection | path | frontmatter |
 |---|---|---|
-| `chapters` | `chapters/NN-slug.mdx` | `number`, `title`, `part` (one of `PARTS` in `src/lib/parts.ts`), `pullquotes?` |
+| `chapters` | `chapters/NN-slug.mdx` | `number`, `title`, `part` (one of `text.divisions` in `src/site.config.ts`), `pullquotes?` |
 | `concepts` | `concepts/slug.mdx` | `title`, `summary`, `terms?`, `chapters` (refs) |
-| `authors`  | `authors/slug.mdx`  | same as concepts + `dates?`, `sortName?` (surname; defaults to the title's last word — authors sort by it in the sidebar and prev/next) |
+| `touchstones` | `touchstones/slug.mdx` | same as concepts + `dates?`, `sortName?` (surname; defaults to the title's last word — touchstones sort by it in the sidebar and prev/next) |
 | `themes`   | `themes/slug.mdx`   | `title`, `summary`, `hobbes?`, `chapters` (refs), `concepts` (refs) |
-| `works`    | `works/slug.mdx`    | `title`, `dates`, `year` (sort key), `summary`, `chapters`/`concepts`/`themes` (refs) |
+| `works`    | `works/slug.mdx`    | `title`, `dates`, `year` (sort key), `summary`, `chapters`/`concepts`/`themes`/`context` (refs) |
 | `kindred`  | `kindred/slug.mdx`  | same as `works`; `year` is a birth year, negative for BC |
-| `readings` | `readings/slug.mdx` | `title`, `summary`, `chapters`/`concepts`/`themes` (refs) |
+| `readings` | `readings/slug.mdx` | `title`, `summary`, `chapters`/`concepts`/`themes`/`context` (refs) |
+| `receptions` | `receptions/slug.mdx` | same as `readings` |
+| `context`  | `context/slug.mdx`  | `title`, `dates`, `order` (sort key), `summary`, `chapters`/`concepts`/`themes` (refs) |
+| `hobbes`   | `hobbes/slug.mdx`   | `title`, `summary`, `order`, optional `image*` |
 
 Every collection also takes `footnotes` (`after` is matched in the text, the
 note collected at the foot; see `rehype-footnotes.mjs`). The marker is placed
@@ -75,13 +99,13 @@ to it. Notes about people end with a pointer to `/thinkers/`, said accurately:
 "Listed among the people Hobbes names" for those on that page, "Not among…"
 for contemporaries like Bramhall, Wallis, and Cromwell who are not in the book.
 
-`concepts` and `authors` are **ref collections**: each entry gets (a) a brief
+`concepts` and `touchstones` are **ref collections**: each entry gets (a) a brief
 `summary` shown in tooltips and (b) a full page at `/concepts/<id>/` or
-`/authors/<id>/`. `terms` is the list of words to match in chapter text
+`/touchstones/<id>/`. `terms` is the list of words to match in chapter text
 (case-insensitive, whole word); it defaults to `[title]`, and `terms: []` turns
 linking off for an entry whose title is too common a word (e.g. "good"). Adding a new ref
-kind means touching `REF_KINDS` in the rehype plugin, `src/lib/refs.ts`,
-`content.config.ts`, a `[id].astro` page, and a `ListNav` in the layout.
+kind means touching `refKinds` and `sections` in `src/site.config.ts`,
+`content.config.ts`, and adding the `[id].astro`/`index.astro` pages.
 
 ### Chapter text
 
@@ -90,10 +114,11 @@ paragraphs unwrapped, Gutenberg's standalone marginal headings turned into
 `###`. Those headings ("Memory", "Dreams", …) are Hobbes's own marginal
 notes from the 1651 edition, not editorial additions. Chapter IX's table of
 the sciences is hand-built as a nested list inside `<div class="science-table">`
-(Gutenberg encodes it by indentation, which the extractor cannot parse). Only Chapters I–III are in so far; the rest are added deliberately,
-not in bulk. Keep Hobbes's spelling; do not modernise.
+(Gutenberg encodes it by indentation, which the extractor cannot parse).
+All 47 chapters plus the front and back matter are in. Keep Hobbes's
+spelling; do not modernise.
 
-Author pages: brief account of the author, then Hobbes's relationship to them
+Touchstone pages: brief account of the author, then Hobbes's relationship to them
 (what he took, what he rejected, with quotations from the text).
 
 Theme pages (`/themes/<id>/`) are essays on broad topics that run through the
@@ -112,37 +137,43 @@ titles, since they explain his terms.
 
 ## How the tooltips work
 
-1. `src/plugins/rehype-concepts.mjs` runs on `content/chapters/*` only. It
+The plugins are factories: `astro.config.ts` instantiates each with options
+built from `src/site.config.ts` (collections, paths, the word "Chapter", the
+"Leviathan, " footer prefix).
+
+1. `src/theme/plugins/rehype-concepts.mjs` runs on `content/chapters/*` only. It
    reads every ref collection's frontmatter (re-read on each transform) and
-   wraps matching words in `<concept-ref data-kind="concept|author"
+   wraps matching words in `<concept-ref data-kind="concept|touchstone"
    data-concept="<id>">`. Skips headings, links, code, and existing refs.
-2. `src/components/ConceptRefs.astro` (rendered on chapter pages) emits one
+2. `src/theme/components/ConceptRefs.astro` (rendered on chapter pages) emits one
    `<template id="ref-<kind>-<id>">` per entry. The Alpine `conceptRef`
    component (attached by the plugin via `x-data`/`x-bind`) clones it on
    hover/focus/click, stays open over the tooltip, closes on Escape, and
    flips above when near the bottom of the viewport. The tooltip contains
    the summary and a link to the full page.
-3. `src/integrations/ref-watch.mjs` (dev only) watches the ref directories
+3. `src/theme/integrations/ref-watch.mjs` (dev only) watches the ref directories
    through Vite's watcher and invalidates compiled chapter modules on
    add/remove/change so step 1 re-runs. Nothing external is needed for
    this — no watchexec, no restart.
-4. `src/plugins/rehype-chapter-links.mjs`: on concept/author/theme pages,
+4. `src/theme/plugins/rehype-chapter-links.mjs`: on every essay collection's pages
+   (`essayCollections` in the site config),
    prose mentions like "Chapter XVII" or "Chapters XIV and XV" are rewritten
    to arabic numerals (matching the sidebar) and linked to the chapter page
    when it is loaded. Write chapter numbers in prose however you like (roman
    or arabic); the reader always sees "Chapter 17". Quote footers use arabic
    too. Part numbers stay roman ("Part III").
-5. `src/plugins/rehype-concept-headings.mjs` gives `h2–h4` on chapter, concept,
-   and author pages ids and wraps them in self-links (`.heading-anchor`).
-5. `src/plugins/rehype-pullquotes.mjs`: a chapter's frontmatter `pullquotes`
+5. `src/theme/plugins/rehype-concept-headings.mjs` gives `h2–h4` on chapter pages
+   and every essay collection's pages ids and wraps them in self-links
+   (`.heading-anchor`).
+5. `src/theme/plugins/rehype-pullquotes.mjs`: a chapter's frontmatter `pullquotes`
    (verbatim sentences) are set out as `<aside id="quote-N" class="pullquote">`
    after the paragraph containing them; the quote is a link to
    `?hl=…&to=…#pN`, which `quoteTarget` intercepts to highlight the
    sentence in place (no reload). Reserve these for the famous lines.
-6. `src/plugins/rehype-chapter-paragraphs.mjs` numbers top-level paragraphs on
+6. `src/theme/plugins/rehype-chapter-paragraphs.mjs` numbers top-level paragraphs on
    chapter pages (`<p id="p7">`) and prefixes each with a light `¶7` self-link
    (`.para-num`, positioned in the left margin; excluded from highlighting), and `rehype-quote-sources.mjs` links
-   quotations of Hobbes on concept, author, theme, and Hobbes-himself pages to those paragraphs: every
+   quotations of Hobbes on every essay collection's pages to those paragraphs: every
    blockquote gets a "Leviathan, Chapter 2 ¶7" footer (full chapter title on hover), and
    inline `"…"` quotations of five or more words become links. Links look
    like `/chapters/<id>/?hl=<first six words>&to=<last six words>#p7`; the
@@ -163,7 +194,7 @@ Hover timing is one token: `--default-transition-duration` (180ms) in the
 transition rule for hand-written hover styles; the tooltip fades in on the
 same duration. Don't hard-code other durations.
 
-Styling for all of this is plain CSS at the bottom of `global.css`
+Styling for all of this is plain CSS in `src/theme/styles/theme.css`
 (`concept-ref`, `.concept-tip*`, `.heading-anchor`, `.prose-chapter`).
 
 ## The apparatus pages
@@ -189,7 +220,7 @@ Styling for all of this is plain CSS at the bottom of `global.css`
 - `/frontispiece/` is the 1651 engraving as a diagram: `FrontispieceMap`
   lays invisible buttons over the plate from the region data in
   `src/lib/frontispiece.ts` (percent coordinates, calibrated against a grid
-  overlay), reusing the `hobbesMap` Alpine component for the pinned/hover
+  overlay), reusing the `pinnedFigure` Alpine component for the pinned/hover
   behaviour. One note shows at a time beside the plate.
 - `/latin/` and `/greek/` gloss the foreign vocabulary, from `src/lib/latin.mjs`
   and `src/lib/greek.mjs`: a headword, a literal translation, a paragraph of
@@ -234,9 +265,10 @@ Styling for all of this is plain CSS at the bottom of `global.css`
 
 ## Layout and navigation
 
-- `src/layouts/Layout.astro` fetches all collections and renders the sidebar:
-  `SiteTitle`, `ChapterNav` (a top-level "The book" section with one nested
-  section per `part`), then `ListNav` for Themes, Concepts, and Authors.
+- `src/theme/layouts/Layout.astro` fetches all collections and renders the sidebar,
+  entirely driven by `src/site.config.ts`: `SiteTitle`, `ChapterNav` (the
+  `text.navTitle` section with one nested section per division), then one
+  `ListNav` per entry in `sections`, then the `apparatus` list.
   Every group is a `NavSection` (`<details>`; `nested` for the parts), open/closed state
   persisted by Alpine `$persist` under `localStorage["leviathan:nav:<id>"]`;
   a pre-paint `is:inline` script applies it early. The section containing the
@@ -257,15 +289,18 @@ Styling for all of this is plain CSS at the bottom of `global.css`
   and appears only when a position exists.
 - `BackButton` sits at the top of every page except the home page: `history.back()` if
   the referrer is same-origin, otherwise a link to `/`.
-- Every chapter, concept, author, and theme page ends with `PrevNext` (chapters by
-  number; concepts and authors alphabetically, matching the sidebar).
-- Dark mode is class-based (`@custom-variant dark` in `global.css`, `.dark`
-  on `<html>`). `ThemeToggle` (bottom-left of the sidebar) drives the Alpine
-  `theme` component: `leviathan:theme` persisted as `"light"`/`"dark"`, or
+- Every collection entry page ends with `PrevNext` (chapters by
+  number; concepts alphabetically and touchstones by surname, matching the
+  sidebar). The entry pages themselves are the theme's `EntryPage` +
+  `entryRoutes` (`src/theme/lib/routes.ts`); landing pages are `IndexPage`.
+- Dark mode is class-based (`@custom-variant dark` in the theme's
+  `theme.css`, `.dark` on `<html>`). `ThemeToggle` (bottom-left of the
+  sidebar) drives the Alpine `theme` store: `leviathan:theme` (the
+  `storagePrefix`) persisted as `"light"`/`"sepia"`/`"dark"`, or
   null to follow the system; a pre-paint script in `Layout.astro` `<head>`
   applies it. Use `dark:` variants in templates; hand-written CSS gets
-  `.dark …` overrides at the bottom of `global.css`.
-- Reading column: `max-w-2xl`, serif (`--font-serif` in `global.css`),
+  `.dark …` overrides beside each block.
+- Reading column: `max-w-2xl`, serif (`--font-serif` in `theme.css`),
   `pb-32` bottom padding on `<main>`.
 
 ## Conventions
@@ -286,7 +321,7 @@ Styling for all of this is plain CSS at the bottom of `global.css`
 - Components take plain data as props (no `getCollection` inside components)
   so they render in Storybook. Add a story for every new component.
 - **All interactivity is Alpine.js.** Components are registered in
-  `src/alpine.ts` (loaded everywhere by `@astrojs/alpinejs`, and in Storybook
+  `src/theme/alpine.ts` (loaded everywhere by `@astrojs/alpinejs`, and in Storybook
   by `.storybook/alpine.ts` via the framework `scripts` option). Use
   `x-data`/`x-on:`/`x-bind:` in templates; for markup generated by rehype
   use `x-data="name" x-bind="nameEvents"` with `Alpine.bind` so no `@`/`:`
@@ -307,7 +342,7 @@ Styling for all of this is plain CSS at the bottom of `global.css`
 ## Mobile
 
 Below `desk` (60rem) the sidebar becomes a drawer. That breakpoint is defined
-in `global.css` rather than reused from Tailwind's `md`, because an iPad in
+in the theme's `theme.css` rather than reused from Tailwind's `md`, because an iPad in
 portrait is 820px and at `md` it fell on the desktop side, giving a quarter of
 a narrow screen to navigation. There is also a `touch` variant
 (`@media (hover: none)`) for anything that depends on there being a pointer,

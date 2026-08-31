@@ -1,9 +1,5 @@
-import { readdirSync, readFileSync } from "node:fs";
-import { join } from "node:path";
-import matter from "gray-matter";
-import { chapterParagraphs } from "../plugins/rehype-quote-sources.mjs";
-
-const CHAPTER_DIR = "src/content/chapters";
+import config from "../site.config";
+import { contentDir, loadUnits } from "../theme/lib/text.mjs";
 
 /**
  * The books Hobbes cites, in canonical order, with the spellings and
@@ -134,12 +130,8 @@ export function scriptureIndex() {
   /** @type {Map<string, {book: string, chapter: number, verses: string|null, cited: any[]}>} */
   const refs = new Map();
 
-  for (const file of readdirSync(CHAPTER_DIR).filter((f) => f.endsWith(".mdx"))) {
-    const { data, content } = matter(readFileSync(join(CHAPTER_DIR, file), "utf8"));
-    const id = file.replace(/\.mdx$/, "");
-    const numbered = data.numbered !== false;
-
-    chapterParagraphs(content).forEach((para, i) => {
+  for (const unit of loadUnits(contentDir(config.text.collection))) {
+    unit.paras.forEach((para, i) => {
       for (const m of para.matchAll(CITE)) {
         const key = m[1].toLowerCase().replace(/\./g, "").replace(/\s+/g, " ").trim();
         const book = LOOKUP.get(key);
@@ -150,11 +142,11 @@ export function scriptureIndex() {
         if (!refs.has(refKey)) refs.set(refKey, { book, chapter, verses, cited: [] });
         const entry = refs.get(refKey);
         const where = {
-          id,
-          number: data.number,
-          title: data.title,
-          part: data.part,
-          para: numbered ? i + 1 : null,
+          id: unit.id,
+          number: unit.number,
+          title: unit.title,
+          part: unit.part,
+          para: unit.numbered ? i + 1 : null,
         };
         if (!entry.cited.some((c) => c.id === where.id && c.para === where.para)) entry.cited.push(where);
       }

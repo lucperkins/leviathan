@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
-import SectionIndex from "../../components/SectionIndex.astro";
+import IndexPage from "../../theme/components/IndexPage.astro";
 import { sortThemes } from "../../lib/related";
 import { hobbesForm } from "../../lib/spelling";
 
@@ -14,10 +13,8 @@ const entries = themes.map((t) => ({
 }));
 ---
 
-<Layout title="Themes">
-  <SectionIndex
-    title="Themes"
-    intro="Large subjects that run the length of the book, each gathering passages from chapters that sit far apart. Unlike the [concepts](/concepts/), these are not terms Hobbes stops to define; they are the arguments his definitions were built to serve. Where he has his own word for one, it is given beside the title."
-    entries={entries}
-  />
-</Layout>
+<IndexPage
+  title="Themes"
+  intro="Large subjects that run the length of the book, each gathering passages from chapters that sit far apart. Unlike the [concepts](/concepts/), these are not terms Hobbes stops to define; they are the arguments his definitions were built to serve. Where he has his own word for one, it is given beside the title."
+  entries={entries}
+/>

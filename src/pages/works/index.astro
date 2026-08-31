@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
-import SectionIndex from "../../components/SectionIndex.astro";
+import IndexPage from "../../theme/components/IndexPage.astro";
 
 const works = (await getCollection("works")).sort((a, b) => a.data.year - b.data.year);
 const entries = works.map((w) => ({
@@ -12,10 +11,8 @@ const entries = works.map((w) => ({
 }));
 ---
 
-<Layout title="Other works">
-  <SectionIndex
-    title="Other works"
-    intro="*Leviathan* is not the whole of him. He published nothing until he was past fifty and then wrote for another forty years: a political theory stated three times over, a physics, a history of the civil war, a quarrel about free will, an attack on the common lawyers, and two translations at either end of the life. These are short accounts of each, and of what it does that *Leviathan* does not."
-    entries={entries}
-  />
-</Layout>
+<IndexPage
+  title="Other works"
+  intro="*Leviathan* is not the whole of him. He published nothing until he was past fifty and then wrote for another forty years: a political theory stated three times over, a physics, a history of the civil war, a quarrel about free will, an attack on the common lawyers, and two translations at either end of the life. These are short accounts of each, and of what it does that *Leviathan* does not."
+  entries={entries}
+/>

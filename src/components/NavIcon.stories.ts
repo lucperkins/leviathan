@@ -1,4 +1,4 @@
-import NavIcon from "./NavIcon.astro";
+import NavIcon from "../theme/components/NavIcon.astro";
 
 export default {
   title: "Navigation/NavIcon",

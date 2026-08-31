@@ -1,4 +1,4 @@
-import PrevNext from "./PrevNext.astro";
+import PrevNext from "../theme/components/PrevNext.astro";
 
 export default {
   title: "Navigation/PrevNext",

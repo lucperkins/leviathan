@@ -1,4 +1,4 @@
-import RelatedLinks from "./RelatedLinks.astro";
+import RelatedLinks from "../theme/components/RelatedLinks.astro";
 
 export default {
   title: "Reading/RelatedLinks",

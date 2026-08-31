@@ -1,4 +1,4 @@
-import ChapterNav from "./ChapterNav.astro";
+import ChapterNav from "../theme/components/ChapterNav.astro";
 
 const chapters = [
   { id: "the-epistle-dedicatory", number: -1, title: "The Epistle Dedicatory" },

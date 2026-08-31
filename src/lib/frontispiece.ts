@@ -200,7 +200,7 @@ export const REGIONS: Region[] = [
     w: 26.7,
     h: 13.2,
     note: "A cavalry engagement, smoke and lances: war itself, the condition the whole apparatus above exists to hold off, and the one England was in while the plate was being cut.",
-    href: "/themes/the-english-civil-war/",
+    href: "/context/the-english-civil-war/",
     hrefLabel: "The English civil war",
   },
   {

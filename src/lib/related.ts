@@ -1,4 +1,7 @@
 import type { CollectionEntry } from "astro:content";
+import { surnameSortKey, titleSortKey } from "../theme/lib/sort";
+
+export { titleSortKey };
 
 export const chapterLink = (ch: CollectionEntry<"chapters">) => ({
   href: `/chapters/${ch.id}/`,
@@ -18,22 +21,15 @@ export const conceptLink = (c: CollectionEntry<"concepts">) => ({
   label: c.data.title,
 });
 
-/**
- * Titles sort as though a leading article were not there, so "The English
- * Civil War" files under E and "The state of nature" under S. Used for the
- * themes, which are the only collection whose titles start with "The".
- */
-export const titleSortKey = (title: string) => title.replace(/^the\s+/i, "");
-
 export const themeSortKey = (t: CollectionEntry<"themes">) => titleSortKey(t.data.title);
 
-/** Themes in sidebar order. */
+/** Themes in sidebar order: alphabetical, ignoring a leading "The". */
 export const sortThemes = (themes: CollectionEntry<"themes">[]) =>
   [...themes].sort((a, b) => themeSortKey(a).localeCompare(themeSortKey(b)));
 
 /** Touchstones sort by surname: `sortName` if given, else the last word of the title. */
 export const touchstoneSortKey = (a: CollectionEntry<"touchstones">) =>
-  a.data.sortName ?? a.data.title.trim().split(/\s+/).at(-1)!;
+  surnameSortKey(a.data.title, a.data.sortName);
 
 export const sortTouchstones = (touchstones: CollectionEntry<"touchstones">[]) =>
   [...touchstones].sort((x, y) => touchstoneSortKey(x).localeCompare(touchstoneSortKey(y)));
@@ -45,3 +41,12 @@ export const themeLink = (t: CollectionEntry<"themes">) => ({
 
 /** Related themes: alphabetical, matching the sidebar. */
 export const themeLinks = (themes: CollectionEntry<"themes">[]) => sortThemes(themes).map(themeLink);
+
+export const contextLink = (c: CollectionEntry<"context">) => ({
+  href: `/context/${c.id}/`,
+  label: c.data.title,
+});
+
+/** Related context: in reading order, matching the sidebar. */
+export const contextLinks = (context: CollectionEntry<"context">[]) =>
+  [...context].sort((a, b) => a.data.order - b.data.order).map(contextLink);

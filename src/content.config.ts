@@ -1,50 +1,24 @@
 import { defineCollection, reference } from "astro:content";
 import { z } from "astro/zod";
 import { glob } from "astro/loaders";
+import { essaySchema, footnotesSchema, refEntrySchema, textUnitSchema } from "./theme/content";
 
-/** Editorial footnotes, available to every collection: `after` is matched in the text, the note collected at the foot. */
-const footnotes = z.array(z.object({ after: z.string(), text: z.string() })).default([]);
+const load = (name: string) => glob({ pattern: "**/*.mdx", base: `./src/content/${name}` });
 
 const chapters = defineCollection({
-  loader: glob({ pattern: "**/*.mdx", base: "./src/content/chapters" }),
-  schema: z.object({
-    /** Ordering key. Chapters are 1–47; front matter (the epistle, the introduction) is ≤ 0. */
-    number: z.number(),
-    title: z.string(),
-    /** One of PARTS in src/lib/parts.ts. Front matter has no part. */
-    part: z.string().optional(),
-    /** Verbatim sentences to set out as pull quotes after the paragraph they occur in. */
-    pullquotes: z.array(z.string()).default([]),
-    /** Whether paragraphs get ¶ numbers. Off for the epistle and the introduction. */
-    numbered: z.boolean().default(true),
-    /** Editorial headnote above the chapter text; inline markdown, so links work. */
-    note: z.string().optional(),
-    footnotes,
-    /** Notes shown beside a marginal heading, e.g. the argument a passage answers. */
-    marginalia: z
-      .array(z.object({ heading: z.string(), label: z.string(), href: z.string() }))
-      .default([]),
-  }),
-});
-
-/** Shared shape for anything that gets a tooltip + page: concepts, touchstones. */
-const refSchema = z.object({
-  title: z.string(),
-  summary: z.string(),
-  terms: z.array(z.string()).optional(),
-  chapters: z.array(reference("chapters")).default([]),
-  footnotes,
+  loader: load("chapters"),
+  schema: textUnitSchema(),
 });
 
 const concepts = defineCollection({
-  loader: glob({ pattern: "**/*.mdx", base: "./src/content/concepts" }),
+  loader: load("concepts"),
   /** `hobbes` is his spelling, shown only where it differs from the modern title. */
-  schema: refSchema.extend({ hobbes: z.string().optional() }),
+  schema: refEntrySchema("chapters").extend({ hobbes: z.string().optional() }),
 });
 
 const touchstones = defineCollection({
-  loader: glob({ pattern: "**/*.mdx", base: "./src/content/touchstones" }),
-  schema: refSchema.extend({
+  loader: load("touchstones"),
+  schema: refEntrySchema("chapters").extend({
     dates: z.string().optional(),
     /** Surname (or other key) to sort by; defaults to the last word of the title. */
     sortName: z.string().optional(),
@@ -57,15 +31,11 @@ const touchstones = defineCollection({
  * are not tooltip-linked in chapter text.
  */
 const themes = defineCollection({
-  loader: glob({ pattern: "**/*.mdx", base: "./src/content/themes" }),
-  schema: z.object({
-    title: z.string(),
-    summary: z.string(),
+  loader: load("themes"),
+  schema: essaySchema("chapters").extend({
     /** Hobbes's own spelling of the theme's key term, shown under the title (e.g. "Soveraignty"). */
     hobbes: z.string().optional(),
-    chapters: z.array(reference("chapters")).default([]),
     concepts: z.array(reference("concepts")).default([]),
-    footnotes,
   }),
 });
 
@@ -75,14 +45,11 @@ const themes = defineCollection({
  * the point of a page here is to send a reader to the scholarship.
  */
 const readings = defineCollection({
-  loader: glob({ pattern: "**/*.mdx", base: "./src/content/readings" }),
-  schema: z.object({
-    title: z.string(),
-    summary: z.string(),
-    chapters: z.array(reference("chapters")).default([]),
+  loader: load("readings"),
+  schema: essaySchema("chapters").extend({
     concepts: z.array(reference("concepts")).default([]),
     themes: z.array(reference("themes")).default([]),
-    footnotes,
+    context: z.array(reference("context")).default([]),
   }),
 });
 
@@ -92,14 +59,11 @@ const readings = defineCollection({
  * school of interpretation rather than by place.
  */
 const receptions = defineCollection({
-  loader: glob({ pattern: "**/*.mdx", base: "./src/content/receptions" }),
-  schema: z.object({
-    title: z.string(),
-    summary: z.string(),
-    chapters: z.array(reference("chapters")).default([]),
+  loader: load("receptions"),
+  schema: essaySchema("chapters").extend({
     concepts: z.array(reference("concepts")).default([]),
     themes: z.array(reference("themes")).default([]),
-    footnotes,
+    context: z.array(reference("context")).default([]),
   }),
 });
 
@@ -109,20 +73,17 @@ const receptions = defineCollection({
  * Read in the order they lived, so `year` sorts them.
  */
 const kindred = defineCollection({
-  loader: glob({ pattern: "**/*.mdx", base: "./src/content/kindred" }),
-  schema: z.object({
-    title: z.string(),
+  loader: load("kindred"),
+  schema: essaySchema("chapters").extend({
     /** Shown under the title: "c. 1275–1342". */
     dates: z.string(),
     /** Sort key: birth year, negative for BC. */
     year: z.number(),
     /** Sidebar label, where it differs from the title. */
     navTitle: z.string().optional(),
-    summary: z.string(),
-    chapters: z.array(reference("chapters")).default([]),
     concepts: z.array(reference("concepts")).default([]),
     themes: z.array(reference("themes")).default([]),
-    footnotes,
+    context: z.array(reference("context")).default([]),
   }),
 });
 
@@ -132,27 +93,40 @@ const kindred = defineCollection({
  * they were written, so `year` sorts them.
  */
 const works = defineCollection({
-  loader: glob({ pattern: "**/*.mdx", base: "./src/content/works" }),
-  schema: z.object({
-    title: z.string(),
+  loader: load("works"),
+  schema: essaySchema("chapters").extend({
     /** Shown under the title: "1642, printed for the public in 1647". */
     dates: z.string(),
     /** Sort key: when it was written, not when it was printed. */
     year: z.number(),
-    summary: z.string(),
-    chapters: z.array(reference("chapters")).default([]),
     concepts: z.array(reference("concepts")).default([]),
     themes: z.array(reference("themes")).default([]),
-    footnotes,
+    context: z.array(reference("context")).default([]),
   }),
 });
 
 /**
- * Hobbes himself: a short life in four parts, read in sequence rather than
- * alphabetically, so entries carry an explicit `order`.
+ * The world around the book rather than the man or the argument. Read in
+ * sequence, so entries carry an explicit `order`.
+ */
+const context = defineCollection({
+  loader: load("context"),
+  schema: essaySchema("chapters").extend({
+    /** Shown under the title: the years the page covers, e.g. "1642–1651". */
+    dates: z.string(),
+    /** Sort key: the pages read in rough chronological order. */
+    order: z.number(),
+    concepts: z.array(reference("concepts")).default([]),
+    themes: z.array(reference("themes")).default([]),
+  }),
+});
+
+/**
+ * Hobbes himself: a short life read in sequence rather than alphabetically,
+ * so entries carry an explicit `order`.
  */
 const hobbes = defineCollection({
-  loader: glob({ pattern: "**/*.mdx", base: "./src/content/hobbes" }),
+  loader: load("hobbes"),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -163,8 +137,8 @@ const hobbes = defineCollection({
       imageAlt: z.string().optional(),
       imageCaption: z.string().optional(),
       imageCredit: z.string().optional(),
-      footnotes,
+      footnotes: footnotesSchema,
     }),
 });
 
-export const collections = { chapters, concepts, hobbes, kindred, readings, receptions, touchstones, themes, works };
+export const collections = { chapters, concepts, context, hobbes, kindred, readings, receptions, touchstones, themes, works };

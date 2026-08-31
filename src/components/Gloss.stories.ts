@@ -1,4 +1,4 @@
-import Gloss from "./Gloss.astro";
+import Gloss from "../theme/components/Gloss.astro";
 
 export default {
   title: "Reading/Gloss",

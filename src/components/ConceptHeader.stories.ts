@@ -1,4 +1,4 @@
-import ConceptHeader from "./ConceptHeader.astro";
+import ConceptHeader from "../theme/components/ConceptHeader.astro";
 
 export default {
   title: "Reading/ConceptHeader",

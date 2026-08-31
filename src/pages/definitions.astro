@@ -1,8 +1,8 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from "../theme/layouts/Layout.astro";
 // @ts-ignore -- plain-JS rehype helper, shared so the diagram links use the
 // same paragraph numbering as quotations on concept and touchstone pages.
-import { loadChapters, locate, quoteHref } from "../plugins/rehype-quote-sources.mjs";
+import { loadChapters, locate, quoteHref } from "../lib/chapters.mjs";
 import DefinitionChain from "../components/DefinitionChain.astro";
 import { DEFINITIONS } from "../lib/definitions";
 import fig1 from "../diagrams/fig1.svg?raw";

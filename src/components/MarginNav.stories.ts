@@ -1,4 +1,4 @@
-import MarginNav from "./MarginNav.astro";
+import MarginNav from "../theme/components/MarginNav.astro";
 
 export default {
   title: "Navigation/MarginNav",

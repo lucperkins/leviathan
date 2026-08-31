@@ -1,0 +1,17 @@
+---
+/** A section's landing page: its title, an introduction, and every entry with its summary. */
+import Layout from "../layouts/Layout.astro";
+import SectionIndex from "./SectionIndex.astro";
+
+interface Props {
+  title: string;
+  /** Inline markdown, so links work. */
+  intro: string;
+  entries: { href: string; title: string; meta?: string; summary: string }[];
+}
+const { title, intro, entries } = Astro.props;
+---
+
+<Layout title={title}>
+  <SectionIndex title={title} intro={intro} entries={entries} />
+</Layout>

@@ -1,4 +1,4 @@
-import Shelves from "./Shelves.astro";
+import Shelves from "../theme/components/Shelves.astro";
 // @ts-ignore -- plain-JS data
 import { SHELVES, REPLIES } from "../lib/library.mjs";
 

@@ -1,0 +1,25 @@
+---
+/**
+ * The sidebar masthead: the site's title and subtitle from the site config,
+ * with the site's mark (src/components/Mark.astro) beside it. The mark shares
+ * the title's line: one flex row, vertically centred, with the subtitle
+ * beneath — so the mark's place comes from the layout, not from margin
+ * nudges. Decorative, and hidden from assistive technology: the words say the
+ * same thing.
+ */
+import config from "../../site.config";
+import Mark from "../../components/Mark.astro";
+
+interface Props {
+  href?: string;
+}
+const { href = "/" } = Astro.props;
+---
+
+<a href={href} class="block">
+  <span class="flex items-center justify-between gap-3">
+    <span class="font-serif text-2xl font-semibold tracking-tight">{config.title}</span>
+    <Mark size={28} class="shrink-0 text-stone-400 dark:text-stone-500" />
+  </span>
+  {config.subtitle && <span class="block text-xs text-stone-500 dark:text-stone-400">{config.subtitle}</span>}
+</a>

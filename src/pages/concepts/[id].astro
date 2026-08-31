@@ -1,40 +1,26 @@
 ---
-import { getCollection, getEntries, render } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
-import ConceptHeader from "../../components/ConceptHeader.astro";
-import { hobbesForm } from "../../lib/spelling";
-import PrevNext from "../../components/PrevNext.astro";
-import Prose from "../../components/Prose.astro";
-import RelatedLinks from "../../components/RelatedLinks.astro";
+import { getCollection, getEntries } from "astro:content";
+import EntryPage from "../../theme/components/EntryPage.astro";
+import { entryRoutes } from "../../theme/lib/routes";
 import { chapterLinks } from "../../lib/related";
-import { neighbours } from "../../lib/sequence";
+import { hobbesForm } from "../../lib/spelling";
 
 export async function getStaticPaths() {
   // Same order as the sidebar: alphabetical by title.
   const concepts = (await getCollection("concepts")).sort((a, b) => a.data.title.localeCompare(b.data.title));
-  return concepts.map((concept, i) => ({
-    params: { id: concept.id },
-    props: {
-      concept,
-      ...neighbours(concepts, i, (c) => ({ href: `/concepts/${c.id}/`, title: c.data.title })),
-    },
-  }));
+  return entryRoutes(concepts, "/concepts");
 }
 
-const { concept, prev, next } = Astro.props;
-const { Content } = await render(concept);
-const chapters = chapterLinks(await getEntries(concept.data.chapters));
+const { entry, prev, next } = Astro.props;
+const chapters = chapterLinks(await getEntries(entry.data.chapters));
 ---
 
-<Layout title={concept.data.title}>
-  <ConceptHeader
-    title={concept.data.title}
-    meta={hobbesForm(concept.data.title, concept.data.hobbes)}
-    summary={concept.data.summary}
-  />
-  <Prose>
-    <Content />
-  </Prose>
-  <RelatedLinks title="Read in Leviathan" items={chapters} />
-  <PrevNext kind="concept" prev={prev} next={next} />
-</Layout>
+<EntryPage
+  entry={entry}
+  kind="Concept"
+  meta={hobbesForm(entry.data.title, entry.data.hobbes)}
+  related={[{ title: "Read in Leviathan", items: chapters }]}
+  prev={prev}
+  next={next}
+  sequence="concept"
+/>

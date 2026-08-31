@@ -1,4 +1,4 @@
-import Prose from "./Prose.astro";
+import Prose from "../theme/components/Prose.astro";
 
 const body = `
 <p>Nature hath made men so equall, in the faculties of body, and mind; as that though there bee found one man sometimes manifestly stronger in body, or of quicker mind then another; yet when all is reckoned together, the difference between man, and man, is not so considerable, as that one man can thereupon claim to himselfe any benefit, to which another may not pretend, as well as he.</p>

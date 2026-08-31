@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
-import SectionIndex from "../../components/SectionIndex.astro";
+import IndexPage from "../../theme/components/IndexPage.astro";
 import { hobbesForm } from "../../lib/spelling";
 
 const concepts = (await getCollection("concepts")).sort((a, b) => a.data.title.localeCompare(b.data.title));
@@ -13,10 +12,8 @@ const entries = concepts.map((c) => ({
 }));
 ---
 
-<Layout title="Concepts">
-  <SectionIndex
-    title="Concepts"
-    intro="The terms Hobbes fixes and then builds on. Each is marked in the chapter text wherever it appears, so hovering it gives the definition without leaving the page. The [chain of definitions](/definitions/) shows how they depend on one another."
-    entries={entries}
-  />
-</Layout>
+<IndexPage
+  title="Concepts"
+  intro="The terms Hobbes fixes and then builds on. Each is marked in the chapter text wherever it appears, so hovering it gives the definition without leaving the page. The [chain of definitions](/definitions/) shows how they depend on one another."
+  entries={entries}
+/>

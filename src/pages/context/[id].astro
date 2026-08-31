@@ -1,0 +1,29 @@
+---
+import { getCollection, getEntries } from "astro:content";
+import EntryPage from "../../theme/components/EntryPage.astro";
+import { entryRoutes } from "../../theme/lib/routes";
+import { chapterLinks, conceptLinks, themeLinks } from "../../lib/related";
+
+export async function getStaticPaths() {
+  // Chronological, like the sidebar: the order the history happened in.
+  const pages = (await getCollection("context")).sort((a, b) => a.data.order - b.data.order);
+  return entryRoutes(pages, "/context");
+}
+
+const { entry, prev, next } = Astro.props;
+const related = [
+  { title: "Related themes", items: themeLinks(await getEntries(entry.data.themes)) },
+  { title: "Related concepts", items: conceptLinks(await getEntries(entry.data.concepts)) },
+  { title: "Read in Leviathan", items: chapterLinks(await getEntries(entry.data.chapters)) },
+];
+---
+
+<EntryPage
+  entry={entry}
+  kind="Context"
+  meta={entry.data.dates}
+  related={related}
+  prev={prev}
+  next={next}
+  sequence="page"
+/>

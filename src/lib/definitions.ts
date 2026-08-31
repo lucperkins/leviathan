@@ -13,6 +13,8 @@
  * sentence. `quote` is the opening words used to locate the paragraph in the
  * chapter file; it must match the text on disk (see rehype-quote-sources).
  */
+import { derivation as chainDerivation, usedBy as chainUsedBy } from "../theme/lib/definition-chain";
+
 export interface Definition {
   id: string;
   /** The term as a heading: modern where the site modernises, his where it does not. */
@@ -217,46 +219,15 @@ export const DEFINITIONS: Definition[] = [
 
 export const BY_ID = new Map(DEFINITIONS.map((d) => [d.id, d]));
 
-export type Segment = { text: string } | { word: string; of: string };
-
-/** Split a definition's text into plain runs and the terms it borrows. */
-export function segments(text: string): Segment[] {
-  const out: Segment[] = [];
-  let last = 0;
-  for (const m of text.matchAll(/\{([^{}|]+)\|([a-z]+)\}/g)) {
-    if (m.index > last) out.push({ text: text.slice(last, m.index) });
-    out.push({ word: m[1], of: m[2] });
-    last = m.index + m[0].length;
-  }
-  if (last < text.length) out.push({ text: text.slice(last) });
-  return out;
-}
-
-/** The terms a definition consumes directly, in the order they appear. */
-export function borrows(d: Definition): string[] {
-  const seen = new Set<string>();
-  for (const s of segments(d.text)) if ("of" in s) seen.add(s.of);
-  return [...seen];
-}
+/** The chain machinery is the theme's; this file binds it to Hobbes's definitions. */
+export { borrows, segments, type Segment } from "../theme/lib/definition-chain";
 
 /**
  * Everything a term rests on, itself included, in the order the book defines
  * them. This is the derivation: reading it top to bottom is reading Hobbes's
  * own order of proof.
  */
-export function derivation(id: string): Definition[] {
-  const need = new Set<string>();
-  const walk = (at: string) => {
-    if (need.has(at)) return;
-    need.add(at);
-    const d = BY_ID.get(at);
-    if (d) for (const b of borrows(d)) walk(b);
-  };
-  walk(id);
-  return DEFINITIONS.filter((d) => need.has(d.id));
-}
+export const derivation = (id: string): Definition[] => chainDerivation(DEFINITIONS, id);
 
 /** Definitions that consume this one, for reading the chain forwards. */
-export function usedBy(id: string): Definition[] {
-  return DEFINITIONS.filter((d) => borrows(d).includes(id));
-}
+export const usedBy = (id: string): Definition[] => chainUsedBy(DEFINITIONS, id);

@@ -1,4 +1,4 @@
-import ChapterHeader from "./ChapterHeader.astro";
+import ChapterHeader from "../theme/components/ChapterHeader.astro";
 
 export default {
   title: "Reading/ChapterHeader",

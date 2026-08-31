@@ -1,4 +1,4 @@
-import ConceptRefs from "./ConceptRefs.astro";
+import ConceptRefs from "../theme/components/ConceptRefs.astro";
 
 const concepts = [
   {

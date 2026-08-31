@@ -1,0 +1,46 @@
+---
+/**
+ * A collection entry rendered as a page: header (eyebrow, title, meta,
+ * summary), the entry's prose, any related-link lists, and prev/next within
+ * the collection. The slot goes between the header and the prose, for a page
+ * that opens with something else (a portrait, say). Pair with `entryRoutes`
+ * (src/theme/lib/routes.ts) in the page's getStaticPaths.
+ */
+import { render } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import ConceptHeader from "./ConceptHeader.astro";
+import Prose from "./Prose.astro";
+import RelatedLinks from "./RelatedLinks.astro";
+import PrevNext from "./PrevNext.astro";
+
+interface Item {
+  href: string;
+  title: string;
+}
+interface Props {
+  /** A collection entry with at least a title and summary; rendered with astro:content's render(). */
+  entry: { id: string; data: { title: string; summary: string } } & Record<string, any>;
+  /** Small label above the title, e.g. "Concept". */
+  kind: string;
+  /** Optional line under the title, e.g. a person's dates or the author's spelling. */
+  meta?: string;
+  /** Link lists after the prose, in order. */
+  related?: { title: string; items: { href: string; label: string }[] }[];
+  prev?: Item;
+  next?: Item;
+  /** What the sequence is called in the prev/next labels, e.g. "concept". */
+  sequence?: string;
+}
+const { entry, kind, meta, related = [], prev, next, sequence } = Astro.props;
+const { Content } = await render(entry as Parameters<typeof render>[0]);
+---
+
+<Layout title={entry.data.title}>
+  <ConceptHeader kind={kind} title={entry.data.title} meta={meta} summary={entry.data.summary} />
+  <slot />
+  <Prose>
+    <Content />
+  </Prose>
+  {related.map((r) => <RelatedLinks title={r.title} items={r.items} />)}
+  <PrevNext kind={sequence} prev={prev} next={next} />
+</Layout>

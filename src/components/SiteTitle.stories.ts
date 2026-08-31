@@ -1,4 +1,4 @@
-import SiteTitle from "./SiteTitle.astro";
+import SiteTitle from "../theme/components/SiteTitle.astro";
 
 export default {
   title: "Navigation/SiteTitle",

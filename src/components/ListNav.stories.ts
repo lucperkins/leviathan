@@ -1,4 +1,4 @@
-import ListNav from "./ListNav.astro";
+import ListNav from "../theme/components/ListNav.astro";
 
 const concepts = [
   { id: "sense", title: "Sense" },

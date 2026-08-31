@@ -1,4 +1,4 @@
-import ThemeToggle from "./ThemeToggle.astro";
+import ThemeToggle from "../theme/components/ThemeToggle.astro";
 
 export default {
   title: "Navigation/ThemeToggle",

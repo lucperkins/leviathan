@@ -1,0 +1,1351 @@
+/*
+ * The theme's stylesheet: reading typography, tooltips, quotation
+ * highlighting, pull quotes, paragraph numbers, footnotes, glossaries, the
+ * table of contents, the sidebar and drawer chrome, and the light/sepia/dark
+ * machinery. Imported by the site's global.css, which holds the
+ * site-specific styles.
+ */
+
+/* Class-based dark mode: `.dark` on <html>, toggled by the ThemeToggle component. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Capability rather than size. Every phone and tablet answers `hover: none`
+ * and every desktop does not, whatever the window is doing, which is a
+ * sounder test than a width for anything that depends on there being a
+ * pointer — the hover-to-trace diagrams on /definitions/, say.
+ */
+@custom-variant touch (@media (hover: none));
+@custom-variant landscape (@media (orientation: landscape));
+
+/*
+ * Sepia: the warm paper setting e-readers offer, and the third state of the
+ * theme toggle. Every colour on the site is a stone shade, and Tailwind v4
+ * compiles those to var(--color-stone-N), so retinting the ramp here turns the
+ * whole page warm without touching a single utility class or hand-written
+ * rule. The lightness of each step is kept close to Tailwind's, so contrast
+ * relationships carry over; what changes is chroma and hue.
+ *
+ * The class is `theme-sepia` rather than `sepia` because Tailwind ships a
+ * `sepia` filter utility, and a bare `.sepia` on <html> would put a
+ * sepia() filter over the whole page as well as retinting it.
+ */
+.theme-sepia {
+  color-scheme: light;
+  --color-stone-50: oklch(94.5% 0.03 88);
+  --color-stone-100: oklch(91.5% 0.034 86);
+  --color-stone-200: oklch(86.5% 0.038 84);
+  --color-stone-300: oklch(80% 0.042 80);
+  --color-stone-400: oklch(66% 0.045 66);
+  --color-stone-500: oklch(53% 0.048 58);
+  --color-stone-600: oklch(43% 0.045 55);
+  --color-stone-700: oklch(36% 0.042 52);
+  --color-stone-800: oklch(28% 0.035 48);
+  --color-stone-900: oklch(23% 0.03 46);
+  --color-stone-950: oklch(17% 0.025 45);
+}
+
+/* Alpine: hide elements until it has booted. */
+[x-cloak] {
+  display: none !important;
+}
+
+/*
+ * `desk` is the point at which the sidebar can sit beside the reading column
+ * rather than slide over it. It is 60rem rather than Tailwind's md (48rem)
+ * because an iPad in portrait is 820px: at md it fell on the desktop side and
+ * gave a quarter of a narrow screen to navigation. Everything else keeps the
+ * default scale.
+ */
+@theme {
+  --breakpoint-desk: 60rem;
+
+  --font-serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+
+  /* One hover duration everywhere: Tailwind's transition-* utilities read
+     these, and the hand-written styles below reference them too. */
+  --default-transition-duration: 180ms;
+  --default-transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* One hover duration for every interactive style on the site. Listing each
+   class here meant new link styles kept missing it, so this matches elements
+   and custom elements instead: low specificity, so Tailwind's transition-*
+   utilities still win wherever a component sets its own. */
+a,
+button,
+summary,
+concept-ref,
+.heading-anchor::after,
+.prose-chapter mark.quote-hl {
+  transition-property: color, background-color, text-decoration-color, opacity;
+  transition-duration: var(--default-transition-duration);
+  transition-timing-function: var(--default-transition-timing-function);
+}
+
+.prose-chapter p + p {
+  margin-top: 1.25rem;
+}
+
+/* A bare <figure> in an MDX page: preflight zeroes its margin, so without
+   this it sits flush against the paragraph above it. */
+.prose-chapter figure {
+  margin: 2rem 0;
+}
+
+.prose-chapter h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-stone-500);
+}
+.prose-chapter h3 + p {
+  margin-top: 0;
+}
+
+.prose-chapter blockquote {
+  margin: 1.25rem 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--color-stone-300);
+  color: var(--color-stone-600);
+}
+.prose-chapter em {
+  font-style: italic;
+}
+
+/* Concept references in chapter text */
+concept-ref {
+  position: relative;
+  cursor: help;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--color-stone-400);
+  text-underline-offset: 0.2em;
+  outline: none;
+}
+concept-ref:hover,
+concept-ref:focus-visible {
+  text-decoration-color: var(--color-stone-800);
+  text-decoration-style: solid;
+}
+concept-ref:focus-visible {
+  border-radius: 2px;
+  box-shadow: 0 0 0 2px var(--color-stone-400);
+}
+
+.concept-tip {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  z-index: 20;
+  width: 20rem;
+  max-width: calc(100vw - 2rem);
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--color-stone-200);
+  border-radius: 0.5rem;
+  background: white;
+  box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.25);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--color-stone-700);
+  cursor: auto;
+  text-decoration: none;
+  animation: concept-tip-in var(--default-transition-duration) var(--default-transition-timing-function);
+}
+@keyframes concept-tip-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.25rem);
+  }
+}
+.concept-tip--above {
+  top: auto;
+  bottom: calc(100% + 0.4rem);
+}
+.concept-tip__title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-stone-900);
+}
+.concept-tip__summary {
+  margin-top: 0.25rem;
+}
+.concept-tip__link {
+  display: inline-block;
+  margin-top: 1.25rem;
+  font-weight: 500;
+  color: var(--color-stone-900);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--color-stone-300);
+}
+.concept-tip__link:hover {
+  text-decoration-color: var(--color-stone-900);
+}
+
+/* Linkable headings on concept pages */
+.prose-chapter h3 {
+  scroll-margin-top: 2rem;
+}
+.heading-anchor {
+  color: inherit;
+  text-decoration: none;
+}
+.heading-anchor::after {
+  content: " #";
+  opacity: 0;
+  color: var(--color-stone-400);
+}
+.heading-anchor:hover,
+.heading-anchor:focus-visible {
+  color: var(--color-stone-900);
+}
+.heading-anchor:hover::after,
+.heading-anchor:focus-visible::after {
+  opacity: 1;
+}
+
+.concept-tip__kind {
+  display: flex;
+  color: var(--color-stone-400);
+}
+concept-ref[data-kind="touchstone"] {
+  text-decoration-style: dashed;
+}
+
+.prose-chapter ul,
+.prose-chapter ol {
+  margin: 1.25rem 0 1.25rem 1.25rem;
+}
+.prose-chapter ul {
+  list-style: disc;
+}
+.prose-chapter ol {
+  list-style: decimal;
+}
+.prose-chapter li + li {
+  margin-top: 0.5rem;
+}
+.prose-chapter li::marker {
+  color: var(--color-stone-400);
+}
+
+/* Quotation sources on concept and touchstone pages */
+.quote-source {
+  margin-top: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--color-stone-500);
+}
+.quote-source__link,
+.quote-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.quote-source__link:hover,
+.quote-link:hover {
+  color: var(--color-stone-900);
+  text-decoration-color: var(--color-stone-900);
+}
+
+/* Paragraph targets in chapter text */
+.prose-chapter p {
+  scroll-margin-top: 2rem;
+}
+.prose-chapter mark.quote-hl {
+  background: var(--color-amber-200);
+  color: inherit;
+  cursor: pointer;
+  padding: 0.05em 0;
+  box-decoration-break: clone;
+  animation: quote-hl-in 600ms ease-out;
+}
+@keyframes quote-hl-in {
+  from {
+    background: var(--color-amber-400);
+  }
+}
+
+/* ---------- Dark theme overrides for the hand-written styles above ---------- */
+.dark {
+  color-scheme: dark;
+}
+.dark .prose-chapter h3 {
+  color: var(--color-stone-300);
+}
+.dark .prose-chapter blockquote {
+  border-left-color: var(--color-stone-600);
+  color: var(--color-stone-300);
+}
+.dark .prose-chapter li::marker {
+  color: var(--color-stone-600);
+}
+.dark concept-ref {
+  text-decoration-color: var(--color-stone-600);
+}
+.dark concept-ref:hover,
+.dark concept-ref:focus-visible {
+  text-decoration-color: var(--color-stone-200);
+}
+.dark concept-ref:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-stone-600);
+}
+.dark .concept-tip {
+  border-color: var(--color-stone-700);
+  background: var(--color-stone-900);
+  color: var(--color-stone-300);
+  box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.7);
+}
+.dark .concept-tip__kind {
+  color: var(--color-stone-500);
+}
+.dark .concept-tip__title {
+  color: var(--color-stone-100);
+}
+.dark .concept-tip__link {
+  color: var(--color-stone-100);
+  text-decoration-color: var(--color-stone-600);
+}
+.dark .concept-tip__link:hover {
+  text-decoration-color: var(--color-stone-100);
+}
+.dark .heading-anchor::after {
+  color: var(--color-stone-600);
+}
+.dark .heading-anchor:hover,
+.dark .heading-anchor:focus-visible {
+  color: var(--color-stone-100);
+}
+.dark .quote-source {
+  color: var(--color-stone-400);
+}
+.dark .quote-source__link,
+.dark .quote-link {
+  text-decoration-color: var(--color-stone-700);
+}
+.dark .quote-source__link:hover,
+.dark .quote-link:hover {
+  color: var(--color-stone-100);
+  text-decoration-color: var(--color-stone-100);
+}
+.dark .prose-chapter mark.quote-hl {
+  background: var(--color-amber-900);
+  color: var(--color-amber-50);
+}
+.dark .prose-chapter mark.quote-hl {
+  animation-name: quote-hl-in-dark;
+}
+@keyframes quote-hl-in-dark {
+  from {
+    background: var(--color-amber-600);
+  }
+}
+
+/* Pull quotes set between chapter paragraphs */
+.prose-chapter .pullquote {
+  margin: 2.5rem 0;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--color-stone-300);
+  border-bottom: 1px solid var(--color-stone-300);
+  text-align: center;
+}
+.prose-chapter .pullquote p {
+  margin: 0;
+  font-size: 1.6rem;
+  line-height: 1.3;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  color: var(--color-stone-800);
+  text-wrap: balance;
+}
+.prose-chapter .pullquote p::before {
+  content: "\201C";
+}
+.prose-chapter .pullquote p::after {
+  content: "\201D";
+}
+.dark .prose-chapter .pullquote {
+  border-color: var(--color-stone-700);
+}
+.dark .prose-chapter .pullquote p {
+  color: var(--color-stone-200);
+}
+
+/* Paragraph numbers in the left margin of chapter text */
+.prose-chapter p {
+  position: relative;
+}
+.para-num {
+  position: absolute;
+  right: 100%;
+  top: 0.45em;
+  margin-right: 0.9rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-style: normal;
+  line-height: 1;
+  color: var(--color-stone-400);
+  text-decoration: none;
+  user-select: none;
+  white-space: nowrap;
+}
+.para-num:hover,
+.para-num:focus-visible {
+  color: var(--color-stone-700);
+}
+.dark .para-num {
+  color: var(--color-stone-600);
+}
+.dark .para-num:hover,
+.dark .para-num:focus-visible {
+  color: var(--color-stone-300);
+}
+.pullquote .para-num {
+  display: none;
+}
+
+/* Pull quote as a link to its sentence */
+.prose-chapter .pullquote {
+  scroll-margin-top: 2rem;
+}
+.prose-chapter .pullquote__link {
+  color: inherit;
+  text-decoration: none;
+}
+.prose-chapter .pullquote__link:hover,
+.prose-chapter .pullquote__link:focus-visible {
+  color: var(--color-stone-950);
+}
+.dark .prose-chapter .pullquote__link:hover,
+.dark .prose-chapter .pullquote__link:focus-visible {
+  color: white;
+}
+
+/* Links inside summaries (page headers and tooltips) */
+.summary a,
+.concept-tip__summary a {
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.summary a:hover,
+.concept-tip__summary a:hover {
+  color: var(--color-stone-900);
+  text-decoration-color: var(--color-stone-900);
+}
+.dark .summary a,
+.dark .concept-tip__summary a {
+  text-decoration-color: var(--color-stone-600);
+}
+.dark .summary a:hover,
+.dark .concept-tip__summary a:hover {
+  color: var(--color-stone-100);
+  text-decoration-color: var(--color-stone-100);
+}
+
+/* Chapter mentions: both the ones rehype-chapter-links makes in editorial
+   prose and the ones written by hand in page templates. The rule used to be
+   scoped to .prose-chapter, so the hand-written ones on the home page and the
+   appendix pages were links with no indication that they were links. */
+.chapter-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.chapter-link:hover,
+.chapter-link:focus-visible {
+  text-decoration-color: var(--color-stone-900);
+}
+.dark .chapter-link {
+  text-decoration-color: var(--color-stone-600);
+}
+.dark .chapter-link:hover,
+.dark .chapter-link:focus-visible {
+  text-decoration-color: var(--color-stone-100);
+}
+
+/* Links to other sites open in a new tab (rehype-external-links, or `target="_blank"`
+   by hand) and end in a small arrow, drawn with currentColor via a mask. */
+a.external::after {
+  content: "";
+  display: inline-block;
+  width: 0.65em;
+  height: 0.65em;
+  margin-left: 0.2em;
+  vertical-align: 0.05em;
+  background-color: currentColor;
+  opacity: 0.7;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 18 18 6M9 6h9v9'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 18 18 6M9 6h9v9'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* Bold-only display lines ("FINIS", the epistle's salutation): unnumbered, set a little apart.
+   One that closes the text is a colophon: centred with space above, as FINIS sits in the 1651 printing. */
+.prose-chapter p.display-line {
+  letter-spacing: 0.06em;
+}
+.prose-chapter p.display-line:last-child {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+/* Marginal annotations on a chapter heading: what argument the passage answers.
+   They sit in the right margin only where the viewport can spare the room. */
+.prose-chapter h3.has-note {
+  position: relative;
+}
+.margin-note {
+  display: block;
+  margin-top: 0.35rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.45;
+  text-transform: none;
+  color: var(--color-stone-500);
+}
+.margin-note a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 2px;
+}
+.margin-note a:hover,
+.margin-note a:focus-visible {
+  color: var(--color-stone-800);
+  text-decoration-color: var(--color-stone-500);
+}
+/* Stone-500 sits too close to the dark background; lift it 5% in lightness. */
+.dark .margin-note {
+  color: oklch(from var(--color-stone-500) calc(l + 0.05) c h);
+}
+.dark .margin-note a {
+  text-decoration-color: var(--color-stone-700);
+}
+.dark .margin-note a:hover,
+.dark .margin-note a:focus-visible {
+  color: var(--color-stone-200);
+}
+@media (min-width: 82rem) {
+  .margin-note {
+    position: absolute;
+    /* Above the margin-nav rail, so a note's link stays clickable. */
+    z-index: 30;
+    top: 0;
+    left: 100%;
+    width: 11rem;
+    margin-top: 0;
+    margin-left: 2.5rem;
+  }
+}
+
+/* Appendix: the language glossaries. Headword and literal translation on one
+   line, the gloss under it, and the places the text uses it under that. */
+.gloss-term {
+  padding: 1rem 0.1rem;
+}
+.gloss-term__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.1rem 0.75rem;
+}
+.gloss-term__word {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  color: var(--color-stone-900);
+  text-decoration: none;
+}
+.dark .gloss-term__word {
+  color: var(--color-stone-100);
+}
+.gloss-term__word:hover,
+.gloss-term__word:focus-visible {
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-400);
+  text-underline-offset: 4px;
+}
+/* The word in its own alphabet. Palatino leads the stack because it carries
+   polytonic Greek; Hebrew falls through to whatever the system provides. */
+.gloss-term__script {
+  font-family: "Palatino Linotype", Palatino, "Times New Roman", Times, serif;
+  font-size: 1.0625rem;
+  color: var(--color-stone-600);
+}
+.dark .gloss-term__script {
+  color: var(--color-stone-400);
+}
+.gloss-term__literal {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--color-stone-500);
+}
+.gloss-term__body {
+  margin: 0;
+}
+.gloss-term__gloss {
+  margin-top: 0.35rem;
+  max-width: 62ch;
+  line-height: 1.6;
+  color: var(--color-stone-700);
+}
+.dark .gloss-term__gloss {
+  color: var(--color-stone-300);
+}
+.gloss-term__gloss a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.gloss-term__gloss a:hover,
+.gloss-term__gloss a:focus-visible {
+  text-decoration-color: var(--color-stone-900);
+}
+.dark .gloss-term__gloss a {
+  text-decoration-color: var(--color-stone-600);
+}
+.dark .gloss-term__gloss a:hover,
+.dark .gloss-term__gloss a:focus-visible {
+  text-decoration-color: var(--color-stone-100);
+}
+.gloss-term__cites {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.9rem;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-stone-500);
+}
+.gloss-term__cites a {
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.gloss-term__cites a:hover,
+.gloss-term__cites a:focus-visible {
+  color: var(--color-stone-900);
+}
+.dark .gloss-term__cites a:hover,
+.dark .gloss-term__cites a:focus-visible {
+  color: var(--color-stone-100);
+}
+
+/* The contents page: a printed table of contents rather than a nav list. */
+.toc-front {
+  font-family: var(--font-serif);
+  text-align: center;
+}
+.toc-front li + li {
+  margin-top: 0.6rem;
+}
+.toc-front a {
+  font-size: 1.125rem;
+  color: var(--color-stone-700);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+}
+.dark .toc-front a {
+  color: var(--color-stone-300);
+}
+.toc-front a:hover,
+.toc-front a:focus-visible {
+  color: var(--color-stone-950);
+  text-decoration-color: var(--color-stone-400);
+}
+.dark .toc-front a:hover,
+.dark .toc-front a:focus-visible {
+  color: var(--color-stone-50);
+}
+
+.toc-part {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  padding-bottom: 0.6rem;
+}
+.toc-part__numeral {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  line-height: 1;
+  color: var(--color-stone-300);
+}
+.dark .toc-part__numeral {
+  color: var(--color-stone-700);
+}
+.toc-part__title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.toc-list {
+  margin-top: 0.75rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 2.5rem;
+}
+@media (min-width: 48rem) {
+  .toc-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.toc-list a {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+  border-radius: 3px;
+  padding: 0.4rem 0.5rem;
+  transition-property: background-color, color;
+  transition-duration: var(--default-transition-duration);
+  transition-timing-function: var(--default-transition-timing-function);
+}
+.toc-list a:hover,
+.toc-list a:focus-visible {
+  background-color: var(--color-stone-100);
+}
+.dark .toc-list a:hover,
+.dark .toc-list a:focus-visible {
+  background-color: var(--color-stone-900);
+}
+.toc-list__num {
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--color-stone-400);
+}
+.dark .toc-list__num {
+  color: var(--color-stone-600);
+}
+.toc-list__title {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.35;
+  color: var(--color-stone-700);
+}
+.dark .toc-list__title {
+  color: var(--color-stone-300);
+}
+.toc-list a:hover .toc-list__title,
+.toc-list a:focus-visible .toc-list__title {
+  color: var(--color-stone-950);
+}
+.dark .toc-list a:hover .toc-list__title,
+.dark .toc-list a:focus-visible .toc-list__title {
+  color: var(--color-stone-50);
+}
+
+/* Editorial headnote above a chapter, set apart from the text itself. */
+.chapter-note {
+  margin-bottom: 2rem;
+  border-left: 2px solid var(--color-stone-300);
+  padding-left: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--color-stone-600);
+}
+.dark .chapter-note {
+  border-color: var(--color-stone-700);
+  color: var(--color-stone-400);
+}
+.chapter-note a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-400);
+  text-underline-offset: 2px;
+}
+.chapter-note a:hover,
+.chapter-note a:focus-visible {
+  color: var(--color-stone-900);
+}
+.dark .chapter-note a:hover,
+.dark .chapter-note a:focus-visible {
+  color: var(--color-stone-100);
+}
+
+/* Sidebar: a thin scrollbar, so a long chapter list does not put a wide
+   platform scrollbar down the middle of the page. */
+[data-nav-scroll] {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-stone-300) transparent;
+}
+.dark [data-nav-scroll] {
+  scrollbar-color: var(--color-stone-700) transparent;
+}
+[data-nav-scroll]::-webkit-scrollbar {
+  width: 6px;
+}
+[data-nav-scroll]::-webkit-scrollbar-track {
+  background: transparent;
+}
+[data-nav-scroll]::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: var(--color-stone-300);
+}
+.dark [data-nav-scroll]::-webkit-scrollbar-thumb {
+  background: var(--color-stone-700);
+}
+
+/* Hand-written glosses in prose: historical detail that is not one of the text's
+   terms, so it has no page. Shown on hover or keyboard focus, no JavaScript. */
+.gloss {
+  position: relative;
+  display: inline-block;
+}
+.gloss__term {
+  font: inherit;
+  color: inherit;
+  cursor: help;
+  background: none;
+  border: 0;
+  padding: 0;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--color-stone-400);
+  text-underline-offset: 0.2em;
+}
+.gloss__term:hover,
+.gloss__term:focus-visible {
+  text-decoration-style: solid;
+  text-decoration-color: var(--color-stone-800);
+  outline: none;
+}
+.dark .gloss__term:hover,
+.dark .gloss__term:focus-visible {
+  text-decoration-color: var(--color-stone-200);
+}
+.gloss__note {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  z-index: 20;
+  width: 20rem;
+  max-width: calc(100vw - 2rem);
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--color-stone-200);
+  border-radius: 0.5rem;
+  background: white;
+  box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.25);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-style: normal;
+  line-height: 1.5;
+  color: var(--color-stone-600);
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  transition-property: opacity;
+  transition-duration: var(--default-transition-duration);
+  transition-timing-function: var(--default-transition-timing-function);
+}
+.dark .gloss__note {
+  border-color: var(--color-stone-700);
+  background: var(--color-stone-900);
+  color: var(--color-stone-300);
+  box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.7);
+}
+.gloss:hover .gloss__note,
+.gloss:focus-within .gloss__note {
+  opacity: 1;
+  visibility: visible;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gloss__note {
+    transition: none;
+  }
+}
+
+/* Footnote markers and lists. */
+.fn-ref {
+  margin-left: 0.1em;
+  font-size: 0.65em;
+  scroll-margin-top: 2rem;
+}
+.fn-ref a {
+  color: var(--color-stone-500);
+  text-decoration: none;
+}
+.fn-ref a:hover,
+.fn-ref a:focus-visible {
+  color: var(--color-stone-900);
+}
+.dark .fn-ref a {
+  color: var(--color-stone-500);
+}
+.dark .fn-ref a:hover,
+.dark .fn-ref a:focus-visible {
+  color: var(--color-stone-200);
+}
+.footnotes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  max-width: 62ch;
+}
+.footnotes li {
+  display: flex;
+  gap: 0.6rem;
+  scroll-margin-top: 2rem;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--color-stone-600);
+}
+.dark .footnotes li {
+  color: var(--color-stone-400);
+}
+/* The number links back to the marker in the text, so it carries the whole
+   return journey; there is no separate ↩. */
+.footnotes__num {
+  flex: none;
+  width: 1.1rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-stone-400);
+  text-decoration: none;
+}
+.footnotes__num:hover,
+.footnotes__num:focus-visible {
+  color: var(--color-stone-800);
+}
+.dark .footnotes__num {
+  color: var(--color-stone-500);
+}
+.dark .footnotes__num:hover,
+.dark .footnotes__num:focus-visible {
+  color: var(--color-stone-200);
+}
+.footnotes a:not(.footnotes__num) {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.dark .footnotes a:not(.footnotes__num) {
+  text-decoration-color: var(--color-stone-600);
+}
+.footnotes a:not(.footnotes__num):hover,
+.footnotes a:not(.footnotes__num):focus-visible {
+  text-decoration-color: var(--color-stone-700);
+}
+.dark .footnotes a:not(.footnotes__num):hover,
+.dark .footnotes a:not(.footnotes__num):focus-visible {
+  text-decoration-color: var(--color-stone-200);
+}
+
+/* Editorial footnotes at the foot of a chapter. */
+.chapter-footnotes {
+  margin-top: 3rem;
+  border-top: 1px solid var(--color-stone-200);
+  padding-top: 1.25rem;
+}
+.dark .chapter-footnotes {
+  border-color: var(--color-stone-800);
+}
+.chapter-footnotes__title {
+  margin-bottom: 0.9rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--color-stone-500);
+}
+.prose-chapter .chapter-footnotes .footnotes li {
+  font-size: 0.9rem;
+}
+
+/* Section landing pages: every entry with its summary. */
+.section-index {
+  display: flex;
+  flex-direction: column;
+}
+.section-index li {
+  border-top: 1px solid var(--color-stone-200);
+  padding: 1.1rem 0;
+}
+.dark .section-index li {
+  border-color: var(--color-stone-800);
+}
+.section-index li:last-child {
+  border-bottom: 1px solid var(--color-stone-200);
+}
+.dark .section-index li:last-child {
+  border-bottom-color: var(--color-stone-800);
+}
+/* Title first, then the descriptor under it: "Thucydides" over "Eight Bookes
+   of the Peloponnesian Warre, 1629". */
+.section-index__link {
+  display: block;
+}
+.section-index__title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-stone-900);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  transition-property: text-decoration-color;
+  transition-duration: var(--default-transition-duration);
+  transition-timing-function: var(--default-transition-timing-function);
+}
+.dark .section-index__title {
+  color: var(--color-stone-100);
+}
+.section-index__link:hover .section-index__title,
+.section-index__link:focus-visible .section-index__title {
+  text-decoration-color: var(--color-stone-400);
+}
+.section-index__meta {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  color: var(--color-stone-500);
+}
+.dark .section-index__meta {
+  color: var(--color-stone-400);
+}
+.section-index__summary {
+  margin-top: 0.4rem;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--color-stone-600);
+}
+.dark .section-index__summary {
+  color: var(--color-stone-400);
+}
+
+/* Breakout for the derivation diagrams on /definitions/. The page keeps the
+   standard column; a diagram alone spills into the margins, the same distance
+   on both sides — up to 11rem each, which at full stretch restores the 64rem
+   the page's old wide layout had — and never more than the room <main>
+   (the @container above the column) actually has. */
+.breakout {
+  margin-inline: calc(-1 * min(11rem, max(0rem, (100cqw - 100%) / 2)));
+}
+
+/* Sidelights: modern rhymes with the text, carded so they read as asides
+   set beside the argument rather than sections of it. The title out-ranks
+   .prose-chapter h3 by being written as h3.sidelight__title further down
+   the sheet. */
+.sidelight {
+  margin: 2.5rem 0;
+  padding: 1.3rem 1.5rem 1.5rem;
+  border: 1px solid var(--color-stone-200);
+  border-radius: 6px;
+  background: var(--color-stone-100);
+}
+.dark .sidelight {
+  border-color: var(--color-stone-800);
+  background: var(--color-stone-900);
+}
+.sidelight__label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-stone-400);
+}
+.dark .sidelight__label {
+  color: var(--color-stone-500);
+}
+h3.sidelight__title {
+  margin: 0.3rem 0 0;
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--color-stone-900);
+}
+.dark h3.sidelight__title {
+  color: var(--color-stone-100);
+}
+.sidelight__body {
+  margin-top: 0.65rem;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+.sidelight__body p + p {
+  margin-top: 1rem;
+}
+
+/* Shelved book lists (the Shelves component): title with the year on the
+   right, the author on its own line beneath, then the note. */
+.shelf-work__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.6rem;
+}
+.shelf-work__name {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.shelf-work__name a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.dark .shelf-work__name a {
+  text-decoration-color: var(--color-stone-600);
+}
+.shelf-work__name a:hover,
+.shelf-work__name a:focus-visible {
+  text-decoration-color: var(--color-stone-700);
+}
+.dark .shelf-work__name a:hover,
+.dark .shelf-work__name a:focus-visible {
+  text-decoration-color: var(--color-stone-200);
+}
+.shelf-work__year {
+  margin-left: auto;
+  font-size: 0.7rem;
+  letter-spacing: 0.01em;
+  color: var(--color-stone-400);
+  white-space: nowrap;
+}
+.dark .shelf-work__year {
+  color: var(--color-stone-600);
+}
+.shelf-work__note {
+  margin-top: 0.35rem;
+  max-width: 62ch;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--color-stone-700);
+}
+.dark .shelf-work__note {
+  color: var(--color-stone-300);
+}
+.shelf-work__author {
+  margin-top: 0.1rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--color-stone-500);
+}
+.dark .shelf-work__author {
+  color: var(--color-stone-400);
+}
+.shelf-work__author a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.dark .shelf-work__author a {
+  text-decoration-color: var(--color-stone-600);
+}
+.shelf-work__author a:hover,
+.shelf-work__author a:focus-visible {
+  text-decoration-color: var(--color-stone-700);
+}
+.dark .shelf-work__author a:hover,
+.dark .shelf-work__author a:focus-visible {
+  text-decoration-color: var(--color-stone-200);
+}
+
+/* Section headings on the index and apparatus pages. They used to be set as
+   small caps, which read as labels rather than headings; the marginal
+   headings inside the chapter text are a different thing and stay as they
+   are. */
+.section-heading {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* The small label above a page title: "Appendix", "Theme", "Chapter 13". It
+   used to be set in wide-tracked capitals; the only all-caps left on the site
+   is the text's own marginal headings in the chapter prose. */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--color-stone-500);
+}
+.dark .eyebrow {
+  color: var(--color-stone-400);
+}
+
+/* "Related concepts", "Read in the book": a heading rather than a label. */
+.related-heading {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-stone-700);
+}
+.dark .related-heading {
+  color: var(--color-stone-300);
+}
+
+/* Previous/next, above the link to the neighbouring page. */
+.prevnext-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--color-stone-400);
+}
+.dark .prevnext-label {
+  color: var(--color-stone-500);
+}
+
+/* Links written by hand in editorial prose — to a chapter, a theme, a concept,
+   a kindred spirit, one of his other books, or off the site. They carried no
+   class and so no styling at all, which made them invisible as links. The
+   generated ones (.chapter-link, .scripture-ref) and the page furniture
+   (.heading-anchor, .para-num, pull quotes, footnote markers) style
+   themselves and are left alone. */
+.prose-chapter a:not([class]),
+.prose-chapter a.external {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-stone-300);
+  text-underline-offset: 3px;
+}
+.prose-chapter a:not([class]):hover,
+.prose-chapter a:not([class]):focus-visible,
+.prose-chapter a.external:hover,
+.prose-chapter a.external:focus-visible {
+  text-decoration-color: var(--color-stone-900);
+}
+.dark .prose-chapter a:not([class]),
+.dark .prose-chapter a.external {
+  text-decoration-color: var(--color-stone-600);
+}
+.dark .prose-chapter a:not([class]):hover,
+.dark .prose-chapter a:not([class]):focus-visible,
+.dark .prose-chapter a.external:hover,
+.dark .prose-chapter a.external:focus-visible {
+  text-decoration-color: var(--color-stone-100);
+}
+
+/* Below the mobile breakpoint the reading column reaches the edge of the
+   screen, so the paragraph number has nowhere to sit outside it. It goes on
+   its own line above the paragraph instead. */
+@media (max-width: 47.99rem) {
+  .para-num {
+    position: static;
+    display: block;
+    margin: 0 0 0.2rem;
+  }
+  /* One tap target rather than a hover trail on a screen with no pointer. */
+  .prose-chapter .pullquote {
+    margin: 2rem 0;
+    padding: 1.25rem 0;
+  }
+  .prose-chapter .pullquote p {
+    font-size: 1.3rem;
+  }
+}
+
+/* The sidebar as a drawer below the mobile breakpoint. The transform is here
+   rather than in a Tailwind utility so that it applies at first paint: bound
+   with x-bind:class it would arrive only once Alpine had booted, and the
+   drawer would be visible on load and then slide away. */
+.nav-drawer {
+  transform: translateX(-100%);
+}
+.nav-drawer.is-open {
+  transform: none;
+}
+@media (min-width: 60rem) {
+  .nav-drawer {
+    transform: none;
+  }
+}
+
+/* The sidebar and the mobile navbar are one piece of chrome and share a
+   background. In dark mode it sits between stone-900 and the page's stone-950:
+   distinct from the page without being a lighter panel on top of it. */
+.site-chrome {
+  background-color: var(--color-stone-100);
+}
+.dark .site-chrome {
+  background-color: oklch(18.5% 0.005 52);
+}
+
+/* Turning the page from the margins. A rail down each side of the window,
+   invisible until the pointer is on it. Only above 80rem: below that the
+   reading column is close enough to the edges that a rail would sit on the
+   text, and the buttons at the foot of the page are the way through. */
+.margin-nav {
+  display: none;
+}
+@media (min-width: 80rem) {
+  .margin-nav {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 20;
+    display: flex;
+    width: 3.5rem;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--default-transition-duration) var(--default-transition-timing-function);
+  }
+  .margin-nav--prev {
+    left: 20rem;
+    cursor: w-resize;
+    background: linear-gradient(to right, rgb(0 0 0 / 0.05), transparent);
+  }
+  .margin-nav--next {
+    right: 0;
+    cursor: e-resize;
+    background: linear-gradient(to left, rgb(0 0 0 / 0.05), transparent);
+  }
+  .margin-nav:hover,
+  .margin-nav:focus-visible {
+    opacity: 1;
+  }
+  .margin-nav__mark {
+    display: flex;
+    height: 2.5rem;
+    width: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background-color: var(--color-stone-100);
+    color: var(--color-stone-500);
+    box-shadow: 0 6px 18px -12px rgb(0 0 0 / 0.4);
+    backdrop-filter: blur(2px);
+  }
+  .dark .margin-nav__mark {
+    background-color: var(--color-stone-800);
+    color: var(--color-stone-300);
+  }
+  .dark .margin-nav--prev {
+    background: linear-gradient(to right, rgb(255 255 255 / 0.05), transparent);
+  }
+  .dark .margin-nav--next {
+    background: linear-gradient(to left, rgb(255 255 255 / 0.05), transparent);
+  }
+}

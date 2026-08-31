@@ -1,7 +1,7 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from "../theme/layouts/Layout.astro";
 // @ts-ignore -- plain-JS helpers, so the links use the site's paragraph numbering
-import { loadChapters, locate, quoteHref } from "../plugins/rehype-quote-sources.mjs";
+import { loadChapters, locate, quoteHref } from "../lib/chapters.mjs";
 // @ts-ignore
 import { CATEGORIES, OMISSIONS } from "../lib/thinkers.mjs";
 // @ts-ignore

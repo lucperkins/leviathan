@@ -1,4 +1,4 @@
-import ResumeReading from "./ResumeReading.astro";
+import ResumeReading from "../theme/components/ResumeReading.astro";
 
 /**
  * The button reads its position from localStorage, so the stories seed it.

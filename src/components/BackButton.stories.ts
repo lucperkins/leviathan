@@ -1,4 +1,4 @@
-import BackButton from "./BackButton.astro";
+import BackButton from "../theme/components/BackButton.astro";
 
 export default {
   title: "Navigation/BackButton",

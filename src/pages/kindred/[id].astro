@@ -1,39 +1,33 @@
 ---
-import { getCollection, getEntries, render } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
-import ConceptHeader from "../../components/ConceptHeader.astro";
-import PrevNext from "../../components/PrevNext.astro";
-import Prose from "../../components/Prose.astro";
-import RelatedLinks from "../../components/RelatedLinks.astro";
-import { chapterLinks, conceptLinks, themeLinks } from "../../lib/related";
-import { neighbours } from "../../lib/sequence";
+import { getCollection, getEntries } from "astro:content";
+import EntryPage from "../../theme/components/EntryPage.astro";
+import { entryRoutes } from "../../theme/lib/routes";
+import { chapterLinks, conceptLinks, contextLinks, themeLinks } from "../../lib/related";
 
 export async function getStaticPaths() {
   // Chronological, like the sidebar: the order they lived in.
   const kindred = (await getCollection("kindred")).sort((a, b) => a.data.year - b.data.year);
-  return kindred.map((spirit, i) => ({
-    params: { id: spirit.id },
-    props: {
-      spirit,
-      ...neighbours(kindred, i, (w) => ({ href: `/kindred/${w.id}/`, title: w.data.title })),
-    },
-  }));
+  return entryRoutes(kindred, "/kindred");
 }
 
-const { spirit, prev, next } = Astro.props;
-const { Content } = await render(spirit);
-const chapters = chapterLinks(await getEntries(spirit.data.chapters));
-const concepts = conceptLinks(await getEntries(spirit.data.concepts));
-const themes = themeLinks(await getEntries(spirit.data.themes));
+const { entry, prev, next } = Astro.props;
+const chapters = chapterLinks(await getEntries(entry.data.chapters));
+const concepts = conceptLinks(await getEntries(entry.data.concepts));
+const themes = themeLinks(await getEntries(entry.data.themes));
+const context = contextLinks(await getEntries(entry.data.context));
 ---
 
-<Layout title={spirit.data.title}>
-  <ConceptHeader kind="Kindred spirit" title={spirit.data.title} meta={spirit.data.dates} summary={spirit.data.summary} />
-  <Prose>
-    <Content />
-  </Prose>
-  <RelatedLinks title="Related themes" items={themes} />
-  <RelatedLinks title="Related concepts" items={concepts} />
-  <RelatedLinks title="Read in Leviathan" items={chapters} />
-  <PrevNext kind="kindred spirit" prev={prev} next={next} />
-</Layout>
+<EntryPage
+  entry={entry}
+  kind="Kindred spirit"
+  meta={entry.data.dates}
+  related={[
+    { title: "Related themes", items: themes },
+    { title: "Related context", items: context },
+    { title: "Related concepts", items: concepts },
+    { title: "Read in Leviathan", items: chapters },
+  ]}
+  prev={prev}
+  next={next}
+  sequence="kindred spirit"
+/>

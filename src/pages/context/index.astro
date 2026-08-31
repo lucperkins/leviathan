@@ -1,0 +1,18 @@
+---
+import { getCollection } from "astro:content";
+import IndexPage from "../../theme/components/IndexPage.astro";
+
+const pages = (await getCollection("context")).sort((a, b) => a.data.order - b.data.order);
+const entries = pages.map((p) => ({
+  href: `/context/${p.id}/`,
+  title: p.data.title,
+  meta: p.data.dates,
+  summary: p.data.summary,
+}));
+---
+
+<IndexPage
+  title="Context"
+  intro="The history the book was written inside. *Leviathan* names almost none of it — one civil war in the dedication, no battles, no bills — but every chapter has the same hundred years behind it: a Europe at war over religion, an England quarrelling itself toward war over its church, and then the war itself. Three pages, read in order."
+  entries={entries}
+/>

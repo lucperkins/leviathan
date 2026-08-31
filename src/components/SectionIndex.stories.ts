@@ -1,4 +1,4 @@
-import SectionIndex from "./SectionIndex.astro";
+import SectionIndex from "../theme/components/SectionIndex.astro";
 
 const entries = [
   {

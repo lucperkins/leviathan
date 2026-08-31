@@ -1,4 +1,4 @@
-import Glossary from "./Glossary.astro";
+import Glossary from "../theme/components/Glossary.astro";
 // @ts-ignore -- plain-JS data. These modules import nothing, which is the point:
 // the machinery that locates each term reads the chapter files with node:fs and
 // cannot run in a browser, so a story must never reach for it.

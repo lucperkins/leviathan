@@ -1,13 +1,13 @@
 ---
 import { getCollection, render } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
-import ChapterHeader from "../../components/ChapterHeader.astro";
-import { inlineMarkdown } from "../../lib/inline";
-import ConceptRefs from "../../components/ConceptRefs.astro";
-import PrevNext from "../../components/PrevNext.astro";
-import Prose from "../../components/Prose.astro";
-import { getAllRefs } from "../../lib/refs";
-import { neighbours } from "../../lib/sequence";
+import Layout from "../../theme/layouts/Layout.astro";
+import ChapterHeader from "../../theme/components/ChapterHeader.astro";
+import { inlineMarkdown } from "../../theme/lib/inline";
+import ConceptRefs from "../../theme/components/ConceptRefs.astro";
+import PrevNext from "../../theme/components/PrevNext.astro";
+import Prose from "../../theme/components/Prose.astro";
+import { getAllRefs } from "../../theme/lib/refs";
+import { neighbours } from "../../theme/lib/sequence";
 
 export async function getStaticPaths() {
   const chapters = (await getCollection("chapters")).sort((a, b) => a.data.number - b.data.number);

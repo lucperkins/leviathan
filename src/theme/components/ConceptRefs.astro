@@ -1,0 +1,37 @@
+---
+/**
+ * Tooltip content for <concept-ref data-kind="…" data-concept="…"> elements
+ * produced by the rehype-concepts plugin: one <template> per ref (title,
+ * summary, link). The Alpine `conceptRef` component (src/theme/alpine.ts)
+ * clones the matching template on hover/focus.
+ */
+import config from "../../site.config";
+import { inlineMarkdown } from "../lib/inline";
+import NavIcon from "./NavIcon.astro";
+
+interface Props {
+  refs: { kind: string; id: string; title: string; summary: string }[];
+}
+const { refs } = Astro.props;
+/** The tooltip is headed by the section's own mark rather than by its name. */
+const kinds = new Map(config.refKinds.map((rk) => [rk.kind, rk]));
+const icon = (kind: string) => kinds.get(kind)?.icon ?? kind;
+const href = (kind: string, id: string) => `${kinds.get(kind)?.basePath ?? `/${kind}s`}/${id}/`;
+---
+
+{
+  refs.map((r) => (
+    <template id={`ref-${r.kind}-${r.id}`} data-ref-template>
+      <div class="concept-tip" role="tooltip">
+        <p class="concept-tip__kind" aria-hidden="true">
+          <NavIcon name={icon(r.kind)} />
+        </p>
+        <p class="concept-tip__title">{r.title}</p>
+        <p class="concept-tip__summary" set:html={inlineMarkdown(r.summary)} />
+        <a class="concept-tip__link" href={href(r.kind, r.id)}>
+          Read the full entry &rarr;
+        </a>
+      </div>
+    </template>
+  ))
+}
