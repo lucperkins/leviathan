@@ -106,7 +106,7 @@ export const CLAIMS = [
         href: `${W}Philosophy_of_language`,
         author: "The nominalist line",
         year: "Chapter 4",
-        note: "Truth and falsity are properties of speech, not of things; universals are names; definitions settle what a word will do, and reasoning that has not settled them is not reasoning. Whatever else Part I is, it is a philosophy of language put at the foundation of a political argument, which was a new thing to do.",
+        note: "Truth and falsity are properties of speech, not of things; universals are names; definitions settle what a word will do, and reasoning that has not settled them is not reasoning. Whatever else Part I is, it is a philosophy of language put at the foundation of a political argument, which was a new thing to do. The claim was pressed hardest three centuries later by Carnap and the Vienna Circle, who declared the metaphysics of the schools not false but meaningless — the same verdict Chapter 5 reaches on insignificant speech, by the same route of asking what a word could possibly be the name of.",
       },
       {
         id: "public-choice",
