@@ -2,14 +2,14 @@
   <!-- Sword and scepter crossed beneath a crown, after the two powers the
        1651 frontispiece puts in one pair of hands. The staves are mirror
        images so they read as the same length: scepter up-left, capped by the
-       orb; sword up-right, crossguard low on the grip; the crown clear above
+       orb; sword up-right, crossguard down by the handle end, well clear of the crossing; the crown clear above
        both. Kept in step with src/components/Mark.astro. -->
   <rect width="32" height="32" rx="6" fill="#292524"/>
   <path d="M7 10 8.5 3.5l4.5 4.2L16 2.5l3 5.2L23.5 3.5 25 10Z" fill="#fafaf9"/>
   <g fill="none" stroke="#fafaf9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 29 9.5 16.7"/>
-    <path d="M11 29 22.5 16.7"/>
-    <path d="M12.8 24.3 15.2 26.7"/>
+    <path d="M21 29 9 14.2"/>
+    <path d="M11 29 23 14.2"/>
+    <path d="M11.3 26 13.9 28.2"/>
   </g>
-  <circle cx="9.5" cy="16.7" r="1.9" fill="#fafaf9"/>
+  <circle cx="9" cy="14.2" r="1.9" fill="#fafaf9"/>
 </svg>
