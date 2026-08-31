@@ -7,6 +7,8 @@ on:
 
 permissions:
   contents: read
+  # FlakeHub Cache authenticates with the job's OIDC token.
+  id-token: write
   pull-requests: write
 
 jobs:
@@ -14,18 +16,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
-      - run: bun run check
-      - run: bun run build
-      - run: bun run check:links
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - uses: DeterminateSystems/flakehub-cache-action@main
+      # Everything runs inside the flake's dev shell, so CI uses the same
+      # bun and netlify-cli that `nix develop` provides locally.
+      - run: nix develop --command bun install --frozen-lockfile
+      - run: nix develop --command bun run check
+      - run: nix develop --command bun run build
+      - run: nix develop --command bun run check:links
       - name: Deploy
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
           if [ "${{ github.event_name }}" = "push" ]; then
-            bunx netlify-cli deploy --prod --dir dist --message "${{ github.sha }}"
+            nix develop --command netlify deploy --prod --dir dist --message "${{ github.sha }}"
           else
-            bunx netlify-cli deploy --dir dist --alias "pr-${{ github.event.number }}" --message "PR #${{ github.event.number }}"
+            nix develop --command netlify deploy --dir dist --alias "pr-${{ github.event.number }}" --message "PR #${{ github.event.number }}"
           fi
