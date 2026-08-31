@@ -16,6 +16,8 @@ footnotes:
 import HobbesMap from "../../components/HobbesMap.astro";
 import Lightbox from "../../components/Lightbox.astro";
 import malmesbury from "../../assets/malmesbury-1829.jpg";
+import magdalenHall from "../../assets/magdalen-hall-loggan.jpg";
+import hardwick from "../../assets/hardwick-lysons.jpg";
 
 Thomas Hobbes was born on 5 April 1588 at Westport, the parish adjoining
 Malmesbury in Wiltshire. The Spanish fleet was expected that summer, and in
@@ -46,6 +48,20 @@ curriculum was scholastic logic and Aristotelian physics, and the mature
 Hobbes wrote about that training with a contempt that never cooled: the whole
 attack on the universities in Part IV of *Leviathan* is, among other things,
 a settling of accounts with his own education.
+
+<figure>
+  <Lightbox
+    src={magdalenHall}
+    alt="A seventeenth century engraving of Magdalen Hall, Oxford: a long stone street range with rows of gabled dormers, figures and riders passing in front, and the gateway of Magdalen College at the right."
+    caption="Magdalen Hall, engraved by David Loggan for Oxonia Illustrata in 1675. The hall was demolished in the 1820s and its name absorbed into Hertford College, so this is nearly the only view of the building. Loggan's caption lists the famous men of the house, and 'Hobbs Malmsburiensis' is among them, beside Edward Hyde and Matthew Hale."
+    widths={[480, 720, 1080]}
+    sizes="(min-width: 60rem) 42rem, 90vw"
+    class="w-full rounded border border-stone-200 shadow-[0_10px_24px_-20px_rgb(0_0_0/0.22)] dark:border-stone-800"
+  />
+  <figcaption class="mt-3 text-center text-xs text-stone-500 dark:text-stone-400">
+    David Loggan, *Oxonia Illustrata*, 1675. Getty Research Institute copy, via the Internet Archive. Public domain.
+  </figcaption>
+</figure>
 
 <figure>
   <Lightbox
@@ -105,3 +121,17 @@ English verse, remarking that he did it because he had nothing else to do. He
 died on 4 December 1679, at Hardwick Hall, in his ninety-second year, and was
 buried in the parish church at Ault Hucknall in Derbyshire, where his
 monument still is.
+
+<figure>
+  <Lightbox
+    src={hardwick}
+    alt="An early nineteenth century engraving of Hardwick Hall from the north east: a tall square Elizabethan house, more window than wall, with the ruin of the Old Hall visible beyond it."
+    caption="Hardwick Hall from the north east, from Lysons's Magna Britannia, around 1817. The house is essentially unchanged since Bess of Hardwick built it in the 1590s, so this is the house Hobbes knew: he served the family that owned it for seventy-one years, and died here in December 1679. The ruin at the right is the Old Hall."
+    widths={[480, 720, 1080]}
+    sizes="(min-width: 60rem) 42rem, 90vw"
+    class="w-full rounded border border-stone-200 shadow-[0_10px_24px_-20px_rgb(0_0_0/0.22)] dark:border-stone-800"
+  />
+  <figcaption class="mt-3 text-center text-xs text-stone-500 dark:text-stone-400">
+    Samuel and Daniel Lysons, *Magna Britannia*, vol. V. British Library copy, via Wikimedia Commons. Public domain.
+  </figcaption>
+</figure>

@@ -19,10 +19,27 @@ footnotes:
     text: "[**Leslie Stephen**](https://en.wikipedia.org/wiki/Leslie_Stephen) (1832-1904), editor of the *Dictionary of National Biography*. His [*Hobbes*](https://openlibrary.org/works/OL1132835W) (1904) is the Victorian summing-up: admiring of the style, embarrassed by the conclusions, and the last book to treat him as a national figure rather than a scholarly subject."
 ---
 
+import Lightbox from "../../components/Lightbox.astro";
+import stPauls from "../../assets/st-pauls-hollar.jpg";
+
 *Leviathan* was published in London in 1651 into a country that had executed
 its king two years earlier, and its first readers were not scholars but people
 deciding whether to swear an oath to the new regime. That is the reception the
 book got, and it never quite escaped it.
+
+<figure>
+  <Lightbox
+    src={stPauls}
+    alt="An etching of old St Paul's cathedral from the west: the long gothic church with its classical west portico, before the spire fell and before the Great Fire."
+    caption="Old St Paul's from the west, etched by Wenceslaus Hollar. Andrew Crooke sold Leviathan at the Green Dragon in St Paul's Churchyard, the centre of the English book trade; the cathedral, already spireless, burned in 1666, the same year the Commons committee was empowered to inquire into the book. Hollar is also the artist once thought to have drawn the frontispiece."
+    widths={[480, 720, 1080]}
+    sizes="(min-width: 60rem) 42rem, 90vw"
+    class="w-full rounded border border-stone-200 shadow-[0_10px_24px_-20px_rgb(0_0_0/0.22)] dark:border-stone-800"
+  />
+  <figcaption class="mt-3 text-center text-xs text-stone-500 dark:text-stone-400">
+    Wenceslaus Hollar, before 1666. Via Wikimedia Commons. Public domain.
+  </figcaption>
+</figure>
 
 ### Hobbism
 
