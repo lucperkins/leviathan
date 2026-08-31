@@ -181,6 +181,11 @@ Styling for all of this is plain CSS at the bottom of `global.css`
   someone will fail loudly there.
 - `/scripture/` links verses to Wikisource's King James text (public domain,
   with `#Chapter_N` and `#C:V` anchors), not to a commercial Bible site.
+- Sidelights are the `Sidelight` component: a carded aside for a modern rhyme
+  with the text (Deleuze on desire, Ryle on spirit, Mandeville's bees). The
+  register is for resemblances, not descents — nobody in one is claimed to
+  have read Hobbes; claimed descents belong on `/ancestor/`. Keep them rare:
+  one on a page, and only where the rhyme is exact.
 - `/frontispiece/` is the 1651 engraving as a diagram: `FrontispieceMap`
   lays invisible buttons over the plate from the region data in
   `src/lib/frontispiece.ts` (percent coordinates, calibrated against a grid

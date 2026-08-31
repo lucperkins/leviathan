@@ -1,0 +1,24 @@
+---
+/**
+ * A sidelight: a modern rhyme with the text, boxed so it reads as an aside
+ * set beside the argument rather than a section of it. The register is kept
+ * for resemblances, not descents — nobody in a sidelight is claimed to have
+ * read Hobbes; the claimed descents live on /ancestor/. Used from content
+ * MDX, with the prose in the slot.
+ */
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+const id = "sidelight-" + title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+---
+
+<aside class="sidelight" aria-labelledby={id}>
+  <p class="sidelight__label">Sidelight</p>
+  <h3 id={id} class="sidelight__title">
+    <a href={`#${id}`} class="heading-anchor">{title}</a>
+  </h3>
+  <div class="sidelight__body">
+    <slot />
+  </div>
+</aside>
