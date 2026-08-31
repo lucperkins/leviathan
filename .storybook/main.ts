@@ -1,3 +1,4 @@
+import tailwindcss from "@tailwindcss/vite";
 import type { StorybookConfig } from "storybook-astro";
 
 const config: StorybookConfig = {
@@ -15,13 +16,24 @@ const config: StorybookConfig = {
   core: {
     builder: "@storybook/builder-vite",
   },
-  /**
-   * The dev server watches the project root, so `bun run build` or
-   * `build-storybook` in another terminal rewrites files under it and forces a
-   * full page reload in whatever story is open. Ignore the build outputs.
-   * Vite's own defaults are restated because this list replaces them.
-   */
   async viteFinal(config) {
+    /**
+     * Tailwind v4 generates its utilities in a Vite plugin; astro.config.mjs
+     * registers it for the site, and Storybook has its own Vite config, so it
+     * needs the plugin too. Without it `@import "tailwindcss"` resolves to a
+     * file of @theme and @layer declarations that nothing compiles, so every
+     * utility class in every component silently does nothing and only the
+     * hand-written rules in global.css survive.
+     */
+    config.plugins ??= [];
+    config.plugins.push(tailwindcss());
+
+    /**
+     * The dev server watches the project root, so `bun run build` or
+     * `build-storybook` in another terminal rewrites files under it and forces
+     * a full page reload in whatever story is open. Ignore the build outputs.
+     * Vite's own defaults are restated because this list replaces them.
+     */
     config.server ??= {};
     config.server.watch = {
       ...config.server.watch,

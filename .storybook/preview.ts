@@ -4,7 +4,7 @@ import "../src/styles/global.css";
  * The site's three themes as a toolbar control. On the site itself the class
  * goes on <html> and the page background comes from Layout.astro; stories have
  * no Layout, so the decorator also puts the body colours on directly, using
- * the same utilities Layout uses.
+ * the same four utilities Layout puts on its <body>.
  */
 export const globalTypes = {
   theme: {
@@ -35,7 +35,9 @@ const preview = {
       const root = document.documentElement;
       root.classList.toggle("dark", theme === "dark");
       root.classList.toggle("theme-sepia", theme === "sepia");
-      document.body.className = "bg-stone-50 text-stone-900";
+      // Add rather than assign: Storybook puts its own classes on the body
+      // (sb-show-main, sb-main-padded) and replacing them loses the padding.
+      document.body.classList.add("bg-stone-50", "text-stone-900", "dark:bg-stone-950", "dark:text-stone-100");
       return story();
     },
   ],
