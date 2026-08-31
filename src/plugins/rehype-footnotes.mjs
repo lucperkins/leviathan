@@ -22,6 +22,9 @@ function inline(text) {
 
 const el = (tagName, properties, children = []) => ({ type: "element", tagName, properties, children });
 
+/** Elements a marker is never placed inside. */
+const SKIP = new Set(["a", "sup", "h1", "h2", "h3", "h4", "h5", "h6"]);
+
 /**
  * Editorial footnotes in any content collection, driven by frontmatter:
  *
@@ -46,7 +49,10 @@ export default function rehypeFootnotes() {
       const n = i + 1;
       visit(tree, "text", (node, index, parent) => {
         if (placed.has(n) || !parent || index === undefined) return;
-        if (parent.tagName === "a" || parent.tagName === "sup") return;
+        // A marker never goes in a heading: it would be read out as part of the
+        // title, and the anchor is better served by the next mention in prose.
+        // Nor inside a link or an existing marker.
+        if (SKIP.has(parent.tagName)) return;
         const at = node.value.indexOf(note.after);
         if (at < 0) return;
 
