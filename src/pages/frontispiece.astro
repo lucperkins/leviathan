@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import FrontispieceMap from "../components/FrontispieceMap.astro";
+import Lightbox from "../components/Lightbox.astro";
+import manuscript from "../assets/frontispiece-manuscript.jpg";
 ---
 
 <Layout title="The frontispiece">
@@ -31,6 +33,19 @@ import FrontispieceMap from "../components/FrontispieceMap.astro";
         looking outward rather than backs turned. Nothing in the book explains the picture; the picture was
         evidently expected to explain the book.
       </p>
+      <figure class="my-8">
+        <Lightbox
+          src={manuscript}
+          alt="An ink and wash drawing of the Leviathan frontispiece's upper half: the crowned giant rises over a town, sword and crozier in hand, his body composed of tiny human faces looking out at the viewer."
+          caption="The drawing in the vellum manuscript presented to Charles II, attributed to the same hand as the print. The body is made of faces here, looking out at the reader; the engraving turned them around."
+          widths={[480, 720, 1080]}
+          sizes="(min-width: 60rem) 42rem, 90vw"
+          class="w-full rounded border border-stone-200 shadow-[0_10px_24px_-20px_rgb(0_0_0/0.22)] dark:border-stone-800"
+        />
+        <figcaption class="mt-3 text-center text-xs text-stone-500 dark:text-stone-400">
+          British Library, Egerton MS 1910, via Wikimedia Commons. Public domain.
+        </figcaption>
+      </figure>
       <p>
         It repays the reading. The giant is the <em>Matter</em> and the <em>Forme</em> of the title, the
         landscape below him its <em>Power</em> at work, and the two columns are <em>Ecclesiasticall</em>{" "}
