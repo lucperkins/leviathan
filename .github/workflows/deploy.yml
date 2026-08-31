@@ -21,6 +21,15 @@ jobs:
           persist-credentials: false
       - uses: DeterminateSystems/determinate-nix-action@527f17dd63d2d60d3e5552934bc84b9a33a14d11 # v3.22.2
       - uses: DeterminateSystems/flakehub-cache-action@83293488abfd33fbfb2ab084097467491c029962 # v3.22.2
+      # Bun's global download cache, so a lockfile hit skips refetching
+      # every package. The frozen install below still verifies against the
+      # lockfile; this only saves the network.
+      - uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            bun-${{ runner.os }}-
       # Everything runs inside the flake's dev shell, so CI uses the same
       # bun and netlify-cli that `nix develop` provides locally.
       - run: nix develop --command bun install --frozen-lockfile
