@@ -379,6 +379,15 @@ export const REPLIES = [
         note: "Lectures that set out to do political theory without the sovereign, and take Hobbes as the thing to get past: the covenant is treated as a device for making war disappear from the account of how power actually works. The most interesting modern refusal of the whole frame.",
       },
       {
+        id: "agamben-homo-sacer",
+        title: "Homo Sacer: Sovereign Power and Bare Life",
+        href: "https://en.wikipedia.org/wiki/Homo_Sacer",
+        author: "Giorgio Agamben",
+        authorHref: `${W}Giorgio_Agamben`,
+        year: "1995",
+        note: "That the state of exception is not a lapse in sovereignty but its hidden centre, and that Hobbes said as much in Chapter 28: the right to punish was not given to the sovereign but left to him, entire, as in the condition of war. Everyone leaves the state of nature except the one person who matters. See the [biopolitical reading](/readings/biopolitical/).",
+      },
+      {
         id: "shklar-liberalism-of-fear",
         title: "The Liberalism of Fear",
         href: `${W}Judith_N._Shklar#Views`,
