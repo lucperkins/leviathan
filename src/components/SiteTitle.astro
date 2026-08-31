@@ -1,8 +1,11 @@
 ---
 /**
- * The sidebar masthead: title and author, with the site's mark held out to the
- * right of them. The mark is decorative — the words beside it say the same
- * thing — so it is hidden from assistive technology.
+ * The sidebar masthead. The mark shares the title's line: one flex row,
+ * vertically centred, with the author line beneath — so the mark's place
+ * comes from the layout, not from margin nudges. Its viewBox hugs its ink,
+ * so the right edge that aligns with the nav rows is the crown's own corner.
+ * Decorative, and hidden from assistive technology: the words say the same
+ * thing.
  */
 import Mark from "./Mark.astro";
 
@@ -12,10 +15,10 @@ interface Props {
 const { href = "/" } = Astro.props;
 ---
 
-<a href={href} class="flex items-center justify-between gap-3">
-  <span class="block">
-    <span class="block font-serif text-2xl font-semibold tracking-tight">Leviathan</span>
-    <span class="block text-xs text-stone-500 dark:text-stone-400">Thomas Hobbes, 1651</span>
+<a href={href} class="block">
+  <span class="flex items-center justify-between gap-3">
+    <span class="font-serif text-2xl font-semibold tracking-tight">Leviathan</span>
+    <Mark size={28} class="shrink-0 text-stone-400 dark:text-stone-500" />
   </span>
-  <Mark size={28} class="shrink-0 text-stone-400 dark:text-stone-500" />
+  <span class="block text-xs text-stone-500 dark:text-stone-400">Thomas Hobbes, 1651</span>
 </a>

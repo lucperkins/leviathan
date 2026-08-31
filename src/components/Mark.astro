@@ -1,27 +1,27 @@
 ---
 /**
  * The site's mark: a crown over a crossed sword and scepter, after the two
- * powers the 1651 frontispiece puts in one pair of hands. Same paths as
- * `public/favicon.svg`, with the dark tile dropped and everything drawn in
- * `currentColor`, so it takes the page's colour instead of carrying its own
- * background into a light or sepia one.
+ * powers the 1651 frontispiece puts in one pair of hands. Same figure as
+ * `public/favicon.svg`, drawn in `currentColor` with the dark tile dropped.
  *
- * The two staves are exact mirrors across the centre line, so they read as the
- * same length; the scepter runs up-left and is capped by the orb, the sword
- * runs up-right with a crossguard down by the handle end, well clear of the crossing, and the crown sits clear
- * above both.
+ * The viewBox hugs the ink — x 7–25, y 2.5–30.1 of the favicon's square, the
+ * crown's corners and the staves' stroke caps — so the rendered box IS the
+ * figure and callers can align its edges like any other box, with no dead
+ * margin to compensate for. `size` is the height; the width follows from the
+ * figure's own proportions.
  */
 interface Props {
   size?: number;
   class?: string;
 }
 const { size = 44, class: className } = Astro.props;
+const width = +((size * 18) / 27.6).toFixed(1);
 ---
 
 <svg
   aria-hidden="true"
-  viewBox="0 0 32 32"
-  width={size}
+  viewBox="7 2.5 18 27.6"
+  width={width}
   height={size}
   fill="none"
   class={className}
