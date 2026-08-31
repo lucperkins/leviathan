@@ -1431,6 +1431,15 @@ a.external::after {
   margin-top: 0.2rem;
 }
 
+/* Breakout for the derivation diagrams on /definitions/. The page keeps the
+   standard column; a diagram alone spills into the margins, the same distance
+   on both sides — up to 11rem each, which at full stretch restores the 64rem
+   the page's old wide layout had — and never more than the room <main>
+   (the @container above the column) actually has. */
+.breakout {
+  margin-inline: calc(-1 * min(11rem, max(0rem, (100cqw - 100%) / 2)));
+}
+
 /* Sidelights: modern rhymes with the text, carded so they read as asides
    set beside the argument rather than sections of it. The title out-ranks
    .prose-chapter h3 by being written as h3.sidelight__title further down
@@ -1447,6 +1456,9 @@ a.external::after {
   background: var(--color-stone-900);
 }
 .sidelight__label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   font-family: var(--font-sans);
   font-size: 0.7rem;
   font-weight: 600;
