@@ -1,5 +1,3 @@
-import { glossaryIndex } from "./glossary.mjs";
-
 /**
  * The Latin in *Leviathan*, glossed. Hobbes writes in English on purpose — the
  * complaint of Chapter 46 is that school Latin hides its own emptiness — so the
@@ -297,8 +295,3 @@ export const ABSENT = [
       "Job 41:24 in the Vulgate, printed above the sovereign on the [frontispiece](/) and nowhere in the text beneath it. Hobbes quotes the same chapter of Job in English in Chapter 28, to a different purpose.",
   },
 ];
-
-/** Every term with the chapters and paragraphs where Hobbes uses it. */
-export function latinIndex() {
-  return glossaryIndex({ groups: GROUPS, terms: TERMS, absent: ABSENT, label: "latin" });
-}

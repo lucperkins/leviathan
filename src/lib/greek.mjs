@@ -1,5 +1,3 @@
-import { glossaryIndex } from "./glossary.mjs";
-
 /**
  * The Greek in *Leviathan*, glossed, with the Hebrew and Aramaic at the end
  * because most of it reaches Hobbes through the Septuagint anyway.
@@ -450,8 +448,3 @@ export const ABSENT = [
       "Leviathan's companion in Job 40, and absent here. Hobbes gave the name to [his history of the civil war](/works/behemoth/), written about 1668 and kept from the press by the King; it is the other half of the pair, and it is a different book.",
   },
 ];
-
-/** Every term with the chapters and paragraphs where Hobbes uses it. */
-export function greekIndex() {
-  return glossaryIndex({ groups: GROUPS, terms: TERMS, absent: ABSENT, label: "greek" });
-}

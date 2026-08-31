@@ -1,10 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Glossary from "../components/Glossary.astro";
-// @ts-ignore -- plain-JS data, shares the chapter paragraph numbering
-import { greekIndex } from "../lib/greek.mjs";
+// @ts-ignore -- plain-JS helper: finds each entry in the chapter text at build time
+import { glossaryIndex } from "../lib/glossary.mjs";
+// @ts-ignore -- plain-JS data, and deliberately free of imports so Storybook can load it
+import { GROUPS, TERMS, ABSENT } from "../lib/greek.mjs";
 
-const { groups, total, absent } = greekIndex();
+const { groups, total, absent } = glossaryIndex({ groups: GROUPS, terms: TERMS, absent: ABSENT, label: "greek" });
 ---
 
 <Layout title="Greek glossary">
