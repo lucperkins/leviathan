@@ -15,9 +15,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: DeterminateSystems/determinate-nix-action@v3
-      - uses: DeterminateSystems/flakehub-cache-action@main
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Nothing here pushes back to the repo; don't leave the token in .git/config.
+          persist-credentials: false
+      - uses: DeterminateSystems/determinate-nix-action@527f17dd63d2d60d3e5552934bc84b9a33a14d11 # v3.22.2
+      - uses: DeterminateSystems/flakehub-cache-action@83293488abfd33fbfb2ab084097467491c029962 # v3.22.2
       # Everything runs inside the flake's dev shell, so CI uses the same
       # bun and netlify-cli that `nix develop` provides locally.
       - run: nix develop --command bun install --frozen-lockfile
