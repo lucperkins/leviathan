@@ -1,10 +1,13 @@
 ---
 /**
- * The site's mark: a crown over a crossed sword and crozier, the civil and
- * ecclesiastical powers the frontispiece puts in one pair of hands. Same paths
- * as `public/favicon.svg`, with the dark tile dropped and everything drawn in
- * `currentColor`, so it takes the page's colour instead of carrying its own
- * background into a light or sepia one.
+ * The site's mark: a crown over a sword and a crozier, the civil and
+ * ecclesiastical powers the frontispiece puts in one pair of hands. Drawn in
+ * `currentColor` and with no background of its own, so it takes the page's
+ * colour in every theme; `public/favicon.svg` is the same figure on a tile.
+ *
+ * The two are stood side by side rather than crossed. Crossed, at the sizes
+ * this is used at, the sword cannot carry a hilt without the guard reading as
+ * a second X.
  */
 interface Props {
   size?: number;
@@ -23,9 +26,9 @@ const { size = 44, class: className } = Astro.props;
 >
   <path d="M7 11.5 8.5 5l4.5 4.2L16 4l3 5.2L23.5 5 25 11.5Z" fill="currentColor" />
   <g stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M9.5 28 22 15.5" />
-    <path d="M19 12.5l5 5" />
-    <path d="M22.5 28 10 15.5" />
-    <path d="M10 15.5c-2.8-2.8-1.2-6.6 2-5.4" />
+    <path d="M11.8 14v14.6" />
+    <path d="M8.6 23.2h6.4" />
+    <path d="M20.6 28.6V17.2" />
+    <path d="M20.6 17.2a2.9 2.9 0 0 1 5.8 0" />
   </g>
 </svg>
