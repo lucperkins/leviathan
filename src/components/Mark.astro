@@ -1,15 +1,15 @@
 ---
 /**
- * The site's mark: a crown over a crossed sword and crozier, the civil and
- * ecclesiastical powers the frontispiece puts in one pair of hands. Same paths
- * as `public/favicon.svg`, with the dark tile dropped and everything drawn in
+ * The site's mark: a crown over a crossed sword and scepter, after the two
+ * powers the 1651 frontispiece puts in one pair of hands. Same paths as
+ * `public/favicon.svg`, with the dark tile dropped and everything drawn in
  * `currentColor`, so it takes the page's colour instead of carrying its own
  * background into a light or sepia one.
  *
- * The sword ends in a pommel rather than a crossguard. A guard would have to be
- * perpendicular to a blade already at 45 degrees, which puts a second X beneath
- * the first and turns to mush at favicon size; the disc says which end is held
- * without adding a crossing, and the crozier's curl says the same of the other.
+ * The two staves are exact mirrors across the centre line, so they read as the
+ * same length; the scepter runs up-left and is capped by the orb, the sword
+ * runs up-right with a crossguard low on the grip, and the crown sits clear
+ * above both.
  */
 interface Props {
   size?: number;
@@ -28,9 +28,9 @@ const { size = 44, class: className } = Astro.props;
 >
   <path d="M7 10 8.5 3.5l4.5 4.2L16 2.5l3 5.2L23.5 3.5 25 10Z" fill="currentColor" />
   <g stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M11 27.5 22 16.5" />
-    <path d="M22.5 29 10 16.5" />
-    <path d="M10 16.5c-2.6-2.6-1.1-5 1.9-4.1" />
+    <path d="M21 29 9.5 16.7" />
+    <path d="M11 29 22.5 16.7" />
+    <path d="M12.8 24.3 15.2 26.7" />
   </g>
-  <circle cx="9.6" cy="28.9" r="1.9" fill="currentColor" />
+  <circle cx="9.5" cy="16.7" r="1.9" fill="currentColor" />
 </svg>

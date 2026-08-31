@@ -1,15 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- Sword and crozier crossed beneath a crown: the civil and ecclesiastical
-       powers held in one hand, after the 1651 frontispiece. The sword takes a
-       pommel rather than a crossguard, which at this size would read as a
-       second X, and the crown sits clear above the crossing so the crook
-       never runs into it. Kept in step with src/components/Mark.astro. -->
+  <!-- Sword and scepter crossed beneath a crown, after the two powers the
+       1651 frontispiece puts in one pair of hands. The staves are mirror
+       images so they read as the same length: scepter up-left, capped by the
+       orb; sword up-right, crossguard low on the grip; the crown clear above
+       both. Kept in step with src/components/Mark.astro. -->
   <rect width="32" height="32" rx="6" fill="#292524"/>
   <path d="M7 10 8.5 3.5l4.5 4.2L16 2.5l3 5.2L23.5 3.5 25 10Z" fill="#fafaf9"/>
   <g fill="none" stroke="#fafaf9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M11 27.5 22 16.5"/>
-    <path d="M22.5 29 10 16.5"/>
-    <path d="M10 16.5c-2.6-2.6-1.1-5 1.9-4.1"/>
+    <path d="M21 29 9.5 16.7"/>
+    <path d="M11 29 22.5 16.7"/>
+    <path d="M12.8 24.3 15.2 26.7"/>
   </g>
-  <circle cx="9.6" cy="28.9" r="1.9" fill="#fafaf9"/>
+  <circle cx="9.5" cy="16.7" r="1.9" fill="#fafaf9"/>
 </svg>
