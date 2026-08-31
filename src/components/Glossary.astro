@@ -20,6 +20,9 @@ interface Cite {
 }
 interface Term {
   term: string;
+  /** The word in its own alphabet, where it has one the 1651 printer did not set. */
+  script?: string;
+  lang?: string;
   literal: string;
   gloss: string;
   cited?: Cite[];
@@ -81,6 +84,11 @@ const href = (c: Cite) => (c.para ? `/chapters/${c.id}/#p${c.para}` : `/chapters
                 <a href={`#${slug(t.term)}`} class="gloss-term__word">
                   {t.term}
                 </a>
+                {t.script && (
+                  <span class="gloss-term__script" lang={t.lang}>
+                    {t.script}
+                  </span>
+                )}
                 <span class="gloss-term__literal">{t.literal}</span>
               </dt>
               <dd class="gloss-term__body">
@@ -119,6 +127,11 @@ const href = (c: Cite) => (c.para ? `/chapters/${c.id}/#p${c.para}` : `/chapters
               <a href={`#${slug(t.term)}`} class="gloss-term__word">
                 {t.term}
               </a>
+              {t.script && (
+                <span class="gloss-term__script" lang={t.lang}>
+                  {t.script}
+                </span>
+              )}
               <span class="gloss-term__literal">{t.literal}</span>
             </dt>
             <dd class="gloss-term__body">

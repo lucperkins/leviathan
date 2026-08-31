@@ -773,6 +773,16 @@ a.external::after {
   text-decoration-color: var(--color-stone-400);
   text-underline-offset: 4px;
 }
+/* The word in its own alphabet. Palatino leads the stack because it carries
+   polytonic Greek; Hebrew falls through to whatever the system provides. */
+.gloss-term__script {
+  font-family: "Palatino Linotype", Palatino, "Times New Roman", Times, serif;
+  font-size: 1.0625rem;
+  color: var(--color-stone-600);
+}
+.dark .gloss-term__script {
+  color: var(--color-stone-400);
+}
 .gloss-term__literal {
   font-size: 0.875rem;
   font-style: italic;

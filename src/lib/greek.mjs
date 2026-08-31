@@ -56,6 +56,8 @@ export const TERMS = [
   {
     group: "no-english",
     term: "Logos",
+    script: "λόγος",
+    lang: "grc",
     literal: "speech, reason, account",
     find: ["Logos"],
     gloss:
@@ -64,6 +66,8 @@ export const TERMS = [
   {
     group: "no-english",
     term: "Nomos",
+    script: "νόμος",
+    lang: "grc",
     literal: "distribution",
     find: ["Nomos"],
     gloss:
@@ -72,6 +76,8 @@ export const TERMS = [
   {
     group: "no-english",
     term: "Makarismos",
+    script: "μακαρισμός",
+    lang: "grc",
     literal: "a pronouncing blessed",
     find: ["Makarismos"],
     gloss:
@@ -80,6 +86,8 @@ export const TERMS = [
   {
     group: "no-english",
     term: "Pleonexia",
+    script: "πλεονεξία",
+    lang: "grc",
     literal: "having more",
     find: ["pleonexia"],
     gloss:
@@ -88,6 +96,8 @@ export const TERMS = [
   {
     group: "no-english",
     term: "Orme, Aphorme",
+    script: "ὁρμή, ἀφορμή",
+    lang: "grc",
     literal: "impulse toward, impulse away",
     find: ["orme and aphorme"],
     gloss:
@@ -96,6 +106,8 @@ export const TERMS = [
   {
     group: "no-english",
     term: "Zogria",
+    script: "ζωγρία",
+    lang: "grc",
     literal: "taking alive",
     find: ["Zogria"],
     gloss:
@@ -104,6 +116,8 @@ export const TERMS = [
   {
     group: "person",
     term: "Prosopon",
+    script: "πρόσωπον",
+    lang: "grc",
     literal: "face",
     find: ["Prosopon"],
     gloss:
@@ -112,6 +126,8 @@ export const TERMS = [
   {
     group: "person",
     term: "Kurios",
+    script: "κύριος",
+    lang: "grc",
     literal: "owner, lord",
     find: ["Kurios"],
     gloss:
@@ -120,6 +136,8 @@ export const TERMS = [
   {
     group: "person",
     term: "Pisteno Eis, Pisteno Anto",
+    script: "πιστεύω εἰς, πιστεύω αὐτῷ",
+    lang: "grc",
     literal: "I believe into, I believe him",
     find: ["Pisteno"],
     gloss:
@@ -128,6 +146,8 @@ export const TERMS = [
   {
     group: "church",
     term: "Ecclesia",
+    script: "ἐκκλησία",
+    lang: "grc",
     literal: "an assembly called out",
     find: ["Ecclesia"],
     gloss:
@@ -136,6 +156,8 @@ export const TERMS = [
   {
     group: "church",
     term: "Episcopus",
+    script: "ἐπίσκοπος",
+    lang: "grc",
     literal: "an overseer",
     find: ["Episcopus"],
     gloss:
@@ -144,6 +166,8 @@ export const TERMS = [
   {
     group: "church",
     term: "Diakonos",
+    script: "διάκονος",
+    lang: "grc",
     literal: "one who does another's errands",
     find: ["Diakonos"],
     gloss:
@@ -152,6 +176,8 @@ export const TERMS = [
   {
     group: "church",
     term: "Proestotes",
+    script: "προεστῶτες",
+    lang: "grc",
     literal: "those who stand in front",
     find: ["proestotes"],
     gloss:
@@ -160,6 +186,8 @@ export const TERMS = [
   {
     group: "church",
     term: "Aposunagogon Poiein",
+    script: "ἀποσυνάγωγον ποιεῖν",
+    lang: "grc",
     literal: "to make out of the synagogue",
     find: ["Aposunagogon"],
     gloss:
@@ -168,6 +196,8 @@ export const TERMS = [
   {
     group: "church",
     term: "Upakouei",
+    script: "ὑπακούει",
+    lang: "grc",
     literal: "hearkens to",
     find: ["upakouei"],
     gloss:
@@ -176,6 +206,8 @@ export const TERMS = [
   {
     group: "church",
     term: "Paraggelias Edokamen",
+    script: "παραγγελίας ἐδώκαμεν",
+    lang: "grc",
     literal: "we gave you instructions",
     find: ["paraggelias"],
     gloss:
@@ -184,6 +216,8 @@ export const TERMS = [
   {
     group: "church",
     term: "Logos Theou, Theologia",
+    script: "λόγος θεοῦ, θεολογία",
+    lang: "grc",
     literal: "word of God, God-talk",
     find: ["Logos Theou"],
     gloss:
@@ -192,6 +226,8 @@ export const TERMS = [
   {
     group: "church",
     term: "Periousios, Epiousios",
+    script: "περιούσιος, ἐπιούσιος",
+    lang: "grc",
     literal: "over and above, for the day",
     find: ["periousios"],
     gloss:
@@ -200,6 +236,8 @@ export const TERMS = [
   {
     group: "church",
     term: "Delosin Kai Aletheian",
+    script: "δήλωσιν καὶ ἀλήθειαν",
+    lang: "grc",
     literal: "evidence and truth",
     find: ["delosin"],
     gloss:
@@ -208,6 +246,8 @@ export const TERMS = [
   {
     group: "church",
     term: "Dia Puros",
+    script: "διὰ πυρός",
+    lang: "grc",
     literal: "through fire",
     find: ["dia puros"],
     gloss:
@@ -216,6 +256,8 @@ export const TERMS = [
   {
     group: "hell",
     term: "Hades",
+    script: "ᾅδης",
+    lang: "grc",
     literal: "the unseen",
     find: ["Hades"],
     gloss:
@@ -224,6 +266,7 @@ export const TERMS = [
   {
     group: "hell",
     term: "Gehenna, Tophet",
+    script: "γέεννα, תֹּפֶת",
     literal: "the valley of Hinnom, the burning place",
     find: ["Gehenna"],
     gloss:
@@ -232,6 +275,8 @@ export const TERMS = [
   {
     group: "hell",
     term: "Tartarus",
+    script: "τάρταρος",
+    lang: "grc",
     literal: "the pit",
     find: ["Tartarus"],
     gloss:
@@ -240,6 +285,8 @@ export const TERMS = [
   {
     group: "hell",
     term: "Eis To Skotos To Exoteron",
+    script: "εἰς τὸ σκότος τὸ ἐξώτερον",
+    lang: "grc",
     literal: "into the outer darkness",
     find: ["Skotos"],
     gloss:
@@ -248,6 +295,8 @@ export const TERMS = [
   {
     group: "hell",
     term: "Diabolus, Satan, Abbadon",
+    script: "διάβολος, σατανᾶς, Ἀβαδδών",
+    lang: "grc",
     literal: "the accuser, the enemy, the destroyer",
     find: ["Diabolus"],
     gloss:
@@ -256,6 +305,8 @@ export const TERMS = [
   {
     group: "hell",
     term: "Daemon",
+    script: "δαίμων",
+    lang: "grc",
     literal: "a spirit",
     find: ["Daemon"],
     gloss:
@@ -264,6 +315,8 @@ export const TERMS = [
   {
     group: "hell",
     term: "Heroes",
+    script: "ἥρωες",
+    lang: "grc",
     literal: "heroes",
     find: ["called Heroes"],
     gloss:
@@ -272,6 +325,8 @@ export const TERMS = [
   {
     group: "hell",
     term: "Eido",
+    script: "εἴδω",
+    lang: "grc",
     literal: "to see",
     find: ["word Eido"],
     gloss:
@@ -280,6 +335,8 @@ export const TERMS = [
   {
     group: "schools",
     term: "Academia, Lycaeum, Stoa",
+    script: "Ἀκαδήμεια, Λύκειον, στοά",
+    lang: "grc",
     literal: "Academus's grove, the walk by Pan's temple, the covered colonnade",
     find: ["Academia", "Lycaeum"],
     gloss:
@@ -288,6 +345,8 @@ export const TERMS = [
   {
     group: "schools",
     term: "Metaphysiques",
+    script: "τὰ μετὰ τὰ φυσικά",
+    lang: "grc",
     literal: "the books after the physics",
     find: ["Metaphysiques"],
     gloss:
@@ -296,6 +355,8 @@ export const TERMS = [
   {
     group: "schools",
     term: "Antiperistasis",
+    script: "ἀντιπερίστασις",
+    lang: "grc",
     literal: "surrounding on all sides",
     find: ["Antiperistasis"],
     gloss:
@@ -304,6 +365,8 @@ export const TERMS = [
   {
     group: "schools",
     term: "Thaumaturgi",
+    script: "θαυματουργοί",
+    lang: "grc",
     literal: "workers of wonders",
     find: ["Thaumaturgi"],
     gloss:
@@ -312,6 +375,8 @@ export const TERMS = [
   {
     group: "hebrew",
     term: "Cephas",
+    script: "כֵּיפָא",
+    lang: "arc",
     literal: "stone",
     find: ["Cephas"],
     gloss:
@@ -320,6 +385,8 @@ export const TERMS = [
   {
     group: "hebrew",
     term: "Urim, Thummim",
+    script: "אוּרִים וְתֻמִּים",
+    lang: "he",
     literal: "lights, perfections",
     find: ["Urim"],
     gloss:
@@ -328,6 +395,8 @@ export const TERMS = [
   {
     group: "hebrew",
     term: "Ephod",
+    script: "אֵפוֹד",
+    lang: "he",
     literal: "a priestly vestment",
     find: ["Ephod"],
     gloss:
@@ -336,6 +405,7 @@ export const TERMS = [
   {
     group: "hebrew",
     term: "Messiah, Christos",
+    script: "Χριστός, מָשִׁיחַ",
     literal: "anointed",
     find: ["the Christ, that is, the Anointed"],
     gloss:
@@ -357,18 +427,24 @@ export const TERMS = [
 export const ABSENT = [
   {
     term: "Zoon politikon",
+    script: "ζῷον πολιτικόν",
+    lang: "grc",
     literal: "a political animal",
     gloss:
       "Aristotle's phrase, and the doctrine [Chapter 17](/chapters/17-of-the-causes-generation-and-definition-of-a-common-wealth/) exists to refute — but Hobbes argues against the [bees and ants](/themes/animals/) rather than against the Greek, and never quotes it.",
   },
   {
     term: "Eudaimonia",
+    script: "εὐδαιμονία",
+    lang: "grc",
     literal: "flourishing, happiness",
     gloss:
       "The thing whose Latin, *summum bonum*, he denies outright in Chapter 11. The Greek never appears: he disposes of the subject in the schools' language rather than in Aristotle's own.",
   },
   {
     term: "Behemoth",
+    script: "בְּהֵמוֹת",
+    lang: "he",
     literal: "beasts, the beast",
     gloss:
       "Leviathan's companion in Job 40, and absent here. Hobbes gave the name to [his history of the civil war](/works/behemoth/), written about 1668 and kept from the press by the King; it is the other half of the pair, and it is a different book.",
