@@ -1,0 +1,64 @@
+---
+import Layout from "../layouts/Layout.astro";
+import FrontispieceMap from "../components/FrontispieceMap.astro";
+---
+
+<Layout title="The frontispiece">
+  <header class="mb-2">
+    <p class="eyebrow">Appendix</p>
+    <h1 class="mt-1 font-serif text-3xl font-semibold">The frontispiece</h1>
+    <p class="mt-3 max-w-prose text-lg text-stone-600 dark:text-stone-400">
+      The most famous title page in philosophy, engraved by Abraham Bosse<sup class="fn-ref"
+        ><a id="fnref-1" href="#fn-1">1</a></sup
+      > in Paris in 1651 with Hobbes at his
+      elbow, and an argument in its own right: every instrument of the civil power on the left has its
+      ecclesiastical double on the right, and one figure holds the emblems of both. Hover over any part of the
+      plate — or tap it — to see what it shows.
+    </p>
+  </header>
+
+  <FrontispieceMap />
+
+  <section class="mt-12 max-w-prose">
+    <h2 id="on-the-plate" class="section-heading">
+      <a href="#on-the-plate" class="heading-anchor">On the plate</a>
+    </h2>
+    <div class="prose-chapter mt-4 font-serif text-lg leading-relaxed">
+      <p>
+        The design was almost certainly worked out between Hobbes and the engraver rather than delivered to him:
+        Bosse was the finest etcher in Paris, Hobbes was living there, and the manuscript copy presented to
+        Charles II carries a variant of the same design drawn by hand, with the giant's body made of faces
+        looking outward rather than backs turned. Nothing in the book explains the picture; the picture was
+        evidently expected to explain the book.
+      </p>
+      <p>
+        It repays the reading. The giant is the <em>Matter</em> and the <em>Forme</em> of the title, the
+        landscape below him its <em>Power</em> at work, and the two columns are <em>Ecclesiasticall</em> and
+        <em>Civil</em> set against each other panel for panel — fortress and church, coronet and mitre, cannon
+        and thunderbolt, arms and distinctions, battle and disputation. The book's claim that these are two
+        kinds of the same thing, and must be held by the same hands, is on the cover before it is anywhere in
+        the text.
+      </p>
+    </div>
+  </section>
+
+  <div class="chapter-footnotes max-w-prose">
+    <p class="chapter-footnotes__title" id="notes">Notes</p>
+    <ol class="footnotes">
+      <li id="fn-1">
+        <a href="#fnref-1" class="footnotes__num" aria-label="Back to the text">1</a>
+        <span>
+          <a class="external" href="https://en.wikipedia.org/wiki/Abraham_Bosse" target="_blank" rel="noopener noreferrer"
+            ><strong>Abraham Bosse</strong></a
+          > (c. 1604&ndash;1676), the leading French printmaker of the century: some 1,600 etchings, a treatise
+          that fixed the technique for everyone after him, and a running quarrel with the French academy over
+          perspective that got him expelled from it. A Huguenot working for a largely Catholic market, which may
+          be why a book holding church and state in one pair of hands did not trouble him. The attribution of
+          the <em>Leviathan</em> plate to Bosse is modern &mdash; the engraving is unsigned &mdash; and is owed
+          to Noel Malcolm, who also identified the optical device behind the giant's composite body:
+          Jean-Fran&ccedil;ois Niceron's multiplying glass, which Hobbes would have seen demonstrated in Paris.
+        </span>
+      </li>
+    </ol>
+  </div>
+</Layout>

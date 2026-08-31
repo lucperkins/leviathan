@@ -1,0 +1,56 @@
+---
+/**
+ * The frontispiece as a diagram: the plate with an invisible button over each
+ * region, and one note shown at a time beside it. Hovering or focusing a
+ * region previews it; clicking pins it, so a touch screen gets the same
+ * thing. Driven by the same Alpine `hobbesMap` component as the map on
+ * /hobbes/life/ — the behaviour (one pinned, hover previews) is identical.
+ *
+ * Region geometry and prose live in `src/lib/frontispiece.ts`.
+ */
+import { Image } from "astro:assets";
+import { REGIONS } from "../lib/frontispiece";
+import frontispiece from "../assets/frontispiece.jpg";
+
+const alt =
+  "The engraved frontispiece of Leviathan, 1651. A crowned giant made of small human figures rises over a landscape, sword in one hand and crozier in the other; below, two columns of panels flank the title curtain.";
+---
+
+<figure class="frontis" x-data="hobbesMap">
+  <div class="frontis__stage">
+    <Image src={frontispiece} alt={alt} widths={[480, 720, 1080]} sizes="(min-width: 48rem) 26rem, 92vw" quality={68} class="frontis__plate" />
+    {
+      REGIONS.map((r, i) => (
+        <button
+          type="button"
+          class="frontis__region"
+          style={`left:${r.x}%;top:${r.y}%;width:${r.w}%;height:${r.h}%`}
+          aria-label={r.title}
+          x-bind:class={`active === ${i} && "is-active"`}
+          x-on:mouseenter={`preview(${i})`}
+          x-on:mouseleave="clear()"
+          x-on:focus={`preview(${i})`}
+          x-on:blur="clear()"
+          x-on:click={`pin(${i})`}
+        />
+      ))
+    }
+  </div>
+
+  <figcaption class="frontis__notes">
+    {
+      REGIONS.map((r, i) => (
+        <span class="frontis__note" x-show={`active === ${i}`} x-cloak={i === 0 ? undefined : true}>
+          <strong class="frontis__name">{r.title}</strong>
+          {r.side && <span class="frontis__side">{r.side === "civil" ? "Civil" : "Ecclesiastical"}</span>}
+          <span class="frontis__what">{r.note}</span>
+          {r.href && (
+            <a class="frontis__link" href={r.href}>
+              {r.hrefLabel} &rarr;
+            </a>
+          )}
+        </span>
+      ))
+    }
+  </figcaption>
+</figure>

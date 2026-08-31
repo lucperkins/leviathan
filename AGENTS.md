@@ -181,6 +181,11 @@ Styling for all of this is plain CSS at the bottom of `global.css`
   someone will fail loudly there.
 - `/scripture/` links verses to Wikisource's King James text (public domain,
   with `#Chapter_N` and `#C:V` anchors), not to a commercial Bible site.
+- `/frontispiece/` is the 1651 engraving as a diagram: `FrontispieceMap`
+  lays invisible buttons over the plate from the region data in
+  `src/lib/frontispiece.ts` (percent coordinates, calibrated against a grid
+  overlay), reusing the `hobbesMap` Alpine component for the pinned/hover
+  behaviour. One note shows at a time beside the plate.
 - `/latin/` and `/greek/` gloss the foreign vocabulary, from `src/lib/latin.mjs`
   and `src/lib/greek.mjs`: a headword, a literal translation, a paragraph of
   gloss, and the places Hobbes uses it. `src/lib/glossary.mjs` locates those in
