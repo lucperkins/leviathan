@@ -1,0 +1,20 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import SectionIndex from "../../components/SectionIndex.astro";
+
+const receptions = (await getCollection("receptions")).sort((a, b) => a.data.title.localeCompare(b.data.title));
+const entries = receptions.map((r) => ({
+  href: `/receptions/${r.id}/`,
+  title: r.data.title,
+  summary: r.data.summary,
+}));
+---
+
+<Layout title="Receptions">
+  <SectionIndex
+    title="Receptions"
+    intro="What each country did with him, and why it wanted him when it did. The [readings](/readings/) are grouped by what a school finds in the book; these are grouped by place, because the same passages have been made to answer very different local questions — a constitutional crisis in England, a discipline being founded in Germany, a Cold War in America. He is read most seriously where the argument about the state is least settled."
+    entries={entries}
+  />
+</Layout>

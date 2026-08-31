@@ -199,6 +199,11 @@ Styling for all of this is plain CSS at the bottom of `global.css`
 - `/further-reading/` is the one appendix page not generated from the text: a
   short reading list in `src/lib/library.mjs`, each entry described by what it
   claims. Entries have stable `id` anchors so pages can link to a book.
+- `/receptions/` is the same afterlife cut by place rather than by school:
+  what Britain, France, Germany, America and Italy each did with him, and why
+  each wanted him when it did. Same schema and same footnote convention as
+  `/readings/`, and the two cross-link — Schmitt is a totalitarian reading and
+  a German reception, and the pages should say different things about him.
 - `/readings/` is the schools that have taken the book up — feminist, marxist,
   social scientific, post-colonial, libertarian, totalitarian, materialist.
   These pages are about the scholarship, so the people are footnoted rather
