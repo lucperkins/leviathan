@@ -3,10 +3,12 @@ import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import SectionIndex from "../../components/SectionIndex.astro";
 
+// The sidebar's labels and order: the section supplies the word, so
+// "Feminist readings" is listed as "Feminist".
 const readings = (await getCollection("readings")).sort((a, b) => a.data.title.localeCompare(b.data.title));
 const entries = readings.map((r) => ({
   href: `/readings/${r.id}/`,
-  title: r.data.title,
+  title: r.data.title.replace(/ readings$/i, ""),
   summary: r.data.summary,
 }));
 ---

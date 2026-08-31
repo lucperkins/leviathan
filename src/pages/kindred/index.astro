@@ -6,7 +6,8 @@ import SectionIndex from "../../components/SectionIndex.astro";
 const kindred = (await getCollection("kindred")).sort((a, b) => a.data.year - b.data.year);
 const entries = kindred.map((k) => ({
   href: `/kindred/${k.id}/`,
-  title: k.data.title,
+  // The sidebar's label, so the two listings agree (Erastus is listed as Erasmus).
+  title: k.data.navTitle ?? k.data.title,
   meta: k.data.dates,
   summary: k.data.summary,
 }));
