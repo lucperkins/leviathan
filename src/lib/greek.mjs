@@ -17,9 +17,9 @@ import { glossaryIndex } from "./glossary.mjs";
 export const GROUPS = [
   {
     id: "no-english",
-    title: "Words English has not got",
+    title: "No name in our tongue",
     blurb:
-      "Hobbes reaches for Greek where he thinks the language he is writing in has no word, and says so. Two of these are the foundations of his account of reasoning and of law.",
+      "His own phrase, from the passage on *makarismos*. Hobbes reaches for Greek where he thinks English has nothing to reach for, and says so. Two of these are the foundations of his account of reasoning and of law.",
   },
   {
     id: "person",

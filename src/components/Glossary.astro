@@ -73,7 +73,7 @@ const href = (c: Cite) => (c.para ? `/chapters/${c.id}/#p${c.para}` : `/chapters
             {g.title}
           </a>
         </h2>
-        <p class="mt-2 max-w-prose text-stone-600 dark:text-stone-400">{g.blurb}</p>
+        <p class="mt-2 max-w-prose text-stone-600 dark:text-stone-400" set:html={inlineMarkdown(g.blurb)} />
         <dl class="mt-5 divide-y divide-stone-200 border-t border-stone-200 dark:divide-stone-800 dark:border-stone-800">
           {g.terms.map((t) => (
             <div class="gloss-term">
