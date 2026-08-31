@@ -1,21 +1,12 @@
 [build]
-  command = "bun run build"
-  publish = "dist"
-
-[build.environment]
-  NODE_VERSION = "24"
+command = "bun run build"
+publish = "dist"
 
 # Keep the site out of search engines and well-behaved crawlers (robots.txt
 # in public/ does the same for bots that read it). These are requests, not
 # enforcement; only authentication can actually block a scraper.
 [[headers]]
-  for = "/*"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow, noarchive, noimageindex"
+for = "/*"
 
-# The section was renamed from "interlocutors" to "touchstones"; keep the old
-# URLs working for anything that already links to them.
-[[redirects]]
-  from = "/interlocutors/*"
-  to = "/touchstones/:splat"
-  status = 301
+[headers.values]
+X-Robots-Tag = "noindex, nofollow, noarchive, noimageindex"
