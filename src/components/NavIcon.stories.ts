@@ -3,7 +3,6 @@ import NavIcon from "./NavIcon.astro";
 export default {
   title: "Navigation/NavIcon",
   component: NavIcon,
-  decorators: [(story: () => unknown) => `<div class="p-6 text-stone-700">${story()}</div>`],
 };
 
 /** One per top-level sidebar section; nested part sections get none. */

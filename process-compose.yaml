@@ -11,13 +11,16 @@ processes:
     depends_on:
       install:
         condition: process_completed_successfully
+    # Probes keep running after the process is ready, so keep them cheap and
+    # infrequent: /robots.txt is served straight from public/, where / renders
+    # the whole home page — chapters loaded, quotation located, images resized.
     readiness_probe:
       http_get:
         host: localhost
         port: 3000
-        path: /
+        path: /robots.txt
       initial_delay_seconds: 2
-      period_seconds: 2
+      period_seconds: 15
 
   storybook:
     command: bun run storybook
@@ -30,4 +33,4 @@ processes:
         port: 6006
         path: /
       initial_delay_seconds: 5
-      period_seconds: 2
+      period_seconds: 15

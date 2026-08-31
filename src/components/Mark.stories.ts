@@ -3,7 +3,6 @@ import Mark from "./Mark.astro";
 export default {
   title: "Site/Mark",
   component: Mark,
-  decorators: [(story: () => unknown) => `<div class="p-8 text-stone-400 dark:text-stone-600">${story()}</div>`],
 };
 
 /** As it sits above the title on the home page. */

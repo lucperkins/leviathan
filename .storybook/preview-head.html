@@ -1,0 +1,9 @@
+<style>
+  /* Stories render bare. storybook-astro renders each component over a
+     websocket, so a decorator cannot wrap one in markup — see the note in
+     preview.ts — and the reading column the site would give a component has to
+     come from here instead. */
+  #storybook-root {
+    max-width: 56rem;
+  }
+</style>

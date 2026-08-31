@@ -13,7 +13,6 @@ const group = (groups: { id: string }[], terms: { group: string }[]) =>
 export default {
   title: "Appendix/Glossary",
   component: Glossary,
-  decorators: [(story: () => unknown) => `<div class="max-w-3xl p-6">${story()}</div>`],
 };
 
 /** Terms of art, and the three famous tags that are not in the book. */

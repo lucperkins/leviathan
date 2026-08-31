@@ -24,7 +24,6 @@ export default {
     intro: { control: "text", description: "Inline markdown; links are allowed" },
     eyebrow: { control: "text" },
   },
-  decorators: [(story: () => unknown) => `<div class="max-w-2xl px-6 py-8">${story()}</div>`],
 };
 
 export const Default = {

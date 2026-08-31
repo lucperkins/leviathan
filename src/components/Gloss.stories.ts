@@ -6,10 +6,6 @@ export default {
   argTypes: {
     note: { control: "text", description: "The note shown on hover or focus" },
   },
-  decorators: [
-    (story: () => unknown) =>
-      `<p class="max-w-prose font-serif text-lg leading-relaxed">There is no narrative of the fighting, no mention of ${story()} or of the scaffold at Whitehall.</p>`,
-  ],
 };
 
 export const Default = {

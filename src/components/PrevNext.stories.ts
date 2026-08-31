@@ -4,7 +4,6 @@ export default {
   title: "Navigation/PrevNext",
   component: PrevNext,
   argTypes: { kind: { control: "text" } },
-  decorators: [(story: () => unknown) => `<div class="max-w-2xl">${story()}</div>`],
 };
 
 export const Both = {

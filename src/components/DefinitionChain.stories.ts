@@ -3,7 +3,6 @@ import DefinitionChain from "./DefinitionChain.astro";
 export default {
   title: "Apparatus/DefinitionChain",
   component: DefinitionChain,
-  decorators: [(story: () => unknown) => `<div class="max-w-3xl p-6">${story()}</div>`],
 };
 
 /** Pick a term to derive it; click a bold word inside a sentence to re-root the chain. */

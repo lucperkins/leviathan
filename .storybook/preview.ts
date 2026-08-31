@@ -1,25 +1,27 @@
 import "../src/styles/global.css";
 
 /**
+ * A decorator may set things up — classes on <html>, values in localStorage —
+ * and must then return `story()` untouched. It cannot wrap the result in
+ * markup. storybook-astro renders each component on the server over a
+ * websocket, so `story()` returns a descriptor rather than HTML, and dropping
+ * that into a template literal prints the source of an Astro internal:
+ * "(...args) => { if (!validateArgs(args)) ...". Every wrapping decorator in
+ * this project did exactly that, which is why the stories showed a function
+ * body instead of a component. Layout that a story needs goes in
+ * preview-head.html.
+ *
  * The site's three themes as a toolbar control. On the site itself the class
  * goes on <html> and the page background comes from Layout.astro; stories have
  * no Layout, so the decorator also puts the body colours on directly, using
  * the same four utilities Layout puts on its <body>.
  */
+/**
+ * No `toolbar` here on purpose: a toolbar item renders as a menu you open and
+ * pick from, and manager.tsx puts a single cycling button in its place instead.
+ */
 export const globalTypes = {
-  theme: {
-    description: "Site theme",
-    toolbar: {
-      title: "Theme",
-      icon: "paintbrush",
-      items: [
-        { value: "light", title: "Light", icon: "sun" },
-        { value: "sepia", title: "Sepia", icon: "book" },
-        { value: "dark", title: "Dark", icon: "moon" },
-      ],
-      dynamicTitle: true,
-    },
-  },
+  theme: { description: "Site theme" },
 };
 
 const preview = {

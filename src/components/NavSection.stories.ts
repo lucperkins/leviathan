@@ -13,9 +13,6 @@ export default {
     title: { control: "text" },
     open: { control: "boolean" },
   },
-  decorators: [
-    (story: () => unknown) => `<div class="w-80 bg-stone-100 px-4 py-6 text-sm">${story()}</div>`,
-  ],
 };
 
 export const Open = { args: { id: "demo", title: "Of Man", open: true, slots: { default: items } } };

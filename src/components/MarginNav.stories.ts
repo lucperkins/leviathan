@@ -4,12 +4,6 @@ export default {
   title: "Navigation/MarginNav",
   component: MarginNav,
   parameters: { layout: "fullscreen" },
-  decorators: [
-    (story: () => unknown) =>
-      `<div class="min-h-[60vh] p-16 text-stone-600">
-         <p class="mx-auto max-w-2xl">Move the pointer to the far left or right of the window. The rails only
-         appear above 80rem, so widen the preview if nothing shows.</p>${story()}</div>`,
-  ],
 };
 
 /** Both rails, as on a chapter in the middle of the book. */

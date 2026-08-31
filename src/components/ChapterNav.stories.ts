@@ -31,10 +31,6 @@ export default {
       description: "pathname of the page being read",
     },
   },
-  decorators: [
-    (story: () => unknown) =>
-      `<div class="w-80 bg-stone-100 px-4 py-6">${story()}</div>`,
-  ],
 };
 
 export const Default = {

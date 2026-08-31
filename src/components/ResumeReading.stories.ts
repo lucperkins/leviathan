@@ -1,10 +1,17 @@
 import ResumeReading from "./ResumeReading.astro";
 
-/** The button reads its position from localStorage, so the stories seed it. */
+/**
+ * The button reads its position from localStorage, so the stories seed it.
+ *
+ * A decorator here may set things up and must then return `story()` untouched.
+ * It cannot wrap the result in markup: storybook-astro renders each component
+ * over a websocket and `story()` hands back a descriptor, not HTML, so putting
+ * it in a template literal prints the source of an Astro internal instead.
+ */
 const seed = (value: unknown) => (story: () => unknown) => {
   if (value === null) localStorage.removeItem("leviathan:reading");
   else localStorage.setItem("leviathan:reading", JSON.stringify(value));
-  return `<div class="p-4">${story()}</div>`;
+  return story();
 };
 
 export default {

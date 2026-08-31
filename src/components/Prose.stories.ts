@@ -10,7 +10,6 @@ const body = `
 export default {
   title: "Reading/Prose",
   component: Prose,
-  decorators: [(story: () => unknown) => `<div class="max-w-2xl">${story()}</div>`],
 };
 
 export const Default = {
