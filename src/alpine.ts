@@ -211,6 +211,50 @@ export default (Alpine: Alpine) => {
   }));
 
   /**
+   * Chapter pages: remember where the reader got to, so the home page can
+   * offer to send them back. The paragraph nearest the top of the viewport is
+   * taken to be the one being read; scrolling saves on a short debounce.
+   */
+  Alpine.data("readingPosition", () => ({
+    saved: Alpine.$persist(null as Reading | null).as("leviathan:reading"),
+    timer: undefined as number | undefined,
+    init() {
+      const { id, label } = (this.$el as HTMLElement).dataset as { id: string; label: string };
+      this.record(id, label);
+      const later = () => {
+        window.clearTimeout(this.timer);
+        this.timer = window.setTimeout(() => this.record(id, label), 400);
+      };
+      window.addEventListener("scroll", later, { passive: true });
+      window.addEventListener("pagehide", () => this.record(id, label));
+    },
+    /** The last paragraph whose top has passed the reading line. */
+    paragraph(): string | null {
+      let found: string | null = null;
+      for (const p of document.querySelectorAll<HTMLElement>(".prose-chapter p[id^='p']")) {
+        if (p.getBoundingClientRect().top > 140) break;
+        found = p.id;
+      }
+      return found;
+    },
+    record(id: string, label: string) {
+      this.saved = { id, label, para: this.paragraph(), at: Date.now() };
+    },
+  }));
+
+  /** Home page: a link back to wherever `readingPosition` last left the reader. */
+  Alpine.data("resumeReading", () => ({
+    saved: Alpine.$persist(null as Reading | null).as("leviathan:reading"),
+    get href() {
+      if (!this.saved) return "/chapters/the-epistle-dedicatory/";
+      return `/chapters/${this.saved.id}/${this.saved.para ? `#${this.saved.para}` : ""}`;
+    },
+    get label() {
+      return this.saved ? `Resume ${this.saved.label}` : "";
+    },
+  }));
+
+  /**
    * The map on /hobbes/life/. One place is always shown; hovering or focusing
    * another previews it without losing the pinned one, so the panel never goes
    * empty and a click still works on a touch screen.
