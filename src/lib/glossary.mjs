@@ -39,6 +39,12 @@ function chapters() {
  *
  * `find` is a locator rather than a headword: it can be narrower than the entry
  * when one of the words has another sense elsewhere in the book.
+ *
+ * @param {{ groups: { id: string, title: string, blurb: string }[],
+ *           terms: { group: string, term: string, literal: string, gloss: string,
+ *                    find: string[], script?: string, lang?: string }[],
+ *           absent?: { term: string, literal: string, gloss: string }[],
+ *           label: string }} glossary
  */
 export function glossaryIndex({ groups, terms, absent = [], label }) {
   const book = chapters();
