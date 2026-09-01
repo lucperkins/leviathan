@@ -32,8 +32,16 @@
  * `sepia` filter utility, and a bare `.sepia` on <html> would put a
  * sepia() filter over the whole page as well as retinting it.
  */
+/* Raised paper surfaces: tooltips and popovers. White in the light theme (a
+   step above the stone-50 page); the sepia theme warms it; dark mode sets its
+   own backgrounds explicitly. */
+:root {
+  --color-paper: white;
+}
+
 .theme-sepia {
   color-scheme: light;
+  --color-paper: oklch(96.5% 0.025 90);
   --color-stone-50: oklch(94.5% 0.03 88);
   --color-stone-100: oklch(91.5% 0.034 86);
   --color-stone-200: oklch(86.5% 0.038 84);
@@ -147,7 +155,7 @@ concept-ref:focus-visible {
   padding: 0.75rem 0.9rem;
   border: 1px solid var(--color-stone-200);
   border-radius: 0.5rem;
-  background: white;
+  background: var(--color-paper);
   box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.25);
   font-family: var(--font-sans);
   font-size: 0.875rem;
@@ -871,7 +879,7 @@ a.external::after {
   padding: 0.7rem 0.85rem;
   border: 1px solid var(--color-stone-200);
   border-radius: 0.5rem;
-  background: white;
+  background: var(--color-paper);
   box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.25);
   font-family: var(--font-sans);
   font-size: 0.8rem;
