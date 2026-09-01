@@ -775,7 +775,7 @@ a.external::after {
 }
 
 /* Editorial headnote above a chapter, set apart from the text itself. The
-   printer's note mark — an asterisk — stands where a border used to. */
+   quill — the editor's hand — stands where a border used to. */
 .chapter-note {
   display: flex;
   gap: 0.7rem;
