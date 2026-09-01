@@ -23,8 +23,10 @@
  * theme toggle. Every colour on the site is a stone shade, and Tailwind v4
  * compiles those to var(--color-stone-N), so retinting the ramp here turns the
  * whole page warm without touching a single utility class or hand-written
- * rule. The lightness of each step is kept close to Tailwind's, so contrast
- * relationships carry over; what changes is chroma and hue.
+ * rule. The light steps keep Tailwind's lightness so contrast relationships
+ * carry over; the dark steps (700–950) are lifted and given more chroma,
+ * because at Tailwind's lightness the warmth is invisible and the text reads
+ * as black — the ink here is a legible brown, not black under a tint.
  *
  * The class is `theme-sepia` rather than `sepia` because Tailwind ships a
  * `sepia` filter utility, and a bare `.sepia` on <html> would put a
@@ -39,10 +41,10 @@
   --color-stone-400: oklch(66% 0.045 66);
   --color-stone-500: oklch(53% 0.048 58);
   --color-stone-600: oklch(43% 0.045 55);
-  --color-stone-700: oklch(36% 0.042 52);
-  --color-stone-800: oklch(28% 0.035 48);
-  --color-stone-900: oklch(23% 0.03 46);
-  --color-stone-950: oklch(17% 0.025 45);
+  --color-stone-700: oklch(38% 0.05 52);
+  --color-stone-800: oklch(34% 0.055 50);
+  --color-stone-900: oklch(30% 0.055 48);
+  --color-stone-950: oklch(25% 0.05 48);
 }
 
 /* Alpine: hide elements until it has booted. */
