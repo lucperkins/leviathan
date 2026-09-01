@@ -13,3 +13,10 @@ export const divisionLabel = (divisions: readonly string[], title: string) => {
   const n = divisionNumber(divisions, title);
   return n <= divisions.length ? `${ROMAN[n - 1]}. ${title}` : title;
 };
+
+/** "Of the Kingdome of Darknesse" → "of-the-kingdome-of-darknesse". */
+export const divisionSlug = (title: string) =>
+  title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");

@@ -62,6 +62,8 @@ export interface TextConfig {
   backMatterLabel: string;
   /** The work's ordered divisions ("parts"); a unit's `part` frontmatter must match one. */
   divisions: readonly string[];
+  /** Landing page for a division; when given, division titles in the sidebar link there. */
+  divisionHref?: (title: string) => string;
 }
 
 /** The editorial-apparatus section of the sidebar: hand-built pages, not a collection. */

@@ -818,6 +818,18 @@ a.external::after {
   color: var(--color-stone-100);
 }
 
+/* A sidebar section title that is also a page (the book's parts): the text
+   navigates, the chevron and the rest of the row still toggle the accordion. */
+.nav-section__link {
+  color: inherit;
+  text-decoration: none;
+}
+.nav-section__link:hover,
+.nav-section__link:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* Sidebar: a thin scrollbar, so a long chapter list does not put a wide
    platform scrollbar down the middle of the page. */
 [data-nav-scroll] {

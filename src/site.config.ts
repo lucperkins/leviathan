@@ -6,6 +6,7 @@
  */
 import type { SiteConfig } from "./theme/config";
 import { surnameSortKey, titleSortKey } from "./theme/lib/sort";
+import { divisionSlug } from "./theme/lib/divisions";
 
 const config: SiteConfig = {
   title: "Leviathan",
@@ -27,6 +28,7 @@ const config: SiteConfig = {
     backMatterLabel: "Back matter",
     /** The four parts of Leviathan, in order. Chapter frontmatter `part` must match a title here. */
     divisions: ["Of Man", "Of Common-wealth", "Of a Christian Common-wealth", "Of the Kingdome of Darknesse"],
+    divisionHref: (title) => `/parts/${divisionSlug(title)}/`,
   },
 
   sections: [

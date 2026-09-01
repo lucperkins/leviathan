@@ -10,11 +10,13 @@ import NavIcon from "./NavIcon.astro";
 interface Props {
   id: string;
   title: string;
+  /** When given, the title text is a link to this page; the rest of the row still toggles. */
+  href?: string;
   open?: boolean;
   /** Nested inside another NavSection: indented, tighter spacing. */
   nested?: boolean;
 }
-const { id, title, open = false, nested = false } = Astro.props;
+const { id, title, href, open = false, nested = false } = Astro.props;
 ---
 
 <details
@@ -30,7 +32,14 @@ const { id, title, open = false, nested = false } = Astro.props;
   >
     <span class="flex min-w-0 items-center gap-2">
       {!nested && <NavIcon name={id} />}
-      <span class="min-w-0">{title}</span>
+      {/* A link inside <summary> navigates without toggling; .stop keeps Alpine's open state out of it too. */}
+      {href ? (
+        <a href={href} class="nav-section__link min-w-0" x-on:click.stop>
+          {title}
+        </a>
+      ) : (
+        <span class="min-w-0">{title}</span>
+      )}
     </span>
     <svg
       aria-hidden="true"
