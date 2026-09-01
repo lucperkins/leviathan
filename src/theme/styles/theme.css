@@ -1004,19 +1004,8 @@ a.external::after {
 .section-index {
   display: flex;
   flex-direction: column;
-}
-.section-index li {
-  border-top: 1px solid var(--color-stone-200);
-  padding: 1.1rem 0;
-}
-.dark .section-index li {
-  border-color: var(--color-stone-800);
-}
-.section-index li:last-child {
-  border-bottom: 1px solid var(--color-stone-200);
-}
-.dark .section-index li:last-child {
-  border-bottom-color: var(--color-stone-800);
+  /* No rules between entries: the space does the work. */
+  gap: 2.25rem;
 }
 /* Title first, then the descriptor under it: "Thucydides" over "Eight Bookes
    of the Peloponnesian Warre, 1629". */
