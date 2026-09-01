@@ -29,7 +29,7 @@ const href = (kind: string, id: string) => `${kinds.get(kind)?.basePath ?? `/${k
         <p class="concept-tip__title">{r.title}</p>
         <p class="concept-tip__summary" set:html={inlineMarkdown(r.summary)} />
         <a class="concept-tip__link" href={href(r.kind, r.id)}>
-          Read the full entry &rarr;
+          More &rarr;
         </a>
       </div>
     </template>
