@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../theme/layouts/Layout.astro";
-import { PARTS, partNumber } from "../lib/parts";
+import { PARTS, partNumber, partSlug } from "../lib/parts";
 
 const ROMAN = ["I", "II", "III", "IV"];
 
@@ -43,7 +43,11 @@ const parts = PARTS.map((title) => ({
         <section>
           <header class="toc-part">
             <span class="toc-part__numeral">{part.numeral}</span>
-            <h2 class="toc-part__title">{part.title}</h2>
+            <h2 class="toc-part__title">
+              <a href={`/parts/${partSlug(part.title)}/`} class="toc-part__link">
+                {part.title}
+              </a>
+            </h2>
           </header>
           <ol class="toc-list">
             {part.chapters.map((c) => (

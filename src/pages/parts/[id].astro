@@ -1,0 +1,65 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../theme/layouts/Layout.astro";
+import PrevNext from "../../theme/components/PrevNext.astro";
+import { neighbours } from "../../theme/lib/sequence";
+import { PARTS, partNumber, partSlug } from "../../lib/parts";
+
+const ROMAN = ["I", "II", "III", "IV"];
+
+/** What each part is doing, for the landing page's headnote. */
+const INTROS: Record<string, string> = {
+  "Of Man":
+    "The commonwealth is built from the ground up, and the ground is a human body. Sense, imagination, speech, reason, and the passions are assembled part by part as motions, until Chapter 13 shows what such creatures make of one another with no power over them, and Chapters 14 to 16 what reason finds toward getting out.",
+  "Of Common-wealth":
+    "The generation of the artificial man: how covenant raises a sovereign and what rights the office must carry, followed by the anatomy — liberty, systems, ministers, nutrition, counsel, law, punishment — and the diseases by which a commonwealth comes apart.",
+  "Of a Christian Common-wealth":
+    "Scripture enters the argument, and Hobbes reads it as closely as any divine — prophecy, miracles, eternal life, the church — to show that a Christian owes no obedience his civil sovereign cannot claim. The longest of the four parts, and to its first readers the most alarming.",
+  "Of the Kingdome of Darknesse":
+    "The demolition. Spiritual darkness is no underworld but rather a confederacy of deceivers here and now, working by misinterpreted scripture, demonology and the relics of gentilism, and vain philosophy; the closing chapter asks the lawyer's question of who benefits.",
+};
+
+export async function getStaticPaths() {
+  return PARTS.map((title) => ({ params: { id: partSlug(title) }, props: { title } }));
+}
+
+const { title } = Astro.props;
+const number = partNumber(title);
+const all = (await getCollection("chapters")).sort((a, b) => a.data.number - b.data.number);
+const chapters = all.filter((c) => c.data.part === title);
+const parts = PARTS.map((t) => ({ href: `/parts/${partSlug(t)}/`, title: t }));
+const { prev, next } = neighbours(parts, number - 1, (p) => p);
+---
+
+<Layout title={`Contents · ${title}`}>
+  <header class="mb-8 text-center">
+    <p class="eyebrow">Part {ROMAN[number - 1]}</p>
+    <h1 class="mt-3 font-serif text-4xl font-semibold tracking-tight">Contents</h1>
+    <p class="mx-auto mt-4 max-w-xl font-serif text-base leading-snug text-stone-500 italic dark:text-stone-400">
+      {title}
+    </p>
+  </header>
+
+  <p class="mb-8 max-w-prose text-stone-600 dark:text-stone-400">{INTROS[title]}</p>
+
+  <ol class="toc-list">
+    {
+      chapters.map((c) => (
+        <li>
+          <a href={`/chapters/${c.id}/`}>
+            <span class="toc-list__num">{c.data.number}</span>
+            <span class="toc-list__title">{c.data.title}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+
+  <p class="mt-10 text-sm">
+    <a href="/contents/" class="text-stone-500 hover:text-stone-700 dark:text-stone-400 dark:hover:text-stone-200">
+      The complete contents &rarr;
+    </a>
+  </p>
+
+  <PrevNext kind="part" prev={prev} next={next} />
+</Layout>
