@@ -2,7 +2,7 @@
 import { getCollection, render } from "astro:content";
 import Layout from "../../theme/layouts/Layout.astro";
 import ChapterHeader from "../../theme/components/ChapterHeader.astro";
-import { inlineMarkdown } from "../../theme/lib/inline";
+import ChapterNote from "../../theme/components/ChapterNote.astro";
 import ConceptRefs from "../../theme/components/ConceptRefs.astro";
 import PrevNext from "../../theme/components/PrevNext.astro";
 import Prose from "../../theme/components/Prose.astro";
@@ -29,7 +29,7 @@ const label = chapter.data.part ? `Chapter ${chapter.data.number}` : chapter.dat
 
 <Layout title={chapter.data.title}>
   <ChapterHeader number={chapter.data.number} title={chapter.data.title} part={chapter.data.part} />
-  {chapter.data.note && <p class="chapter-note" set:html={inlineMarkdown(chapter.data.note)} />}
+  {chapter.data.note && <ChapterNote note={chapter.data.note} />}
   <Prose x-data="quoteTarget" x-on:click="onClick($event)">
     <Content />
   </Prose>

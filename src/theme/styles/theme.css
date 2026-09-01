@@ -96,12 +96,10 @@ concept-ref,
 .prose-chapter h3 {
   margin-top: 2rem;
   margin-bottom: 0.5rem;
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-stone-500);
+  line-height: 1.3;
 }
 .prose-chapter h3 + p {
   margin-top: 0;
@@ -279,9 +277,6 @@ concept-ref[data-kind="touchstone"] {
 .dark {
   color-scheme: dark;
 }
-.dark .prose-chapter h3 {
-  color: var(--color-stone-300);
-}
 .dark .prose-chapter blockquote {
   border-left-color: var(--color-stone-600);
   color: var(--color-stone-300);
@@ -411,6 +406,18 @@ concept-ref[data-kind="touchstone"] {
 }
 .pullquote .para-num {
   display: none;
+}
+
+/* A dropped initial on the chapter's first paragraph, as the old printings
+   set them. Only the numbered chapters open this way: front matter has
+   `numbered: false`, so no p1 and no initial. ::first-letter takes an opening
+   quote mark along with the letter (Chapter 28), as the compositors did, and
+   reaches inside a concept-ref when the chapter opens on a defined term. */
+.prose-chapter p#p1::first-letter {
+  float: left;
+  font-size: 3.4em;
+  line-height: 0.8;
+  padding: 0.04em 0.08em 0 0;
 }
 
 /* Pull quote as a link to its sentence */
@@ -692,6 +699,21 @@ a.external::after {
   font-weight: 600;
   letter-spacing: -0.01em;
 }
+.toc-part__link {
+  color: inherit;
+  text-decoration: none;
+  transition-property: color;
+  transition-duration: var(--default-transition-duration);
+  transition-timing-function: var(--default-transition-timing-function);
+}
+.toc-part__link:hover,
+.toc-part__link:focus-visible {
+  color: var(--color-stone-500);
+}
+.dark .toc-part__link:hover,
+.dark .toc-part__link:focus-visible {
+  color: var(--color-stone-400);
+}
 
 .toc-list {
   margin-top: 0.75rem;
@@ -750,18 +772,26 @@ a.external::after {
   color: var(--color-stone-50);
 }
 
-/* Editorial headnote above a chapter, set apart from the text itself. */
+/* Editorial headnote above a chapter, set apart from the text itself. The
+   printer's note mark — an asterisk — stands where a border used to. */
 .chapter-note {
+  display: flex;
+  gap: 0.7rem;
   margin-bottom: 2rem;
-  border-left: 2px solid var(--color-stone-300);
-  padding-left: 1rem;
   font-size: 0.9rem;
   line-height: 1.6;
   color: var(--color-stone-600);
 }
-.dark .chapter-note {
-  border-color: var(--color-stone-700);
+.chapter-note__mark {
+  flex: none;
+  margin-top: 0.28em;
   color: var(--color-stone-400);
+}
+.dark .chapter-note {
+  color: var(--color-stone-400);
+}
+.dark .chapter-note__mark {
+  color: var(--color-stone-600);
 }
 .chapter-note a {
   color: inherit;
@@ -1169,9 +1199,7 @@ h3.sidelight__title {
 }
 
 /* Section headings on the index and apparatus pages. They used to be set as
-   small caps, which read as labels rather than headings; the marginal
-   headings inside the chapter text are a different thing and stay as they
-   are. */
+   small caps, which read as labels rather than headings. */
 .section-heading {
   font-family: var(--font-serif);
   font-size: 1.3rem;
@@ -1180,8 +1208,8 @@ h3.sidelight__title {
 }
 
 /* The small label above a page title: "Appendix", "Theme", "Chapter 13". It
-   used to be set in wide-tracked capitals; the only all-caps left on the site
-   is the text's own marginal headings in the chapter prose. */
+   used to be set in wide-tracked capitals; nothing on the site is styled as
+   all caps any more (FINIS and the epistle's salutation are Hobbes's own). */
 .eyebrow {
   font-family: var(--font-sans);
   font-size: 0.78rem;
