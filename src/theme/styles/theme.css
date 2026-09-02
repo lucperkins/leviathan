@@ -429,6 +429,21 @@ concept-ref[data-kind="touchstone"] {
   line-height: 0.8;
   padding: 0.04em 0.08em 0 0;
 }
+/* Where the browser can, let it size and seat the initial itself: two lines
+   deep, with the top of the letter on the cap line of the first line rather
+   than a little above it as the float approximation leaves it. */
+@supports (initial-letter: 2) or (-webkit-initial-letter: 2) {
+  .prose-chapter p#p1::first-letter {
+    float: none;
+    font-size: unset;
+    line-height: unset;
+    /* Ems here are the paragraph's, not the initial's, so this is the same
+       gap the float rule leaves (0.08em of a 3.4em letter). */
+    padding: 0 0.27em 0 0;
+    -webkit-initial-letter: 2;
+    initial-letter: 2;
+  }
+}
 
 /* Pull quote as a link to its sentence */
 .prose-chapter .pullquote {
