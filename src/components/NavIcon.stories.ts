@@ -1,9 +1,13 @@
 import NavIcon from "../theme/components/NavIcon.astro";
+import NavIconSheet from "./NavIconSheet.astro";
 
 export default {
   title: "Navigation/NavIcon",
   component: NavIcon,
 };
+
+/** Every mark in the site config at once, labelled by section. */
+export const Default = { render: () => NavIconSheet };
 
 /** One per top-level sidebar section; nested part sections get none. */
 export const Book = { args: { name: "book" } };

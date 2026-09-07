@@ -5,6 +5,7 @@ import config from "../../site.config";
 import BackButton from "../components/BackButton.astro";
 import ChapterNav from "../components/ChapterNav.astro";
 import ListNav from "../components/ListNav.astro";
+import Navbar from "../components/Navbar.astro";
 import SiteTitle from "../components/SiteTitle.astro";
 import ThemeToggle from "../components/ThemeToggle.astro";
 
@@ -56,38 +57,16 @@ const sections = await Promise.all(
     </script>
   </head>
   <body class="min-h-screen bg-stone-50 text-stone-900 dark:bg-stone-950 dark:text-stone-100">
-    <div class="flex min-h-screen" x-data="navDrawer" x-on:keydown.escape.window="close()">
-      {/* Below md the sidebar is a drawer, and this bar is the only chrome. */}
-      <header
-        class="site-chrome fixed inset-x-0 top-0 z-30 flex items-center justify-between border-b border-stone-200 px-4 py-2.5 desk:hidden dark:border-stone-800"
-      >
-        <a href="/" class="font-serif text-lg font-semibold tracking-tight">{config.title}</a>
-        <div class="flex items-center gap-1">
-          <button
-            type="button"
-            x-on:click="toggle()"
-            x-bind:aria-expanded="open ? 'true' : 'false'"
-            aria-controls="site-nav"
-            x-bind:aria-label="open ? 'Close the contents' : 'Open the contents'"
-            class="inline-flex items-center justify-center rounded p-1.5 text-stone-500 transition-colors hover:bg-stone-200 hover:text-stone-800 dark:text-stone-400 dark:hover:bg-stone-800 dark:hover:text-stone-100"
-          >
-            <svg aria-hidden="true" viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-              <g x-show="!open">
-                <path d="M2.5 4h11M2.5 8h11M2.5 12h11" />
-              </g>
-              <g x-show="open" x-cloak>
-                <path d="M4 4l8 8M12 4l-8 8" />
-              </g>
-            </svg>
-          </button>
-          <ThemeToggle />
-        </div>
-      </header>
+    {/* Below desk the window is a column — navbar, then the page scrolling in its
+        own box — so the scrollbar runs under the navbar rather than behind it.
+        Above desk the document scrolls and the sidebar sticks beside it. */}
+    <div class="flex h-dvh flex-col desk:h-auto desk:min-h-screen desk:flex-row" x-data x-on:keydown.escape.window="$store.drawer.close()">
+      <Navbar class="shrink-0 desk:hidden" />
 
       {/* The scrim behind the open drawer. */}
       <div
-        x-show="open"
-        x-on:click="close()"
+        x-show="$store.drawer.open"
+        x-on:click="$store.drawer.close()"
         x-cloak
         class="fixed inset-0 z-30 bg-stone-950/40 desk:hidden"
         aria-hidden="true"
@@ -96,12 +75,13 @@ const sections = await Promise.all(
 
       <aside
         id="site-nav"
-        x-bind:class="open && 'is-open'"
+        x-bind:class="$store.drawer.open && 'is-open'"
         class="site-chrome nav-drawer fixed inset-y-0 left-0 z-40 flex h-screen w-80 max-w-[85vw] shrink-0 flex-col border-r border-stone-200 transition-transform duration-200 desk:sticky desk:top-0 desk:w-64 desk:max-w-none xl:w-80 dark:border-stone-800"
       >
-        <div class="flex-1 overflow-y-auto py-6 pr-2 pl-3" data-nav-scroll x-data="navScroll" x-on:scroll.passive="save()">
-          {/* px-3 lines the title up with the nav link text, which sits inside the same padding. */}
-          <div class="mb-8 px-3"><SiteTitle /></div>
+        {/* The masthead stays put while the list below it scrolls. px-6 lines it up
+            with the nav link text, which sits in the scroll box's pl-3 plus its own px-3. */}
+        <div class="shrink-0 border-b border-stone-200 px-6 pt-6 pb-4 dark:border-stone-800"><SiteTitle /></div>
+        <div class="flex-1 overflow-y-auto pt-3 pr-2 pb-6 pl-3" data-nav-scroll x-data="navScroll" x-on:scroll.passive="save()">
           <ChapterNav chapters={chapters} currentPath={currentPath} />
           {/* The rule splits the book section's bottom margin so the gap to the first section equals the gaps below it. */}
           <div class="-mt-2 border-t border-stone-200 pt-2 dark:border-stone-800">
@@ -164,7 +144,7 @@ const sections = await Promise.all(
       </aside>
       {/* @container lets .breakout measure the room around the column in cqw
           and spill into it symmetrically. */}
-      <main class="@container min-w-0 flex-1 px-5 pt-20 pb-24 md:px-8 desk:px-12 desk:pt-12 desk:pb-32">
+      <main class="@container min-h-0 min-w-0 flex-1 overflow-y-auto px-5 pt-8 pb-24 md:px-8 desk:overflow-visible desk:px-12 desk:pt-12 desk:pb-32">
         <div class="mx-auto max-w-2xl">
           {!isHome && <BackButton />}
           <slot />

@@ -1,0 +1,45 @@
+---
+/**
+ * The bar across the top of the page below the desk breakpoint, where the
+ * sidebar is a drawer: the site's title, the drawer toggle, and the theme
+ * toggle. The drawer's state is the Alpine `drawer` store, so this bar needs
+ * no ancestor to work — Layout puts it in and hides it above the breakpoint
+ * through `class`.
+ */
+import config from "../../site.config";
+import ThemeToggle from "./ThemeToggle.astro";
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<header
+  class:list={[
+    "site-chrome flex items-center justify-between border-b border-stone-200 px-4 py-2.5 dark:border-stone-800",
+    className,
+  ]}
+>
+  <a href="/" class="font-serif text-lg font-semibold tracking-tight">{config.title}</a>
+  <div class="flex items-center gap-1">
+    <button
+      type="button"
+      x-on:click="$store.drawer.toggle()"
+      x-bind:aria-expanded="$store.drawer.open ? 'true' : 'false'"
+      aria-controls="site-nav"
+      x-bind:aria-label="$store.drawer.open ? 'Close the contents' : 'Open the contents'"
+      class="inline-flex items-center justify-center rounded p-1.5 text-stone-500 transition-colors hover:bg-stone-200 hover:text-stone-800 dark:text-stone-400 dark:hover:bg-stone-800 dark:hover:text-stone-100"
+    >
+      <svg aria-hidden="true" viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <g x-show="!$store.drawer.open">
+          <path d="M2.5 4h11M2.5 8h11M2.5 12h11" />
+        </g>
+        <g x-show="$store.drawer.open" x-cloak>
+          <path d="M4 4l8 8M12 4l-8 8" />
+        </g>
+      </svg>
+    </button>
+    <ThemeToggle />
+  </div>
+</header>

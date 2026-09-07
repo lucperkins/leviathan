@@ -198,21 +198,23 @@ export default (Alpine: Alpine) => {
   Alpine.store("theme", theme);
 
   /**
-   * The sidebar as a drawer, below the mobile breakpoint. Escape closes it,
-   * and the page behind it does not scroll while it is open.
+   * The sidebar as a drawer, below the mobile breakpoint. A store, like the
+   * theme, because the navbar's toggle, the scrim, and the drawer itself all
+   * read it and none is an ancestor of the others; it also lets the Navbar
+   * render on its own in Storybook. Escape closes it. Nothing locks the page
+   * behind it: below that breakpoint <main> is the scroller, and neither the
+   * scrim nor the drawer chains its scrolling into it.
    */
-  Alpine.data("navDrawer", () => ({
+  const drawer = {
     open: false,
     toggle() {
       this.open = !this.open;
-      document.documentElement.style.overflow = this.open ? "hidden" : "";
     },
     close() {
-      if (!this.open) return;
       this.open = false;
-      document.documentElement.style.overflow = "";
     },
-  }));
+  };
+  Alpine.store("drawer", drawer);
 
   /**
    * Chapter pages: remember where the reader got to, so the home page can
@@ -229,7 +231,9 @@ export default (Alpine: Alpine) => {
         window.clearTimeout(this.timer);
         this.timer = window.setTimeout(() => this.record(id, label), 400);
       };
-      window.addEventListener("scroll", later, { passive: true });
+      // Capturing, because below the desk breakpoint it is <main> that scrolls,
+      // not the document, and scroll events do not bubble.
+      window.addEventListener("scroll", later, { passive: true, capture: true });
       window.addEventListener("pagehide", () => this.record(id, label));
     },
     /** The last paragraph whose top has passed the reading line. */

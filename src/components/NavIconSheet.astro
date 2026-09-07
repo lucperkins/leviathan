@@ -1,0 +1,21 @@
+---
+/**
+ * Every sidebar mark at once, each labelled with its key in the site config.
+ * Exists for Storybook (NavIcon's Default story): a story renders one
+ * component and cannot repeat it, and the site never shows the marks
+ * together. Each takes its colour from the list, as it does in the sidebar.
+ */
+import config from "../site.config";
+import NavIcon from "../theme/components/NavIcon.astro";
+---
+
+<ul class="flex flex-wrap gap-x-6 gap-y-3 text-sm text-stone-700 dark:text-stone-300">
+  {
+    Object.keys(config.icons).map((name) => (
+      <li class="flex items-center gap-2">
+        <NavIcon name={name} />
+        <span>{name}</span>
+      </li>
+    ))
+  }
+</ul>

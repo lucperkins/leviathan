@@ -41,6 +41,10 @@
 
 .theme-sepia {
   color-scheme: light;
+  /* `color-scheme: light` alone gives the page a white platform scrollbar,
+     which on warm paper reads as a strip of the wrong colour. The tokens
+     below are the retinted ones, so the track matches the page. */
+  scrollbar-color: var(--color-stone-400) var(--color-stone-50);
   --color-paper: oklch(96.5% 0.025 90);
   --color-stone-50: oklch(94.5% 0.03 88);
   --color-stone-100: oklch(91.5% 0.034 86);

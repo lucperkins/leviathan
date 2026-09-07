@@ -346,17 +346,26 @@ in the theme's `theme.css` rather than reused from Tailwind's `md`, because an i
 portrait is 820px and at `md` it fell on the desktop side, giving a quarter of
 a narrow screen to navigation. There is also a `touch` variant
 (`@media (hover: none)`) for anything that depends on there being a pointer,
-which is a sounder test than any width. `Layout.astro` renders a
-fixed navbar (`md:hidden`) carrying the title, a drawer toggle, and a theme
-toggle; the `<aside>` is `fixed … -translate-x-full` until the Alpine
-`navDrawer` component opens it, with a scrim behind and the document scroll
-locked while it is open. Escape closes it. The theme lives in an Alpine
-**store** rather than a component precisely because two toggles are on the
-page at once below that breakpoint and have to agree.
+which is a sounder test than any width. `Layout.astro` renders the
+`Navbar` component (`desk:hidden`) carrying the title, a drawer toggle, and a
+theme toggle; the `<aside>` is `fixed … -translate-x-full` until the Alpine
+`drawer` **store** opens it, with a scrim behind. Escape closes it. Both the
+drawer and the theme live in stores rather than components because several
+elements on the page read each and none is an ancestor of the others, and
+because a store lets `Navbar` and `ThemeToggle` render alone in Storybook.
 
-`<main>` drops to `px-5 pt-20` to clear the navbar, and `.para-num` floats
-inline instead of sitting outside the column, which it cannot do once the
-column reaches the screen edge.
+Below `desk` the page is a column: the navbar in flow, then `<main>` as its
+own scroll box (`min-h-0 overflow-y-auto` inside an `h-dvh` flex column), so
+the scrollbar runs under the navbar instead of behind it. Above `desk` the
+document scrolls as before and the sidebar sticks beside it. Two things follow.
+`readingPosition` listens for scroll in the capture phase, since `<main>`'s
+scroll events do not bubble to `window`. And the browser does not restore a
+scroll box's position on back navigation the way it does the document's, so
+below `desk` that depends on the bfcache.
+
+`<main>` drops to `px-5 pt-8`, and `.para-num` floats inline instead of
+sitting outside the column, which it cannot do once the column reaches the
+screen edge.
 
 ## TODO
 
